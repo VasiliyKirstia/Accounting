@@ -29,7 +29,7 @@ public class CurrencyService implements ICurrencyService{
     }
 
     @Override
-    public Currency getCurrencyById(Connection con, int id) throws Exception {
+    public Currency getCurrencyById(Connection con, int id) throws SQLException {
         PreparedStatement prepSt = con.prepareStatement("SELECT * FROM currency WHERE id = ?");
         prepSt.setInt(1, id);
         ResultSet resultSet = prepSt.executeQuery();
@@ -42,7 +42,7 @@ public class CurrencyService implements ICurrencyService{
     }
 
     @Override
-    public List<Currency> getAllCurrencis(Connection con) throws Exception {
+    public List<Currency> getAllCurrencis(Connection con) throws SQLException {
         Statement st = con.createStatement();
         ResultSet resultSet = st.executeQuery("SELECT * FROM currency");
         List<Currency> currencis = new LinkedList<Currency>();

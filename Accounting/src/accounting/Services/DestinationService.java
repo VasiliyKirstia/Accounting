@@ -6,8 +6,14 @@
 package accounting.Services;
 
 import accounting.Interfaces.IDestinationService;
+import accounting.Models.Currency;
 import accounting.Models.Destination;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,17 +24,33 @@ public class DestinationService implements IDestinationService{
 
     @Override
     public void addDestination(Connection con, String destinationName) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement prepSt = con.prepareStatement("INSERT INTO destination (name) VALUES (?)");
+        prepSt.setString(1, destinationName);
+        prepSt.executeUpdate();
     }
 
     @Override
     public Destination getDestinationyById(Connection con, int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement prepSt = con.prepareStatement("SELECT * FROM destination WHERE id = ?");
+        prepSt.setInt(1, id);
+        ResultSet resultSet = prepSt.executeQuery();
+        
+        if(resultSet.next()){
+            return new Destination(resultSet.getInt("id"), resultSet.getString("name") );
+        }else{
+            return null;
+        }
     }
 
     @Override
     public List<Destination> getAllDestinations(Connection con) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement st = con.createStatement();
+        ResultSet resultSet = st.executeQuery("SELECT * FROM destination");
+        List<Destination> destinations = new LinkedList<Destination>();
+        while(resultSet.next()){
+            destinations.add(new Destination(resultSet.getInt("id"), resultSet.getString("name")));
+        }
+        return destinations;
     }
     
 }
