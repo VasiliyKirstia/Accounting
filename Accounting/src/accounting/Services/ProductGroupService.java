@@ -6,8 +6,13 @@
 package accounting.Services;
 
 import accounting.Interfaces.IProductGroupService;
+import accounting.Models.Currency;
 import accounting.Models.ProductGroup;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,17 +23,34 @@ public class ProductGroupService implements IProductGroupService{
 
     @Override
     public void addProductGroup(Connection con, String productGroupName, int accountId) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_group (name, account_id) VALUES (?, ?)");
+        prepSt.setString(1, productGroupName);
+        prepSt.setInt(2, accountId);
+        prepSt.executeUpdate();
     }
 
     @Override
     public ProductGroup getProductGroupById(Connection con, int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_group WHERE id = ?");
+        prepSt.setInt(1, id);
+        ResultSet resultSet = prepSt.executeQuery();
+        
+        if(resultSet.next()){
+            return new ProductGroup(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("account_id"));
+        }else{
+            return null;
+        }
     }
 
     @Override
     public List<ProductGroup> getAllProductGroups(Connection con) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement st = con.createStatement();
+        ResultSet resultSet = st.executeQuery("SELECT * FROM product_group");
+        List<ProductGroup> productGroups = new LinkedList<ProductGroup>();
+        while(resultSet.next()){
+            productGroups.add(new ProductGroup(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("account_id")));
+        }
+        return productGroups;
     }
     
 }

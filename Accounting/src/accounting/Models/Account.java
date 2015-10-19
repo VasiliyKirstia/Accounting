@@ -13,7 +13,7 @@ public class Account {
     public final int Id;
     public final String AccountNumber;
     
-    public Account(int id, String name, String accountNumber){
+    public Account(int id, String accountNumber){
         this.Id = id;
         this.AccountNumber = accountNumber;
     }

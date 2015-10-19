@@ -5,10 +5,18 @@
  */
 package accounting.Interfaces;
 
+import accounting.Models.Account;
+import java.sql.Connection;
+import java.util.List;
+
 /**
  *
  * @author Vasiliy Kirstia
  */
 public interface IAccountService {
-    //TODO: работа со счетами    
+    public void addAccount(Connection con, String accountNumber) throws Exception;
+    public Account getAccountById(Connection con, int id) throws Exception;
+    
+    //TODO: в названии этого метода нужно проверить орфографию 
+    public List<Account> getAllAccounts(Connection con) throws Exception;  
 }
