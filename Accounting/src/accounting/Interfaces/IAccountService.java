@@ -16,7 +16,5 @@ import java.util.List;
 public interface IAccountService {
     public void addAccount(Connection con, String accountNumber) throws Exception;
     public Account getAccountById(Connection con, int id) throws Exception;
-    
-    //TODO: в названии этого метода нужно проверить орфографию 
     public List<Account> getAllAccounts(Connection con) throws Exception;  
 }

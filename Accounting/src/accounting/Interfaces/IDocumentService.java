@@ -5,10 +5,17 @@
  */
 package accounting.Interfaces;
 
+import accounting.Models.Account;
+import accounting.Models.Document;
+import java.sql.Connection;
+import java.util.List;
+
 /**
  *
  * @author Vasiliy Kirstia
  */
 public interface IDocumentService {
-    //TODO: закончить когда дадут доступ к тестовым данным
+    public void addDocument(Connection con) throws Exception;
+    public Document getDocumentById(Connection con, int id) throws Exception;
+    public List<Document> getAllDocuments(Connection con) throws Exception;  
 }

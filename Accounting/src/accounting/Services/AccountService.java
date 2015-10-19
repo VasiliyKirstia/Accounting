@@ -24,7 +24,6 @@ public class AccountService implements IAccountService{
     @Override
     public void addAccount(Connection con, String accountNumber) throws Exception {
         PreparedStatement prepSt = con.prepareStatement("INSERT INTO account (account_number) VALUES (?)");
-        prepSt.setString(1, accountNumber);
         prepSt.executeUpdate();
     }
 
