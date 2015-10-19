@@ -7,7 +7,7 @@ package accounting.Interfaces;
 
 import accounting.Models.Transaction;
 import java.sql.Connection;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
