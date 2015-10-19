@@ -7,6 +7,8 @@ package accounting;
 import java.sql.*;
 import accounting.Services.*;
 import accounting.Interfaces.*;
+import accounting.Models.Currency;
+import java.util.List;
 
 /**
  *
@@ -20,7 +22,10 @@ public class Accounting {
     public static void main(String[] args) {
         ICurrencyService currencyService = new CurrencyService();
         try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/accounting", "test_user","test_user")){
-            currencyService.addCurrency(con, "RUP");
+            List<Currency> currensis = currencyService.getAllCurrencis(con);
+            for(Currency currency : currensis){
+                System.out.println(currency.Id + " : " + currency.Name);
+            }
         }
         catch(Exception exc){
             System.out.println("Ops");
