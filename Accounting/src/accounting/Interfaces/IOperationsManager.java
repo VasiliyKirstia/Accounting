@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface IOperationService {
+public interface IOperationsManager {
     public void addOperation(Connection con, String operationName) throws Exception;
     public Operation getOperationById(Connection con, int id) throws Exception;    
     public List<Operation> getAllOperations(Connection con) throws Exception;

@@ -20,7 +20,7 @@ public class Accounting {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ICurrencyService currencyService = new CurrencyService();
+        ICurrencysManager currencyService = new CurrencysManager();
         try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/accounting", "test_user","test_user")){
             List<Currency> currensis = currencyService.getAllCurrencis(con);
             for(Currency currency : currensis){

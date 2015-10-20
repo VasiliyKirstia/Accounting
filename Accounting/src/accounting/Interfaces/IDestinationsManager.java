@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface IDestinationService {
+public interface IDestinationsManager {
     public void addDestination(Connection con, String destinationName) throws Exception;
     public Destination getDestinationyById(Connection con, int id) throws Exception;    
     public List<Destination> getAllDestinations(Connection con) throws Exception;

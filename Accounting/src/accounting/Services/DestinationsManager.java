@@ -5,13 +5,11 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IDestinationService;
-import accounting.Models.Currency;
+import accounting.Interfaces.IDestinationsManager;
 import accounting.Models.Destination;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class DestinationService implements IDestinationService{
+public class DestinationsManager implements IDestinationsManager{
 
     @Override
     public void addDestination(Connection con, String destinationName) throws Exception {

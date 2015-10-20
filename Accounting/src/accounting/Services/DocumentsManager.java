@@ -5,9 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IDocumentService;
-import accounting.Models.Account;
-import accounting.Models.Currency;
+import accounting.Interfaces.IDocumentsManager;
 import accounting.Models.Document;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class DocumentService implements IDocumentService{
+public class DocumentsManager implements IDocumentsManager{
 
     @Override
     public void addDocument(Connection con) throws Exception {

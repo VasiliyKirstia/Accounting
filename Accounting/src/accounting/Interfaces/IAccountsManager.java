@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Account;
-import accounting.Models.Document;
 import java.sql.Connection;
 import java.util.List;
 
@@ -14,8 +13,8 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface IDocumentService {
-    public void addDocument(Connection con) throws Exception;
-    public Document getDocumentById(Connection con, int id) throws Exception;
-    public List<Document> getAllDocuments(Connection con) throws Exception;  
+public interface IAccountsManager {
+    public void addAccount(Connection con, String accountNumber) throws Exception;
+    public Account getAccountById(Connection con, int id) throws Exception;
+    public List<Account> getAllAccounts(Connection con) throws Exception;  
 }

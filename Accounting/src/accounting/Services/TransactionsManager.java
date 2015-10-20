@@ -5,9 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.ITransactionService;
-import accounting.Models.Currency;
-import accounting.Models.Destination;
+import accounting.Interfaces.ITransactionsManager;
 import accounting.Models.Transaction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +19,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class TransactionService implements ITransactionService{
+public class TransactionsManager implements ITransactionsManager{
 
     @Override
     public void addTransaction(Connection con, Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId) throws Exception {

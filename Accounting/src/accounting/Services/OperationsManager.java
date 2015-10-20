@@ -5,7 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IOperationService;
+import accounting.Interfaces.IOperationsManager;
 import accounting.Models.Operation;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.LinkedList;
  *
  * @author vasiliy
  */
-public class OperationService implements IOperationService{
+public class OperationsManager implements IOperationsManager{
 
     @Override
     public void addOperation(Connection con, String operationName) throws Exception {

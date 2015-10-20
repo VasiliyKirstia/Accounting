@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface ITransactionService {
+public interface ITransactionsManager {
     public void addTransaction(Connection con, Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId) throws Exception;
     public Transaction getTransactionById(Connection con, int id) throws Exception;
     public List<Transaction> getAllTransactions(Connection con) throws Exception;

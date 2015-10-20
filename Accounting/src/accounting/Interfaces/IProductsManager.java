@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface IProductService {
+public interface IProductsManager {
     public void addProduct(Connection con, String productName, double amount, double price, int productGroupId, int currencyId, int productUnitId) throws Exception;
     public Product getProductById(Connection con, int id) throws Exception;
     public List<Product> getAllProducts(Connection con) throws Exception;

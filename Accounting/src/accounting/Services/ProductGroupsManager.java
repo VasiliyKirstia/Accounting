@@ -5,8 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IProductGroupService;
-import accounting.Models.Currency;
+import accounting.Interfaces.IProductGroupsManager;
 import accounting.Models.ProductGroup;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class ProductGroupService implements IProductGroupService{
+public class ProductGroupsManager implements IProductGroupsManager{
 
     @Override
     public void addProductGroup(Connection con, String productGroupName, int accountId) throws Exception {

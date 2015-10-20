@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface IProductUnitService {
+public interface IProductUnitsManager {
     public void addProductUnit(Connection con, String productUnitName) throws Exception;
     public ProductUnit getProductUnitById(Connection con, int id) throws Exception;    
     public List<ProductUnit> getAllProductUnits(Connection con) throws Exception;

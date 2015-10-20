@@ -5,8 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IProductService;
-import accounting.Models.Operation;
+import accounting.Interfaces.IProductsManager;
 import accounting.Models.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class ProductService implements IProductService{
+public class ProductsManager implements IProductsManager{
 
     @Override
     public void addProduct(Connection con, String productName, double amount, double price, int productGroupId, int currencyId, int productUnitId) throws Exception {

@@ -5,8 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IProductUnitService;
-import accounting.Models.Operation;
+import accounting.Interfaces.IProductUnitsManager;
 import accounting.Models.ProductUnit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class ProductUnitService implements IProductUnitService{
+public class ProductUnitsManager implements IProductUnitsManager{
 
     @Override
     public void addProductUnit(Connection con, String productUnitName) throws Exception {

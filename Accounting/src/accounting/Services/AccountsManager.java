@@ -5,9 +5,8 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IAccountService;
+import accounting.Interfaces.IAccountsManager;
 import accounting.Models.Account;
-import accounting.Models.Currency;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class AccountService implements IAccountService{
+public class AccountsManager implements IAccountsManager{
 
     @Override
     public void addAccount(Connection con, String accountNumber) throws Exception {

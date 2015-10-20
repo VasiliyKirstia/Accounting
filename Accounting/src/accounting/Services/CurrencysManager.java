@@ -5,7 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.ICurrencyService;
+import accounting.Interfaces.ICurrencysManager;
 import accounting.Models.Currency;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class CurrencyService implements ICurrencyService{
+public class CurrencysManager implements ICurrencysManager{
     
     @Override
     public void addCurrency(Connection con, String currencyName) throws SQLException {

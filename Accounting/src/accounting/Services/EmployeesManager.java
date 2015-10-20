@@ -5,8 +5,7 @@
  */
 package accounting.Services;
 
-import accounting.Interfaces.IEmployeeService;
-import accounting.Models.Currency;
+import accounting.Interfaces.IEmployeesManager;
 import accounting.Models.Employee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class EmployeeService implements IEmployeeService{
+public class EmployeesManager implements IEmployeesManager{
 
     @Override
     public void addEmployee(Connection con, String employeeName) throws Exception {

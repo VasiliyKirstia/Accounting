@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Vasiliy Kirstia
  */
-public interface ICurrencyService {
+public interface ICurrencysManager {
     public void addCurrency(Connection con, String currencyName) throws Exception;
     public Currency getCurrencyById(Connection con, int id) throws Exception;
     
