@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package accounting;
+
 import java.sql.*;
-import accounting.Services.*;
 import accounting.Interfaces.*;
 import accounting.Models.Currency;
+import com.google.inject.Guice;
 import java.util.List;
+import com.google.inject.Injector;
 
 /**
  *
@@ -20,7 +22,10 @@ public class Accounting {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ICurrencysManager currencyService = new CurrencysManager();
+        PostgreModule psm = new PostgreModule();
+        Injector injector = Guice.createInjector(psm);
+        ICurrencysManager currencyService = injector.getInstance(ICurrencysManager.class);
+        
         try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/accounting", "test_user","test_user")){
             List<Currency> currensis = currencyService.getAllCurrencis(con);
             for(Currency currency : currensis){

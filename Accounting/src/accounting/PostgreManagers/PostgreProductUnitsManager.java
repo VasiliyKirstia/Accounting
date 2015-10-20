@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IProductUnitsManager;
 import accounting.Models.ProductUnit;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class ProductUnitsManager implements IProductUnitsManager{
+public class PostgreProductUnitsManager implements IProductUnitsManager{
 
     @Override
     public void addProductUnit(Connection con, String productUnitName) throws Exception {

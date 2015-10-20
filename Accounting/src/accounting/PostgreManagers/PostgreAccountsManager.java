@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IAccountsManager;
 import accounting.Models.Account;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class AccountsManager implements IAccountsManager{
+public class PostgreAccountsManager implements IAccountsManager{
 
     @Override
     public void addAccount(Connection con, String accountNumber) throws Exception {

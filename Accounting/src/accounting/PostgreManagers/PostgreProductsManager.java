@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IProductsManager;
 import accounting.Models.Product;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class ProductsManager implements IProductsManager{
+public class PostgreProductsManager implements IProductsManager{
 
     @Override
     public void addProduct(Connection con, String productName, double amount, double price, int productGroupId, int currencyId, int productUnitId) throws Exception {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.ICurrencysManager;
 import accounting.Models.Currency;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class CurrencysManager implements ICurrencysManager{
+public class PostgreCurrencysManager implements ICurrencysManager{
     
     @Override
     public void addCurrency(Connection con, String currencyName) throws SQLException {

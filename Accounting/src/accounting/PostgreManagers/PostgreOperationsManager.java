@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IOperationsManager;
 import accounting.Models.Operation;
@@ -16,7 +16,7 @@ import java.util.LinkedList;
  *
  * @author vasiliy
  */
-public class OperationsManager implements IOperationsManager{
+public class PostgreOperationsManager implements IOperationsManager{
 
     @Override
     public void addOperation(Connection con, String operationName) throws Exception {

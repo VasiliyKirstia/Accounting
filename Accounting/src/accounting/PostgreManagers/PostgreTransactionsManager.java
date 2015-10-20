@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.ITransactionsManager;
 import accounting.Models.Transaction;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class TransactionsManager implements ITransactionsManager{
+public class PostgreTransactionsManager implements ITransactionsManager{
 
     @Override
     public void addTransaction(Connection con, Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId) throws Exception {

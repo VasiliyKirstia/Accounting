@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IDestinationsManager;
 import accounting.Models.Destination;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class DestinationsManager implements IDestinationsManager{
+public class PostgreDestinationsManager implements IDestinationsManager{
 
     @Override
     public void addDestination(Connection con, String destinationName) throws Exception {

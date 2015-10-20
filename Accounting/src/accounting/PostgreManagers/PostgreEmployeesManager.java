@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IEmployeesManager;
 import accounting.Models.Employee;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class EmployeesManager implements IEmployeesManager{
+public class PostgreEmployeesManager implements IEmployeesManager{
 
     @Override
     public void addEmployee(Connection con, String employeeName) throws Exception {

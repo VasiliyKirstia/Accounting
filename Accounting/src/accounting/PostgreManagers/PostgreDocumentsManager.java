@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting.Services;
+package accounting.PostgreManagers;
 
 import accounting.Interfaces.IDocumentsManager;
 import accounting.Models.Document;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author vasiliy
  */
-public class DocumentsManager implements IDocumentsManager{
+public class PostgreDocumentsManager implements IDocumentsManager{
 
     @Override
     public void addDocument(Connection con) throws Exception {
