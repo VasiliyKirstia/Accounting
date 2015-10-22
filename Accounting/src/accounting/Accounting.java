@@ -11,6 +11,9 @@ import accounting.Models.Currency;
 import com.google.inject.Guice;
 import java.util.List;
 import com.google.inject.Injector;
+import accounting.GUI.Window;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -22,7 +25,7 @@ public class Accounting {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PostgreModule psm = new PostgreModule();
+        /*PostgreModule psm = new PostgreModule();
         Injector injector = Guice.createInjector(psm);
         ICurrencysManager currencyService = injector.getInstance(ICurrencysManager.class);
         
@@ -35,8 +38,7 @@ public class Accounting {
         catch(Exception exc){
             System.out.println("Ops");
         }
-        
-        
+        */
     }
     
 }
