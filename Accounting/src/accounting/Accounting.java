@@ -5,6 +5,7 @@
  */
 package accounting;
 
+import accounting.GUI.ProductAdditionMaster;
 import java.sql.*;
 import accounting.Interfaces.*;
 import accounting.Models.Currency;
@@ -12,6 +13,7 @@ import com.google.inject.Guice;
 import java.util.List;
 import com.google.inject.Injector;
 import accounting.GUI.Window;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -39,6 +41,13 @@ public class Accounting {
             System.out.println("Ops");
         }
         */
+        
+        JFrame frame = new JFrame("Тестовое окно");
+        JPanel panel = new ProductAdditionMaster();
+        frame.add(panel);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
     }
     
 }
