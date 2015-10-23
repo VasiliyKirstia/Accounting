@@ -5,6 +5,7 @@
  */
 package accounting.GUI;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
  *
  * @author vasiliy
  */
-public class MastersFactory {
+public class WindowsFactory {
     public static void createFrame(JPanel panel, String title){
         JFrame frame = new JFrame(title);
         frame.add(panel);
@@ -21,4 +22,12 @@ public class MastersFactory {
         frame.setVisible(true);
     }
     
+    public static void createDialog(JFrame parent, JPanel panel, String title){
+        JDialog dialog = new JDialog(parent, title);
+        dialog.setModal(true);
+        dialog.add(panel);
+        dialog.pack();
+        dialog.setDefaultCloseOperation(dialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+    }
 }

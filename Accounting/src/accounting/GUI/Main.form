@@ -67,6 +67,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="accountCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonCurrencyAdd">
           <Properties>
@@ -75,6 +78,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="currencyCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonDestinationAdd">
           <Properties>
@@ -83,6 +89,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="destinationCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonDocumentAdd">
           <Properties>
@@ -91,6 +100,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="documentCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonEmployeeAdd">
           <Properties>
@@ -99,6 +111,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="employeeCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonOperationAdd">
           <Properties>
@@ -107,6 +122,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="operationCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonProductAdd">
           <Properties>
@@ -115,6 +133,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonProductGroupAdd">
           <Properties>
@@ -123,6 +144,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productGroupCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonProductUnitAdd">
           <Properties>
@@ -131,6 +155,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productUnitCreationHandler"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonTransactionAdd">
           <Properties>
@@ -139,6 +166,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="transactionCreationHandler"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

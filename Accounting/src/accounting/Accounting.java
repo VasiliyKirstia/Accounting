@@ -14,7 +14,7 @@ import accounting.Models.Currency;
 import com.google.inject.Guice;
 import java.util.List;
 import com.google.inject.Injector;
-import accounting.GUI.MastersFactory;
+import accounting.GUI.WindowsFactory;
 import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -31,11 +31,7 @@ public class Accounting {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        PostgreModule psm = new PostgreModule();
-        Injector injector = Guice.createInjector(psm);
-        ICurrencysManager currencyService = injector.getInstance(ICurrencysManager.class);
-        
-        MastersFactory.createFrame(new Main(), "Главное окно");
+        WindowsFactory.createFrame(new Main(), "Главное окно");
     }
     
 }

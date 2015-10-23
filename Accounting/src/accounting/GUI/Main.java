@@ -10,6 +10,7 @@ import accounting.Models.Product;
 import accounting.PostgreManagers.PostgreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +24,9 @@ public class Main extends javax.swing.JPanel {
      */
     public Main() {
         initComponents();
-        
+        updateTableData();
+    }
+    private void updateTableData(){
         PostgreModule psm = new PostgreModule();
         Injector injector = Guice.createInjector(psm);
         IProductsManager productsManager = injector.getInstance(IProductsManager.class);
@@ -87,60 +90,110 @@ public class Main extends javax.swing.JPanel {
         jButtonAccountAdd.setFocusable(false);
         jButtonAccountAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonAccountAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonAccountAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonAccountAdd);
 
         jButtonCurrencyAdd.setText("валюта");
         jButtonCurrencyAdd.setFocusable(false);
         jButtonCurrencyAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonCurrencyAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCurrencyAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                currencyCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonCurrencyAdd);
 
         jButtonDestinationAdd.setText("место");
         jButtonDestinationAdd.setFocusable(false);
         jButtonDestinationAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonDestinationAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonDestinationAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                destinationCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonDestinationAdd);
 
         jButtonDocumentAdd.setText("документ");
         jButtonDocumentAdd.setFocusable(false);
         jButtonDocumentAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonDocumentAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonDocumentAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                documentCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonDocumentAdd);
 
         jButtonEmployeeAdd.setText("сотрудник");
         jButtonEmployeeAdd.setFocusable(false);
         jButtonEmployeeAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonEmployeeAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonEmployeeAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                employeeCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonEmployeeAdd);
 
         jButtonOperationAdd.setText("операция");
         jButtonOperationAdd.setFocusable(false);
         jButtonOperationAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonOperationAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonOperationAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                operationCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonOperationAdd);
 
         jButtonProductAdd.setText("продукт");
         jButtonProductAdd.setFocusable(false);
         jButtonProductAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonProductAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonProductAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonProductAdd);
 
         jButtonProductGroupAdd.setText("прод.гр.");
         jButtonProductGroupAdd.setFocusable(false);
         jButtonProductGroupAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonProductGroupAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonProductGroupAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productGroupCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonProductGroupAdd);
 
         jButtonProductUnitAdd.setText("ед.изм");
         jButtonProductUnitAdd.setFocusable(false);
         jButtonProductUnitAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonProductUnitAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonProductUnitAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productUnitCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonProductUnitAdd);
 
         jButtonTransactionAdd.setText("транзакция");
         jButtonTransactionAdd.setFocusable(false);
         jButtonTransactionAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonTransactionAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonTransactionAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transactionCreationHandler(evt);
+            }
+        });
         jToolBar1.add(jButtonTransactionAdd);
 
         jTable1.setAutoCreateRowSorter(true);
@@ -162,6 +215,46 @@ public class Main extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void accountCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
+    }//GEN-LAST:event_accountCreationHandler
+
+    private void currencyCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_currencyCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new CurrencyAdditionMaster(), "Добавление валюты");
+    }//GEN-LAST:event_currencyCreationHandler
+
+    private void destinationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_destinationCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DestinationAdditionMaster(), "Добавление места");
+    }//GEN-LAST:event_destinationCreationHandler
+
+    private void documentCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_documentCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
+    }//GEN-LAST:event_documentCreationHandler
+
+    private void operationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_operationCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new OperationAdditionMaster(), "Добавление операции");
+    }//GEN-LAST:event_operationCreationHandler
+
+    private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление продукта");
+    }//GEN-LAST:event_productCreationHandler
+
+    private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductGroupAdditionMaster(), "Добавление группы продуктов");
+    }//GEN-LAST:event_productGroupCreationHandler
+
+    private void productUnitCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productUnitCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductUnitAdditionMaster(), "Добавление единицы измерения");
+    }//GEN-LAST:event_productUnitCreationHandler
+
+    private void transactionCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new TransactionAdditionMaster(), "Добавление транзакции");
+    }//GEN-LAST:event_transactionCreationHandler
+
+    private void employeeCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeCreationHandler
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
+    }//GEN-LAST:event_employeeCreationHandler
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
