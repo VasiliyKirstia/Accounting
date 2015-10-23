@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Operation;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IOperationsManager {
-    public void addOperation(Connection con, String operationName) throws Exception;
-    public Operation getOperationById(Connection con, int id) throws Exception;    
-    public List<Operation> getAllOperations(Connection con) throws Exception;
+    public void addOperation(String operationName);
+    public Operation getOperationById(int id);    
+    public List<Operation> getAllOperations();
 }

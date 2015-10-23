@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Destination;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IDestinationsManager {
-    public void addDestination(Connection con, String destinationName) throws Exception;
-    public Destination getDestinationyById(Connection con, int id) throws Exception;    
-    public List<Destination> getAllDestinations(Connection con) throws Exception;
+    public void addDestination(String destinationName);
+    public Destination getDestinationyById(int id);    
+    public List<Destination> getAllDestinations();
 }

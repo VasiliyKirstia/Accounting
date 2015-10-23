@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.ProductGroup;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IProductGroupsManager {
-    public void addProductGroup(Connection con, String productGroupName, int accountId) throws Exception;
-    public ProductGroup getProductGroupById(Connection con, int id) throws Exception;    
-    public List<ProductGroup> getAllProductGroups(Connection con) throws Exception;
+    public void addProductGroup(String productGroupName, int accountId);
+    public ProductGroup getProductGroupById(int id);    
+    public List<ProductGroup> getAllProductGroups();
 }

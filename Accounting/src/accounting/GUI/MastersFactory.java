@@ -12,11 +12,12 @@ import javax.swing.JPanel;
  *
  * @author vasiliy
  */
-public class Window {
-    public Window(JPanel panel){
-        JFrame frame = new JFrame("Главное окно.");
+public class MastersFactory {
+    public static void createFrame(JPanel panel, String title){
+        JFrame frame = new JFrame(title);
         frame.add(panel);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
     

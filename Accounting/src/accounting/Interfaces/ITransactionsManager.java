@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Transaction;
-import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface ITransactionsManager {
-    public void addTransaction(Connection con, Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId) throws Exception;
-    public Transaction getTransactionById(Connection con, int id) throws Exception;
-    public List<Transaction> getAllTransactions(Connection con) throws Exception;
+    public void addTransaction(Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId);
+    public Transaction getTransactionById(int id);
+    public List<Transaction> getAllTransactions();
 }

@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Account;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IAccountsManager {
-    public void addAccount(Connection con, String accountNumber) throws Exception;
-    public Account getAccountById(Connection con, int id) throws Exception;
-    public List<Account> getAllAccounts(Connection con) throws Exception;  
+    public void addAccount(String accountNumber);
+    public Account getAccountById(int id);
+    public List<Account> getAllAccounts();  
 }

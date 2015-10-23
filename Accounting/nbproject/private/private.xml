@@ -3,18 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/DestinationAdditionMaster.java</file>
             <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Accounting.java</file>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/DocumentAdditionMaster.java</file>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/Window.java</file>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/OperationAdditionMaster.java</file>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/AccountAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/MastersFactory.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Transaction.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Document.java</file>
             <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/ProductUnitAdditionMaster.java</file>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/CurrencyAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/AccountAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Product.java</file>
             <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/EmployeeAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Utils/TransactionUtils.java</file>
             <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/TransactionAdditionMaster.java</file>
-            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/ProductAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/Main.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Operation.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/DestinationAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/DocumentAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/ProductGroup.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Employee.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/OperationAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Account.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Destination.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/CurrencyAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/ProductUnit.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/Models/Currency.java</file>
             <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/ProductGroupAdditionMaster.java</file>
+            <file>file:/home/vasiliy/Projects/SberBank/Accounting/src/accounting/GUI/ProductAdditionMaster.java</file>
         </group>
     </open-files>
 </project-private>

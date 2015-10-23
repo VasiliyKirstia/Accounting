@@ -7,9 +7,14 @@ package accounting.PostgreManagers;
 
 import accounting.Interfaces.IDestinationsManager;
 import accounting.Models.Destination;
+import static accounting.PostgreManagers.PostgreModule.CONECTION_STRING;
+import static accounting.PostgreManagers.PostgreModule.PASSWORD;
+import static accounting.PostgreManagers.PostgreModule.USERNAME;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,34 +26,45 @@ import java.util.List;
 public class PostgreDestinationsManager implements IDestinationsManager{
 
     @Override
-    public void addDestination(Connection con, String destinationName) throws Exception {
-        PreparedStatement prepSt = con.prepareStatement("INSERT INTO destination (name) VALUES (?)");
-        prepSt.setString(1, destinationName);
-        prepSt.executeUpdate();
+    public void addDestination(String destinationName){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            PreparedStatement prepSt = con.prepareStatement("INSERT INTO destination (name) VALUES (?)");
+            prepSt.setString(1, destinationName);
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e){}
     }
 
     @Override
-    public Destination getDestinationyById(Connection con, int id) throws Exception {
-        PreparedStatement prepSt = con.prepareStatement("SELECT * FROM destination WHERE id = ?");
-        prepSt.setInt(1, id);
-        ResultSet resultSet = prepSt.executeQuery();
-        
-        if(resultSet.next()){
-            return new Destination(resultSet.getInt("id"), resultSet.getString("name") );
-        }else{
+    public Destination getDestinationyById(int id){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            PreparedStatement prepSt = con.prepareStatement("SELECT * FROM destination WHERE id = ?");
+            prepSt.setInt(1, id);
+            ResultSet resultSet = prepSt.executeQuery();
+
+            if(resultSet.next()){
+                return new Destination(resultSet.getInt("id"), resultSet.getString("name") );
+            }else{
+                return null;
+            }
+        }catch(SQLException e){
             return null;
         }
     }
 
     @Override
-    public List<Destination> getAllDestinations(Connection con) throws Exception {
-        Statement st = con.createStatement();
-        ResultSet resultSet = st.executeQuery("SELECT * FROM destination");
-        List<Destination> destinations = new LinkedList<Destination>();
-        while(resultSet.next()){
-            destinations.add(new Destination(resultSet.getInt("id"), resultSet.getString("name")));
+    public List<Destination> getAllDestinations(){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            Statement st = con.createStatement();
+            ResultSet resultSet = st.executeQuery("SELECT * FROM destination");
+            List<Destination> destinations = new LinkedList<Destination>();
+            while(resultSet.next()){
+                destinations.add(new Destination(resultSet.getInt("id"), resultSet.getString("name")));
+            }
+            return destinations;
+        }catch(SQLException e){
+            return null;
         }
-        return destinations;
     }
     
 }

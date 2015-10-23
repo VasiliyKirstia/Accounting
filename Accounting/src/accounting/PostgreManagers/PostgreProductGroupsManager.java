@@ -7,9 +7,14 @@ package accounting.PostgreManagers;
 
 import accounting.Interfaces.IProductGroupsManager;
 import accounting.Models.ProductGroup;
+import static accounting.PostgreManagers.PostgreModule.CONECTION_STRING;
+import static accounting.PostgreManagers.PostgreModule.PASSWORD;
+import static accounting.PostgreManagers.PostgreModule.USERNAME;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,35 +26,45 @@ import java.util.List;
 public class PostgreProductGroupsManager implements IProductGroupsManager{
 
     @Override
-    public void addProductGroup(Connection con, String productGroupName, int accountId) throws Exception {
-        PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_group (name, account_id) VALUES (?, ?)");
-        prepSt.setString(1, productGroupName);
-        prepSt.setInt(2, accountId);
-        prepSt.executeUpdate();
+    public void addProductGroup(String productGroupName, int accountId){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_group (name, account_id) VALUES (?, ?)");
+            prepSt.setString(1, productGroupName);
+            prepSt.setInt(2, accountId);
+            prepSt.executeUpdate();
+        }catch(SQLException e){}
     }
 
     @Override
-    public ProductGroup getProductGroupById(Connection con, int id) throws Exception {
-        PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_group WHERE id = ?");
-        prepSt.setInt(1, id);
-        ResultSet resultSet = prepSt.executeQuery();
-        
-        if(resultSet.next()){
-            return new ProductGroup(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("account_id"));
-        }else{
+    public ProductGroup getProductGroupById(int id){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_group WHERE id = ?");
+            prepSt.setInt(1, id);
+            ResultSet resultSet = prepSt.executeQuery();
+
+            if(resultSet.next()){
+                return new ProductGroup(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("account_id"));
+            }else{
+                return null;
+            }
+        }catch(SQLException e){
             return null;
         }
     }
 
     @Override
-    public List<ProductGroup> getAllProductGroups(Connection con) throws Exception {
-        Statement st = con.createStatement();
-        ResultSet resultSet = st.executeQuery("SELECT * FROM product_group");
-        List<ProductGroup> productGroups = new LinkedList<ProductGroup>();
-        while(resultSet.next()){
-            productGroups.add(new ProductGroup(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("account_id")));
+    public List<ProductGroup> getAllProductGroups(){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            Statement st = con.createStatement();
+            ResultSet resultSet = st.executeQuery("SELECT * FROM product_group");
+            List<ProductGroup> productGroups = new LinkedList<ProductGroup>();
+            while(resultSet.next()){
+                productGroups.add(new ProductGroup(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getInt("account_id")));
+            }
+            return productGroups;
+        }catch(SQLException e){
+            return null;
         }
-        return productGroups;
     }
     
 }

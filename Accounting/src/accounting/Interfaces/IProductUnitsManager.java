@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.ProductUnit;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IProductUnitsManager {
-    public void addProductUnit(Connection con, String productUnitName) throws Exception;
-    public ProductUnit getProductUnitById(Connection con, int id) throws Exception;    
-    public List<ProductUnit> getAllProductUnits(Connection con) throws Exception;
+    public void addProductUnit(String productUnitName);
+    public ProductUnit getProductUnitById(int id);    
+    public List<ProductUnit> getAllProductUnits();
 }

@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Currency;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,9 +13,9 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface ICurrencysManager {
-    public void addCurrency(Connection con, String currencyName) throws Exception;
-    public Currency getCurrencyById(Connection con, int id) throws Exception;
+    public void addCurrency(String currencyName);
+    public Currency getCurrencyById(int id);
     
     //TODO: в названии этого метода нужно проверить орфографию 
-    public List<Currency> getAllCurrencis(Connection con) throws Exception;
+    public List<Currency> getAllCurrencis();
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accounting;
+package accounting.PostgreManagers;
 
 import com.google.inject.AbstractModule;
 import accounting.Interfaces.*;
@@ -15,6 +15,10 @@ import com.google.inject.Scopes;
  * @author vasiliy
  */
 public class PostgreModule extends AbstractModule{
+    
+    public static final String CONECTION_STRING = "jdbc:postgresql://localhost/accounting";
+    public static final String USERNAME = "test_user";
+    public static final String PASSWORD = "test_user";
 
     @Override
     protected void configure() {

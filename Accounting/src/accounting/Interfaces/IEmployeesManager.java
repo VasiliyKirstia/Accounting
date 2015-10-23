@@ -6,7 +6,6 @@
 package accounting.Interfaces;
 
 import accounting.Models.Employee;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IEmployeesManager {
-    public void addEmployee(Connection con, String employeeName) throws Exception;
-    public Employee getEmployeeById(Connection con, int id) throws Exception;    
-    public List<Employee> getAllEmployees(Connection con) throws Exception;
+    public void addEmployee(String employeeName);
+    public Employee getEmployeeById(int id);    
+    public List<Employee> getAllEmployees();
 }

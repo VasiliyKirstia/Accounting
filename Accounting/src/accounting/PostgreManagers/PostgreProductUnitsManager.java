@@ -7,9 +7,14 @@ package accounting.PostgreManagers;
 
 import accounting.Interfaces.IProductUnitsManager;
 import accounting.Models.ProductUnit;
+import static accounting.PostgreManagers.PostgreModule.CONECTION_STRING;
+import static accounting.PostgreManagers.PostgreModule.PASSWORD;
+import static accounting.PostgreManagers.PostgreModule.USERNAME;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,34 +26,44 @@ import java.util.List;
 public class PostgreProductUnitsManager implements IProductUnitsManager{
 
     @Override
-    public void addProductUnit(Connection con, String productUnitName) throws Exception {
-        PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_unit (name) VALUES (?)");
-        prepSt.setString(1, productUnitName);
-        prepSt.executeUpdate();
+    public void addProductUnit(String productUnitName){
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_unit (name) VALUES (?)");
+            prepSt.setString(1, productUnitName);
+            prepSt.executeUpdate();
+        }catch(SQLException e){}
     }
 
     @Override
-    public ProductUnit getProductUnitById(Connection con, int id) throws Exception {
-        PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_unit WHERE id = ?");
-        prepSt.setInt(1, id);
-        ResultSet resultSet = prepSt.executeQuery();
-        
-        if(resultSet.next()){
-            return new ProductUnit(resultSet.getInt("id"), resultSet.getString("name") );
-        }else{
+    public ProductUnit getProductUnitById(int id) {
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_unit WHERE id = ?");
+            prepSt.setInt(1, id);
+            ResultSet resultSet = prepSt.executeQuery();
+
+            if(resultSet.next()){
+                return new ProductUnit(resultSet.getInt("id"), resultSet.getString("name") );
+            }else{
+                return null;
+            }
+        }catch(SQLException e){
             return null;
         }
     }
 
     @Override
-    public List<ProductUnit> getAllProductUnits(Connection con) throws Exception {
-        Statement st = con.createStatement();
-        ResultSet resultSet = st.executeQuery("SELECT * FROM product_unit");
-        List<ProductUnit> productUnits = new LinkedList<ProductUnit>();
-        while(resultSet.next()){
-            productUnits.add(new ProductUnit(resultSet.getInt("id"), resultSet.getString("name")));
+    public List<ProductUnit> getAllProductUnits() {
+        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+            Statement st = con.createStatement();
+            ResultSet resultSet = st.executeQuery("SELECT * FROM product_unit");
+            List<ProductUnit> productUnits = new LinkedList<ProductUnit>();
+            while(resultSet.next()){
+                productUnits.add(new ProductUnit(resultSet.getInt("id"), resultSet.getString("name")));
+            }
+            return productUnits;
+        }catch(SQLException e){
+            return null;
         }
-        return productUnits;
     }
 
 }
