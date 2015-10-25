@@ -5,6 +5,12 @@
  */
 package accounting.GUI;
 
+import accounting.Interfaces.IProductUnitsManager;
+import accounting.PostgreManagers.PostgreModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import java.awt.Window;
+
 /**
  *
  * @author vasiliy
@@ -28,16 +34,26 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jTextFieldProductUnitName = new javax.swing.JTextField();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         jLabel1.setText("Название единицы измерения:");
 
-        jButton1.setText("Добавить");
+        jButtonAdd.setText("Добавить");
+        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addProductUnit(evt);
+            }
+        });
 
-        jButton2.setText("Отмена");
+        jButtonCancel.setText("Отмена");
+        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeWindow(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -50,12 +66,12 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+                        .addComponent(jTextFieldProductUnitName, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonAdd)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -64,23 +80,36 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldProductUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonAdd)
+                    .addComponent(jButtonCancel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addProductUnit(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductUnit
+        PostgreModule psm = new PostgreModule();
+        Injector injector = Guice.createInjector(psm);
+        IProductUnitsManager productUnitsManager = injector.getInstance(IProductUnitsManager.class);
+        
+        productUnitsManager.addProductUnit(jTextFieldProductUnitName.getText());
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_addProductUnit
+
+    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonCancel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldProductUnitName;
     // End of variables declaration//GEN-END:variables
 }

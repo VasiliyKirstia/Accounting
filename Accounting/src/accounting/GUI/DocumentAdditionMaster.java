@@ -5,6 +5,12 @@
  */
 package accounting.GUI;
 
+import accounting.Interfaces.IDocumentsManager;
+import accounting.PostgreManagers.PostgreModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import java.awt.Window;
+
 /**
  *
  * @author vasiliy
@@ -27,12 +33,22 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
 
-        jButton1.setText("Добавить документ");
+        jButtonAdd.setText("Добавить документ");
+        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addDocument(evt);
+            }
+        });
 
-        jButton2.setText("Отмена");
+        jButtonCancel.setText("Отмена");
+        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeWindow(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -40,9 +56,9 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(jButtonCancel)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jButtonAdd)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -50,15 +66,28 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(jButtonCancel)
+                    .addComponent(jButtonAdd))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addDocument(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDocument
+        PostgreModule psm = new PostgreModule();
+        Injector injector = Guice.createInjector(psm);
+        IDocumentsManager documentsManager = injector.getInstance(IDocumentsManager.class);
+        
+        documentsManager.addDocument();
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_addDocument
+
+    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonCancel;
     // End of variables declaration//GEN-END:variables
 }

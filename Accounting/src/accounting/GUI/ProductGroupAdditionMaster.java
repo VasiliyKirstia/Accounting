@@ -5,17 +5,35 @@
  */
 package accounting.GUI;
 
+import accounting.Interfaces.IAccountsManager;
+import accounting.Interfaces.IProductGroupsManager;
+import accounting.Models.Account;
+import accounting.PostgreManagers.PostgreModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import java.awt.Window;
+import java.util.List;
+
 /**
  *
  * @author vasiliy
  */
 public class ProductGroupAdditionMaster extends javax.swing.JPanel {
-
     /**
      * Creates new form ProductGroupAdditionMaster
      */
     public ProductGroupAdditionMaster() {
+        PostgreModule psm = new PostgreModule();
+        Injector injector = Guice.createInjector(psm);
+        IAccountsManager accountsManager = injector.getInstance(IAccountsManager.class);
+        
+        List<Account> accounts = accountsManager.getAllAccounts();
+        
         initComponents();
+        
+        for(Account account : accounts){
+            jComboBoxAccount.addItem(account.Id);
+        }
     }
 
     /**
@@ -28,22 +46,30 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldGroupName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jComboBoxAccount = new javax.swing.JComboBox();
+        jButtonAdd = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         jLabel1.setText("Название группы:");
 
         jLabel2.setText("Счет:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jButtonAdd.setText("Добавить");
+        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addProductGroup(evt);
+            }
+        });
 
-        jButton1.setText("Добавить");
-
-        jButton2.setText("Отмена");
+        jButtonCancel.setText("Отмена");
+        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeWindow(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,13 +85,13 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox1, 0, 237, Short.MAX_VALUE)))
+                            .addComponent(jTextFieldGroupName)
+                            .addComponent(jComboBoxAccount, 0, 237, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonAdd)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -74,29 +100,42 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldGroupName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonAdd)
+                    .addComponent(jButtonCancel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
+
+    private void addProductGroup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductGroup
+        PostgreModule psm = new PostgreModule();
+        Injector injector = Guice.createInjector(psm);
+        IProductGroupsManager productGroupsManager = injector.getInstance(IProductGroupsManager.class);
+        
+        productGroupsManager.addProductGroup(jTextFieldGroupName.getText(), Integer.parseInt(jComboBoxAccount.getSelectedItem().toString()));
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_addProductGroup
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonCancel;
+    private javax.swing.JComboBox jComboBoxAccount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldGroupName;
     // End of variables declaration//GEN-END:variables
 }

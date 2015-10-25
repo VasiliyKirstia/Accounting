@@ -28,7 +28,7 @@ public class PostgreProductsManager implements IProductsManager{
     @Override
     public void addProduct(String productName, double amount, double price, int productGroupId, int currencyId, int productUnitId) {
         try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
-            PreparedStatement prepSt = con.prepareStatement("INSERT INTO product (name, amount, price, product_croup_id, currency_id, product_unit_id) VALUES (?,?,?,?,?,?)");
+            PreparedStatement prepSt = con.prepareStatement("INSERT INTO product (name, amount, price, product_group_id, currency_id, product_unit_id) VALUES (?,?,?,?,?,?)");
             prepSt.setString(1, productName);
             prepSt.setDouble(2, amount);
             prepSt.setDouble(3, price);
@@ -36,7 +36,7 @@ public class PostgreProductsManager implements IProductsManager{
             prepSt.setInt(5, currencyId);
             prepSt.setInt(6, productUnitId);
             prepSt.executeUpdate();
-        }catch(SQLException e){}
+        }catch(SQLException e){System.err.println(e.toString());}
     }
 
     @Override
