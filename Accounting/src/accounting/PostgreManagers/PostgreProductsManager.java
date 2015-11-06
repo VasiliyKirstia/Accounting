@@ -10,6 +10,7 @@ import accounting.Models.Product;
 import static accounting.PostgreManagers.PostgreModule.CONECTION_STRING;
 import static accounting.PostgreManagers.PostgreModule.PASSWORD;
 import static accounting.PostgreManagers.PostgreModule.USERNAME;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,12 +27,12 @@ import java.util.List;
 public class PostgreProductsManager implements IProductsManager{
 
     @Override
-    public void addProduct(String productName, double amount, double price, int productGroupId, int currencyId, int productUnitId) {
+    public void addProduct(String productName, double amount, BigDecimal price, int productGroupId, int currencyId, int productUnitId) {
         try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO product (name, amount, price, product_group_id, currency_id, product_unit_id) VALUES (?,?,?,?,?,?)");
             prepSt.setString(1, productName);
             prepSt.setDouble(2, amount);
-            prepSt.setDouble(3, price);
+            prepSt.setBigDecimal(3, price);
             prepSt.setInt(4, productGroupId);
             prepSt.setInt(5, currencyId);
             prepSt.setInt(6, productUnitId);
@@ -51,7 +52,7 @@ public class PostgreProductsManager implements IProductsManager{
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getDouble("amount"),
-                        resultSet.getDouble("price"),
+                        resultSet.getBigDecimal("price"),
                         resultSet.getInt("product_group_id"),
                         resultSet.getInt("currency_id"),
                         resultSet.getInt("product_unit_id")
@@ -76,7 +77,7 @@ public class PostgreProductsManager implements IProductsManager{
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getDouble("amount"),
-                        resultSet.getDouble("price"),
+                        resultSet.getBigDecimal("price"),
                         resultSet.getInt("product_group_id"),
                         resultSet.getInt("currency_id"),
                         resultSet.getInt("product_unit_id")

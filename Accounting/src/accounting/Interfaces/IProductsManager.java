@@ -6,6 +6,7 @@
 package accounting.Interfaces;
 
 import accounting.Models.Product;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IProductsManager {
-    public void addProduct(String productName, double amount, double price, int productGroupId, int currencyId, int productUnitId);
+    public void addProduct(String productName, double amount, BigDecimal price, int productGroupId, int currencyId, int productUnitId);
     public Product getProductById(int id);
     public List<Product> getAllProducts();
 }

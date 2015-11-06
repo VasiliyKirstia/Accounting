@@ -45,6 +45,11 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
                 addAccount(evt);
             }
         });
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Номер счета:");
 
@@ -104,6 +109,10 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
         accountsManager.addAccount(jTextFieldAccountNumber.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addAccount
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

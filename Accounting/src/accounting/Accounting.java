@@ -5,20 +5,9 @@
  */
 package accounting;
 
-import accounting.PostgreManagers.PostgreModule;
 import accounting.GUI.Main;
-import accounting.GUI.ProductAdditionMaster;
 import java.sql.*;
-import accounting.Interfaces.*;
-import accounting.Models.Currency;
-import com.google.inject.Guice;
-import java.util.List;
-import com.google.inject.Injector;
 import accounting.GUI.WindowsFactory;
-import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *

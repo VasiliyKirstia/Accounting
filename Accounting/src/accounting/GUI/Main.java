@@ -217,7 +217,8 @@ public class Main extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void accountCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
+        jButtonAccountAdd.setText("Нажато!");
+        //WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
     }//GEN-LAST:event_accountCreationHandler
 
     private void currencyCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_currencyCreationHandler

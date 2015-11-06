@@ -18,6 +18,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.awt.Window;
 import java.util.List;
+import java.math.BigDecimal;
 
 /**
  *
@@ -187,10 +188,10 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         productsManager.addProduct(
                 jTextFieldName.getText(),
                 amount,
-                Double.parseDouble(jTextFieldPrice.getText())/amount,
-                Integer.parseInt(jComboBoxGroup.getSelectedItem().toString()),
-                Integer.parseInt(jComboBoxCurrency.getSelectedItem().toString()),
-                Integer.parseInt(jComboBoxUnit.getSelectedItem().toString())
+                new BigDecimal(jTextFieldPrice.getText()).divide(new BigDecimal(amount)),
+                Integer.valueOf(jComboBoxGroup.getSelectedItem().toString()),
+                Integer.valueOf(jComboBoxCurrency.getSelectedItem().toString()),
+                Integer.valueOf(jComboBoxUnit.getSelectedItem().toString())
         );
         
         ((Window)this.getTopLevelAncestor()).dispose();

@@ -13,6 +13,7 @@ import accounting.Interfaces.IOperationsManager;
 import accounting.Interfaces.IProductGroupsManager;
 import accounting.Interfaces.IProductUnitsManager;
 import accounting.Interfaces.IProductsManager;
+import accounting.Interfaces.ITransactionsManager;
 import accounting.Models.Currency;
 import accounting.Models.Destination;
 import accounting.Models.Document;
@@ -25,6 +26,8 @@ import accounting.PostgreManagers.PostgreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.awt.Window;
+import java.sql.Date;
+import java.util.Calendar;
 
 /**
  *
@@ -72,14 +75,12 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldDate = new javax.swing.JTextField();
         jTextFieldAmount = new javax.swing.JTextField();
         jComboBoxOperation = new javax.swing.JComboBox();
         jComboBoxEmployee = new javax.swing.JComboBox();
@@ -89,8 +90,6 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-
-        jLabel1.setText("Дата:");
 
         jLabel2.setText("Количество:");
 
@@ -127,13 +126,9 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                        .addComponent(jLabel2)
                         .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldAmount)
-                            .addComponent(jTextFieldDate)))
+                        .addComponent(jTextFieldAmount))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -158,11 +153,7 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,7 +188,20 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addTransaction(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTransaction
-        //TODO дополнить
+        PostgreModule psm = new PostgreModule();
+        Injector injector = Guice.createInjector(psm);
+        ITransactionsManager transactionsManager = injector.getInstance(ITransactionsManager.class);
+        
+        transactionsManager.addTransaction(
+                new Date(Calendar.getInstance().getTime().getTime()),
+                Double.valueOf(jTextFieldAmount.getText()),
+                Integer.valueOf(jComboBoxDocument.getSelectedItem().toString()),
+                Integer.valueOf(jComboBoxProduct.getSelectedItem().toString()),
+                Integer.valueOf(jComboBoxDestination.getSelectedItem().toString()),
+                Integer.valueOf(jComboBoxEmployee.getSelectedItem().toString()),
+                Integer.valueOf(jComboBoxOperation.getSelectedItem().toString())
+        );
+        
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addTransaction
 
@@ -214,7 +218,6 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JComboBox jComboBoxEmployee;
     private javax.swing.JComboBox jComboBoxOperation;
     private javax.swing.JComboBox jComboBoxProduct;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -223,6 +226,5 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAmount;
-    private javax.swing.JTextField jTextFieldDate;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package accounting.Models;
+import java.math.BigDecimal;
 
 /**
  *
@@ -13,12 +14,12 @@ public class Product {
     public final int Id;
     public final String Name;
     public final double Amount;
-    public final double Price;
+    public final BigDecimal Price;
     public final int ProductGroupId;
     public final int CurrencyId;
     public final int ProductUnitId;
     
-    public Product(int id, String name, double amount, double price, int productGroupId, int currencyId, int productUnitId){
+    public Product(int id, String name, double amount, BigDecimal price, int productGroupId, int currencyId, int productUnitId){
         this.Id = id;
         this.Name = name;
         this.Amount = amount;
