@@ -17,4 +17,9 @@ public class Destination {
         this.Id = id;
         this.Name = name;
     }
+    
+    @Override
+    public String toString(){
+        return this.Name;
+    }
 }

@@ -30,5 +30,5 @@ public class Transaction {
         this.DestinationId = destinationId;
         this.EmployeeId = employeeId;
         this.OperationId = operationId;
-    } 
+    }
 }

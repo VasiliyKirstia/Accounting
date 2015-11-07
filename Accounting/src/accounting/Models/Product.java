@@ -28,4 +28,9 @@ public class Product {
         this.CurrencyId = currencyId;
         this.ProductUnitId = productUnitId;
     }
+    
+    @Override
+    public String toString(){
+        return this.Name;
+    }
 }

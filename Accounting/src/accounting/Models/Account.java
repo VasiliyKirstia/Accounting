@@ -17,4 +17,9 @@ public class Account {
         this.Id = id;
         this.AccountNumber = accountNumber;
     }
+    
+    @Override
+    public String toString(){
+        return this.AccountNumber;
+    }
 }

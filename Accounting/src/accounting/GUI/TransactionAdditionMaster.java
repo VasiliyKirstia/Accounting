@@ -5,30 +5,27 @@
  */
 package accounting.GUI;
 
-import accounting.Interfaces.ICurrencysManager;
 import accounting.Interfaces.IDestinationsManager;
 import accounting.Interfaces.IDocumentsManager;
 import accounting.Interfaces.IEmployeesManager;
 import accounting.Interfaces.IOperationsManager;
-import accounting.Interfaces.IProductGroupsManager;
-import accounting.Interfaces.IProductUnitsManager;
 import accounting.Interfaces.IProductsManager;
 import accounting.Interfaces.ITransactionsManager;
-import accounting.Models.Currency;
 import accounting.Models.Destination;
 import accounting.Models.Document;
 import accounting.Models.Employee;
 import accounting.Models.Operation;
 import accounting.Models.Product;
-import accounting.Models.ProductGroup;
-import accounting.Models.ProductUnit;
 import accounting.PostgreManagers.PostgreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.awt.Window;
 import java.sql.Date;
 import java.util.Calendar;
-
+import accounting.GUI.Models.DestinationComboBoxModel;
+import accounting.GUI.Models.DocumentComboBoxModel;
+import accounting.GUI.Models.EmployeeComboBoxModel;
+import accounting.GUI.Models.OperationComboBoxModel;
 /**
  *
  * @author vasiliy
@@ -48,22 +45,35 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         IOperationsManager operationsManager = injector.getInstance(IOperationsManager.class);
 
         initComponents();
-
+        
         for(Product prod : productsManager.getAllProducts()){
             jComboBoxProduct.addItem(prod.Id);
         }
+        
+        DestinationComboBoxModel dcm = new DestinationComboBoxModel();
         for(Destination des : destinationsManager.getAllDestinations()){
-            jComboBoxDestination.addItem(des.Id);
+            dcm.addElement(des);
         }
+        
+        DocumentComboBoxModel doccm = new DocumentComboBoxModel();
         for(Document doc : documentsManager.getAllDocuments()){
-            jComboBoxDocument.addItem(doc.Id);
+            doccm.addElement(doc);
         }
+        
+        EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
         for(Employee emp : employeesManager.getAllEmployees()){
-            jComboBoxEmployee.addItem(emp.Id);
+            ecm.addElement(emp);
         }
+        
+        OperationComboBoxModel ocm = new OperationComboBoxModel();
         for(Operation op : operationsManager.getAllOperations()){
-            jComboBoxOperation.addItem(op.Id);
+            ocm.addElement(op);
         }
+        
+        jComboBoxOperation.setModel(ocm);
+        jComboBoxEmployee.setModel(ecm);
+        jComboBoxDestination.setModel(dcm);
+        jComboBoxDocument.setModel(doccm);
     }
 
     /**
@@ -195,11 +205,11 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         transactionsManager.addTransaction(
                 new Date(Calendar.getInstance().getTime().getTime()),
                 Double.valueOf(jTextFieldAmount.getText()),
-                Integer.valueOf(jComboBoxDocument.getSelectedItem().toString()),
-                Integer.valueOf(jComboBoxProduct.getSelectedItem().toString()),
-                Integer.valueOf(jComboBoxDestination.getSelectedItem().toString()),
-                Integer.valueOf(jComboBoxEmployee.getSelectedItem().toString()),
-                Integer.valueOf(jComboBoxOperation.getSelectedItem().toString())
+                ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
+                ((OperationComboBoxModel)jComboBoxProduct.getModel()).getSelectedItem().Id,
+                ((DestinationComboBoxModel)jComboBoxDestination.getModel()).getSelectedItem().Id,
+                ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id,
+                ((OperationComboBoxModel)jComboBoxOperation.getModel()).getSelectedItem().Id
         );
         
         ((Window)this.getTopLevelAncestor()).dispose();

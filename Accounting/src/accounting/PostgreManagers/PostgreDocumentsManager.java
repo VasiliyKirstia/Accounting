@@ -26,11 +26,12 @@ import java.util.List;
 public class PostgreDocumentsManager implements IDocumentsManager{
 
     @Override
-    public void addDocument(){
+    public void addDocument(String documentName){
         try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
-            Statement st = con.createStatement();
-            st.execute("INSERT INTO document");
-        }catch(SQLException e){}
+            PreparedStatement prepSt = con.prepareStatement("INSERT INTO document (name) VALUES (?)");
+            prepSt.setString(1, documentName);
+            prepSt.executeUpdate();
+        }catch(SQLException e){System.out.println("ERROR");}
     }
 
     @Override
@@ -41,7 +42,10 @@ public class PostgreDocumentsManager implements IDocumentsManager{
             ResultSet resultSet = prepSt.executeQuery();
 
             if(resultSet.next()){
-                return new Document(resultSet.getInt("id"));
+                return new Document(
+                        resultSet.getInt("id"), 
+                        resultSet.getString("name")
+                );
             }else{
                 return null;
             }
@@ -57,7 +61,11 @@ public class PostgreDocumentsManager implements IDocumentsManager{
             ResultSet resultSet = st.executeQuery("SELECT * FROM document");
             List<Document> documents = new LinkedList<Document>();
             while(resultSet.next()){
-                documents.add(new Document(resultSet.getInt("id")));
+                documents.add(new Document(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                    )
+                );
             }
             return documents;
         }catch(SQLException e){

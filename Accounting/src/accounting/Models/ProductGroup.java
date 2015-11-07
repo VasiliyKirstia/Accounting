@@ -19,4 +19,9 @@ public class ProductGroup {
         this.Name = name;
         this.AccountId = accountId;
     }
+    
+    @Override
+    public String toString(){
+        return this.Name;
+    }
 }

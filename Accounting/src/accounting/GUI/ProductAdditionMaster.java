@@ -19,6 +19,9 @@ import com.google.inject.Injector;
 import java.awt.Window;
 import java.util.List;
 import java.math.BigDecimal;
+import accounting.GUI.Models.CurrencyComboBoxModel;
+import accounting.GUI.Models.ProductGroupComboBoxModel;
+import accounting.GUI.Models.ProductUnitComboBoxModel;
 
 /**
  *
@@ -38,15 +41,24 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         
         initComponents();
         
+        CurrencyComboBoxModel ccm = new CurrencyComboBoxModel();
         for(Currency cur : currencysManager.getAllCurrencis()){
-            jComboBoxCurrency.addItem(cur.Id);
+            ccm.addElement(cur);
         }
+        
+        ProductUnitComboBoxModel pucm = new ProductUnitComboBoxModel();
         for(ProductUnit pu : productUnitsManager.getAllProductUnits()){
-            jComboBoxUnit.addItem(pu.Id);
+            pucm.addElement(pu);
         }
+        
+        ProductGroupComboBoxModel pgcm = new ProductGroupComboBoxModel();
         for(ProductGroup pg : productGroupsManager.getAllProductGroups()){
-            jComboBoxGroup.addItem(pg.Id);
+            pgcm.addElement(pg);
         }
+        
+        jComboBoxUnit.setModel(pucm);
+        jComboBoxGroup.setModel(pgcm);
+        jComboBoxCurrency.setModel(ccm);
     }
 
     /**
@@ -189,9 +201,9 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
                 jTextFieldName.getText(),
                 amount,
                 new BigDecimal(jTextFieldPrice.getText()).divide(new BigDecimal(amount)),
-                Integer.valueOf(jComboBoxGroup.getSelectedItem().toString()),
-                Integer.valueOf(jComboBoxCurrency.getSelectedItem().toString()),
-                Integer.valueOf(jComboBoxUnit.getSelectedItem().toString())
+                ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).getSelectedItem().Id,
+                ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).getSelectedItem().Id,
+                ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).getSelectedItem().Id
         );
         
         ((Window)this.getTopLevelAncestor()).dispose();

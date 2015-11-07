@@ -13,7 +13,7 @@ import java.util.List;
  * @author Vasiliy Kirstia
  */
 public interface IDocumentsManager {
-    public void addDocument();
+    public void addDocument(String name);
     public Document getDocumentById(int id);
     public List<Document> getAllDocuments();  
 }

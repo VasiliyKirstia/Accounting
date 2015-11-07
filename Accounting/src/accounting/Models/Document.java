@@ -11,8 +11,15 @@ package accounting.Models;
  */
 public class Document {
     public final int Id;
+    public final String Name;
     
-    public Document(int id){
+    public Document(int id, String name){
         this.Id = id;
+        this.Name = name;
+    }
+    
+    @Override
+    public String toString(){
+        return this.Name;
     }
 }

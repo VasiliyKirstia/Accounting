@@ -13,6 +13,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.awt.Window;
 import java.util.List;
+import accounting.GUI.Models.AccountComboBoxModel;
 
 /**
  *
@@ -30,10 +31,11 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         List<Account> accounts = accountsManager.getAllAccounts();
         
         initComponents();
-        
+        AccountComboBoxModel acm = new AccountComboBoxModel();
         for(Account account : accounts){
-            jComboBoxAccount.addItem(account.Id);
+           acm.addElement(account);
         }
+        jComboBoxAccount.setModel(acm);
     }
 
     /**
@@ -124,7 +126,10 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         Injector injector = Guice.createInjector(psm);
         IProductGroupsManager productGroupsManager = injector.getInstance(IProductGroupsManager.class);
         
-        productGroupsManager.addProductGroup(jTextFieldGroupName.getText(), Integer.parseInt(jComboBoxAccount.getSelectedItem().toString()));
+        productGroupsManager.addProductGroup(
+                jTextFieldGroupName.getText(),
+                ((AccountComboBoxModel)jComboBoxAccount.getModel()).getSelectedItem().Id 
+        );
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProductGroup
 
