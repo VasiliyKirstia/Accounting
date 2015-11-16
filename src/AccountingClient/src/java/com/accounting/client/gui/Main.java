@@ -30,7 +30,7 @@ public class Main extends javax.swing.JPanel {
     private void updateTableData(){
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(
-                new String[]{"Id","Name","Amount","Price","ProductGroupId","CurrencyId","ProductUnitId"}
+                new String[]{"Id","Name","Amount","Price","ProductGroupName","CurrencyName","ProductUnitName"}
         );
         for(Product p : lookupProductsServicesRemote().getAllProducts()){
             dtm.addRow(
@@ -39,9 +39,9 @@ public class Main extends javax.swing.JPanel {
                         p.Name,
                         String.valueOf(p.Amount),
                         String.valueOf(p.Price),
-                        String.valueOf(p.ProductGroupId),
-                        String.valueOf(p.CurrencyId),
-                        String.valueOf(p.ProductUnitId)
+                        p.ProductGroupName,
+                        p.CurrencyName,
+                        p.ProductUnitName
                     }
             );
         }

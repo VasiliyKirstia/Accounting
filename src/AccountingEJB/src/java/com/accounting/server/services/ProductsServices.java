@@ -44,7 +44,13 @@ public class ProductsServices implements IProductsServices{
     @Override
     public Product getProductById(int id) {
         try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
-            PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product WHERE id = ?");
+            PreparedStatement prepSt = con.prepareStatement(
+                    "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod "
+                    +"INNER JOIN product_group AS pg ON prod.product_group_id = pg.id "
+                    +"INNER JOIN currency AS cur ON prod.currency_id = cur.id "
+                    +"INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id "
+                    +" WHERE id = ?"
+            );
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
 
@@ -54,9 +60,9 @@ public class ProductsServices implements IProductsServices{
                         resultSet.getString("name"),
                         resultSet.getDouble("amount"),
                         resultSet.getBigDecimal("price"),
-                        resultSet.getInt("product_group_id"),
-                        resultSet.getInt("currency_id"),
-                        resultSet.getInt("product_unit_id")
+                        resultSet.getString("pg_name"),
+                        resultSet.getString("cur_name"),
+                        resultSet.getString("pu_name")
                 );
             }else{
                 return null;
@@ -70,7 +76,12 @@ public class ProductsServices implements IProductsServices{
     public List<Product> getAllProducts() {
         try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
             Statement st = con.createStatement();
-            ResultSet resultSet = st.executeQuery("SELECT * FROM product");
+            ResultSet resultSet = st.executeQuery(
+                    "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod "
+                    +"INNER JOIN product_group AS pg ON prod.product_group_id = pg.id "
+                    +"INNER JOIN currency AS cur ON prod.currency_id = cur.id "
+                    +"INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id "
+            );
             List<Product> products = new LinkedList<Product>();
             while(resultSet.next()){
                 products.add(
@@ -79,9 +90,9 @@ public class ProductsServices implements IProductsServices{
                         resultSet.getString("name"),
                         resultSet.getDouble("amount"),
                         resultSet.getBigDecimal("price"),
-                        resultSet.getInt("product_group_id"),
-                        resultSet.getInt("currency_id"),
-                        resultSet.getInt("product_unit_id")
+                        resultSet.getString("pg_name"),
+                        resultSet.getString("cur_name"),
+                        resultSet.getString("pu_name")
                     )
                 );
             }

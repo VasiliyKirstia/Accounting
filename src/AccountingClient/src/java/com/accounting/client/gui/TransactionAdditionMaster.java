@@ -9,6 +9,7 @@ import com.accounting.client.gui.models.DestinationComboBoxModel;
 import com.accounting.client.gui.models.DocumentComboBoxModel;
 import com.accounting.client.gui.models.EmployeeComboBoxModel;
 import com.accounting.client.gui.models.OperationComboBoxModel;
+import com.accounting.client.gui.models.ProductComboBoxModel;
 import com.accounting.interfaces.IDestinationsServices;
 import com.accounting.interfaces.IDocumentsServices;
 import com.accounting.interfaces.IEmployeesServices;
@@ -40,8 +41,9 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     public TransactionAdditionMaster() {
         initComponents();
         
+        ProductComboBoxModel pcm = new ProductComboBoxModel();
         for(Product prod : lookupProductsServicesRemote().getAllProducts()){
-            jComboBoxProduct.addItem(prod.Id);
+            pcm.addElement(prod);
         }
         
         DestinationComboBoxModel dcm = new DestinationComboBoxModel();
@@ -68,6 +70,7 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         jComboBoxEmployee.setModel(ecm);
         jComboBoxDestination.setModel(dcm);
         jComboBoxDocument.setModel(doccm);
+        jComboBoxProduct.setModel(pcm);
     }
 
     /**

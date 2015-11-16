@@ -16,18 +16,18 @@ public class Product implements Serializable{
     public final String Name;
     public final double Amount;
     public final BigDecimal Price;
-    public final int ProductGroupId;
-    public final int CurrencyId;
-    public final int ProductUnitId;
+    public final String ProductGroupName;
+    public final String CurrencyName;
+    public final String ProductUnitName;
     
-    public Product(int id, String name, double amount, BigDecimal price, int productGroupId, int currencyId, int productUnitId){
+    public Product(int id, String name, double amount, BigDecimal price, String productGroupName, String currencyName, String productUnitName){
         this.Id = id;
         this.Name = name;
         this.Amount = amount;
         this.Price = price;
-        this.ProductGroupId = productGroupId;
-        this.CurrencyId = currencyId;
-        this.ProductUnitId = productUnitId;
+        this.ProductGroupName = productGroupName;
+        this.CurrencyName = currencyName;
+        this.ProductUnitName = productUnitName;
     }
     
     @Override
