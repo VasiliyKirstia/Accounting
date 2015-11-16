@@ -24,57 +24,43 @@ import com.accounting.models.Product;
 import java.awt.Window;
 import java.sql.Date;
 import java.util.Calendar;
-import javax.ejb.EJB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 /**
  *
  * @author vasiliy
  */
 public class TransactionAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static IDestinationsServices destinationsServices;
-    
-    @EJB
-    public static IDocumentsServices documentsServices;
-    
-    @EJB
-    public static IEmployeesServices employeesServices;
-    
-    @EJB
-    public static IOperationsServices operationsServices;
-    
-    @EJB
-    public static IProductsServices productsServices;
-    
-    @EJB
-    public static ITransactionsServices transactionsServices;
     /**
      * Creates new form TransactionAdditionMaster
      */
     public TransactionAdditionMaster() {
         initComponents();
         
-        for(Product prod : productsServices.getAllProducts()){
+        for(Product prod : lookupProductsServicesRemote().getAllProducts()){
             jComboBoxProduct.addItem(prod.Id);
         }
         
         DestinationComboBoxModel dcm = new DestinationComboBoxModel();
-        for(Destination des : destinationsServices.getAllDestinations()){
+        for(Destination des : lookupDestinationsServicesRemote().getAllDestinations()){
             dcm.addElement(des);
         }
         
         DocumentComboBoxModel doccm = new DocumentComboBoxModel();
-        for(Document doc : documentsServices.getAllDocuments()){
+        for(Document doc : lookupDocumentsServicesRemote().getAllDocuments()){
             doccm.addElement(doc);
         }
         
         EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
-        for(Employee emp : employeesServices.getAllEmployees()){
+        for(Employee emp : lookupEmployeesServicesRemote().getAllEmployees()){
             ecm.addElement(emp);
         }
         
         OperationComboBoxModel ocm = new OperationComboBoxModel();
-        for(Operation op : operationsServices.getAllOperations()){
+        for(Operation op : lookupOperationsServicesRemote().getAllOperations()){
             ocm.addElement(op);
         }
         
@@ -206,7 +192,7 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addTransaction(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTransaction
-        transactionsServices.addTransaction(
+        lookupTransactionsServicesRemote().addTransaction(
                 new Date(Calendar.getInstance().getTime().getTime()),
                 Double.valueOf(jTextFieldAmount.getText()),
                 ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
@@ -241,4 +227,64 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAmount;
     // End of variables declaration//GEN-END:variables
+
+    private IDestinationsServices lookupDestinationsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IDestinationsServices) c.lookup("java:comp/env/DestinationsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IDocumentsServices lookupDocumentsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IEmployeesServices lookupEmployeesServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IOperationsServices lookupOperationsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IOperationsServices) c.lookup("java:comp/env/OperationsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IProductsServices lookupProductsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ITransactionsServices lookupTransactionsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (ITransactionsServices) c.lookup("java:comp/env/TransactionsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

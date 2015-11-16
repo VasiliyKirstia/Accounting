@@ -6,17 +6,18 @@
 package com.accounting.client.gui;
 
 import com.accounting.interfaces.IEmployeesServices;
-import javax.ejb.EJB;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class EmployeeAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static IEmployeesServices employeesServices;
     /**
      * Creates new form EmployeeAdditionMaster
      */
@@ -96,7 +97,7 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployee
-        employeesServices.addEmployee(jTextFieldEmployeeName.getText());
+        lookupEmployeesServicesRemote().addEmployee(jTextFieldEmployeeName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addEmployee
 
@@ -108,4 +109,14 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldEmployeeName;
     // End of variables declaration//GEN-END:variables
+
+    private IEmployeesServices lookupEmployeesServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

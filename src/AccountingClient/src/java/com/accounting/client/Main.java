@@ -18,5 +18,5 @@ public class Main {
     public static void main(String[] args) {
         WindowsFactory.createFrame(new com.accounting.client.gui.Main(), "Главное окно");
     }
-    
+
 }

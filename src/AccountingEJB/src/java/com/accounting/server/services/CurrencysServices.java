@@ -25,6 +25,7 @@ import java.util.List;
  * @author vasiliy
  */
 @Stateless
+//@Remote(ICurrencysServices.class)
 public class CurrencysServices implements  ICurrencysServices{
     
     @Override

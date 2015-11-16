@@ -9,16 +9,17 @@ import com.accounting.models.Product;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import com.accounting.interfaces.IProductsServices;
-import javax.ejb.EJB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
-public class Main extends javax.swing.JPanel {
-    @EJB
-    private static IProductsServices productsServices;
-    
+public class Main extends javax.swing.JPanel {   
     /**
      * Creates new form Main
      */
@@ -26,12 +27,12 @@ public class Main extends javax.swing.JPanel {
         initComponents();
         updateTableData();
     }
-    private void updateTableData(){     
+    private void updateTableData(){
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(
                 new String[]{"Id","Name","Amount","Price","ProductGroupId","CurrencyId","ProductUnitId"}
         );
-        for(Product p : productsServices.getAllProducts()){
+        for(Product p : lookupProductsServicesRemote().getAllProducts()){
             dtm.addRow(
                     new String[]{
                         String.valueOf(p.Id),
@@ -270,4 +271,14 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    private IProductsServices lookupProductsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

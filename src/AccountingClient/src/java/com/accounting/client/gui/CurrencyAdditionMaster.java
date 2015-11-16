@@ -6,17 +6,18 @@
 package com.accounting.client.gui;
 
 import com.accounting.interfaces.ICurrencysServices;
-import javax.ejb.EJB;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class CurrencyAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static ICurrencysServices currencysServices;
     /**
      * Creates new form CurrencyAdditionMaster
      */
@@ -97,7 +98,7 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addCurrency(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addCurrency
-        currencysServices.addCurrency(jTextFieldCurrencyName.getText());
+        lookupCurrencysServicesRemote().addCurrency(jTextFieldCurrencyName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addCurrency
 
@@ -109,4 +110,14 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldCurrencyName;
     // End of variables declaration//GEN-END:variables
+
+    private ICurrencysServices lookupCurrencysServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

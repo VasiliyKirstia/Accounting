@@ -8,15 +8,17 @@ package com.accounting.client.gui;
 import com.accounting.interfaces.IOperationsServices;
 import javax.ejb.EJB;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class OperationAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static IOperationsServices operationsServices;
     /**
      * Creates new form OperationAdditionMaster
      */
@@ -96,7 +98,7 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addOperation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addOperation
-        operationsServices.addOperation(jTextFieldOperationName.getText());
+        lookupOperationsServicesRemote().addOperation(jTextFieldOperationName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addOperation
 
@@ -108,4 +110,14 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldOperationName;
     // End of variables declaration//GEN-END:variables
+
+    private IOperationsServices lookupOperationsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IOperationsServices) c.lookup("java:comp/env/OperationsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

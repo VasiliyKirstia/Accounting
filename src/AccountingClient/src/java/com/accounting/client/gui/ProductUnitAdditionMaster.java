@@ -6,18 +6,18 @@
 package com.accounting.client.gui;
 
 import com.accounting.interfaces.IProductUnitsServices;
-import javax.ejb.EJB;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class ProductUnitAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static IProductUnitsServices productUnitsServices;
-    
     /**
      * Creates new form ProductUnitAdditionMaster
      */
@@ -93,7 +93,7 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProductUnit(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductUnit
-        productUnitsServices.addProductUnit(jTextFieldProductUnitName.getText());
+        lookupProductUnitsServicesRemote().addProductUnit(jTextFieldProductUnitName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProductUnit
 
@@ -109,4 +109,14 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldProductUnitName;
     // End of variables declaration//GEN-END:variables
+
+    private IProductUnitsServices lookupProductUnitsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductUnitsServices) c.lookup("java:comp/env/ProductUnitsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

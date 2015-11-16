@@ -18,6 +18,11 @@ import javax.ejb.EJB;
 import java.awt.Window;
 import java.util.List;
 import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -25,17 +30,6 @@ import java.math.BigDecimal;
  */
 public class ProductAdditionMaster extends javax.swing.JPanel {
     
-    @EJB
-    public static ICurrencysServices currencysServices;
-    
-    @EJB
-    public static IProductGroupsServices productGroupsServices;
-    
-    @EJB
-    public static IProductUnitsServices productUnitsServices;
-    
-    @EJB
-    public static IProductsServices productsServices;
     /**
      * Creates new form ProductAdditionMaster
      */
@@ -43,17 +37,17 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         initComponents();
         
         CurrencyComboBoxModel ccm = new CurrencyComboBoxModel();
-        for(Currency cur : currencysServices.getAllCurrencis()){
+        for(Currency cur : lookupCurrencysServicesRemote().getAllCurrencis()){
             ccm.addElement(cur);
         }
         
         ProductUnitComboBoxModel pucm = new ProductUnitComboBoxModel();
-        for(ProductUnit pu : productUnitsServices.getAllProductUnits()){
+        for(ProductUnit pu : lookupProductUnitsServicesRemote1().getAllProductUnits()){
             pucm.addElement(pu);
         }
         
         ProductGroupComboBoxModel pgcm = new ProductGroupComboBoxModel();
-        for(ProductGroup pg : productGroupsServices.getAllProductGroups()){
+        for(ProductGroup pg : lookupProductGroupsServicesRemote().getAllProductGroups()){
             pgcm.addElement(pg);
         }
         
@@ -194,7 +188,7 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     private void addProduct(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProduct
         Double amount = Double.parseDouble(jTextFieldAmount.getText());
         
-        productsServices.addProduct(
+        lookupProductsServicesRemote().addProduct(
                 jTextFieldName.getText(),
                 amount,
                 new BigDecimal(jTextFieldPrice.getText()).divide(new BigDecimal(amount)),
@@ -224,4 +218,44 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldPrice;
     // End of variables declaration//GEN-END:variables
+
+    private ICurrencysServices lookupCurrencysServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IProductsServices lookupProductsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IProductUnitsServices lookupProductUnitsServicesRemote1() {
+        try {
+            Context c = new InitialContext();
+            return (IProductUnitsServices) c.lookup("java:comp/env/ProductUnitsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IProductGroupsServices lookupProductGroupsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

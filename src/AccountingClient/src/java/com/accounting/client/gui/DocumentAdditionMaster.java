@@ -6,17 +6,18 @@
 package com.accounting.client.gui;
 
 import com.accounting.interfaces.IDocumentsServices;
-import javax.ejb.EJB;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class DocumentAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static IDocumentsServices documentsServices;
     /**
      * Creates new form DocumentAdditionMaster
      */
@@ -90,7 +91,7 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDocument(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDocument
-        documentsServices.addDocument(jTextFieldDocumentName.getText());
+        lookupDocumentsServicesRemote().addDocument(jTextFieldDocumentName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addDocument
 
@@ -106,4 +107,14 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldDocumentName;
     // End of variables declaration//GEN-END:variables
+
+    private IDocumentsServices lookupDocumentsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

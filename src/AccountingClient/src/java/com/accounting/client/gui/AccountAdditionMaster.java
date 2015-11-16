@@ -7,15 +7,17 @@ package com.accounting.client.gui;
 
 import com.accounting.interfaces.IAccountsServices;
 import java.awt.Window;
-import javax.ejb.EJB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class AccountAdditionMaster extends javax.swing.JPanel {
-    @EJB
-    public static IAccountsServices accountsServices;
     /**
      * Creates new form AccountAdditionMaster
      */
@@ -101,7 +103,7 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addAccount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAccount
-        accountsServices.addAccount(jTextFieldAccountNumber.getText());
+        lookupAccountsServicesRemote().addAccount(jTextFieldAccountNumber.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addAccount
 
@@ -117,4 +119,14 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAccountNumber;
     // End of variables declaration//GEN-END:variables
+
+    private IAccountsServices lookupAccountsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IAccountsServices) c.lookup("java:comp/env/AccountsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

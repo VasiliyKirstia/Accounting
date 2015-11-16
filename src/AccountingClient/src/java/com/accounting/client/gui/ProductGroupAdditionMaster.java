@@ -11,7 +11,11 @@ import com.accounting.interfaces.IProductGroupsServices;
 import com.accounting.models.Account;
 import java.awt.Window;
 import java.util.List;
-import javax.ejb.EJB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -19,17 +23,11 @@ import javax.ejb.EJB;
  */
 public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     
-    @EJB
-    public static IAccountsServices accountsServices;
-    
-    @EJB
-    public static IProductGroupsServices productGroupsServices;
-    
     /**
      * Creates new form ProductGroupAdditionMaster
      */
     public ProductGroupAdditionMaster() {
-        List<Account> accounts = accountsServices.getAllAccounts();
+        List<Account> accounts = lookupAccountsServicesRemote().getAllAccounts();
         
         initComponents();
         AccountComboBoxModel acm = new AccountComboBoxModel();
@@ -123,7 +121,7 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addProductGroup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductGroup
-        productGroupsServices.addProductGroup(
+        lookupProductGroupsServicesRemote().addProductGroup(
                 jTextFieldGroupName.getText(),
                 ((AccountComboBoxModel)jComboBoxAccount.getModel()).getSelectedItem().Id 
         );
@@ -140,4 +138,24 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldGroupName;
     // End of variables declaration//GEN-END:variables
+
+    private IAccountsServices lookupAccountsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IAccountsServices) c.lookup("java:comp/env/AccountsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private IProductGroupsServices lookupProductGroupsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

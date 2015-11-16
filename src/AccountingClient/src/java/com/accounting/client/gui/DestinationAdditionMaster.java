@@ -6,17 +6,18 @@
 package com.accounting.client.gui;
 
 import com.accounting.interfaces.IDestinationsServices;
-import javax.ejb.EJB;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class DestinationAdditionMaster extends javax.swing.JPanel {
-    
-    @EJB
-    public static IDestinationsServices destinationsServices;
     /**
      * Creates new form DestinationAdditionMaster
      */
@@ -92,7 +93,7 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDestination(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDestination
-        destinationsServices.addDestination(jTextFieldDestinationName.getText());
+        lookupDestinationsServicesRemote().addDestination(jTextFieldDestinationName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addDestination
 
@@ -108,4 +109,14 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldDestinationName;
     // End of variables declaration//GEN-END:variables
+
+    private IDestinationsServices lookupDestinationsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IDestinationsServices) c.lookup("java:comp/env/DestinationsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }
