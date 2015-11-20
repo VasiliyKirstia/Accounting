@@ -5,15 +5,18 @@
  */
 package com.accounting.client.gui;
 
-import com.accounting.models.Product;
+import com.accounting.client.gui.models.ProductTableModel;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 import com.accounting.interfaces.IProductsServices;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.swing.JTable;
 
 /**
  *
@@ -28,23 +31,22 @@ public class Main extends javax.swing.JPanel {
         updateTableData();
     }
     private void updateTableData(){
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(
-                new String[]{"Название","Остаток","Стоимость единицы","Группа товара","Валюта","ед. изм."}
-        );
-        for(Product p : lookupProductsServicesRemote().getAllProducts()){
-            dtm.addRow(
-                    new String[]{
-                        p.Name,
-                        String.valueOf(p.Amount),
-                        String.valueOf(p.Price),
-                        p.ProductGroupName,
-                        p.CurrencyName,
-                        p.ProductUnitName
-                    }
-            );
-        }
-        jTable1.setModel(dtm);
+        jTable1.setModel(new ProductTableModel(lookupProductsServicesRemote().getAllProducts()));
+        final JFrame pearentFrame = (JFrame)this.getTopLevelAncestor();
+        jTable1.addMouseListener( new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    JTable table =(JTable) me.getSource();
+                    Point p = me.getPoint();
+                    int row = table.rowAtPoint(p);
+                    WindowsFactory.createDialog(
+                            pearentFrame, 
+                            new ProductConsumingMaster(((ProductTableModel)jTable1.getModel()).getProductAtRow(row).Id),
+                            "Расходование товара"
+                    );
+                }
+            }
+        });
     }
 
     /**
@@ -69,7 +71,6 @@ public class Main extends javax.swing.JPanel {
         jButtonProductAdd = new javax.swing.JButton();
         jButtonProductGroupAdd = new javax.swing.JButton();
         jButtonProductUnitAdd = new javax.swing.JButton();
-        jButtonTransactionAdd = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -181,17 +182,6 @@ public class Main extends javax.swing.JPanel {
         });
         jToolBar1.add(jButtonProductUnitAdd);
 
-        jButtonTransactionAdd.setText("транзакция");
-        jButtonTransactionAdd.setFocusable(false);
-        jButtonTransactionAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonTransactionAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonTransactionAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                transactionCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonTransactionAdd);
-
         jTable1.setAutoCreateRowSorter(true);
         jScrollPane1.setViewportView(jTable1);
 
@@ -243,10 +233,6 @@ public class Main extends javax.swing.JPanel {
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductUnitAdditionMaster(), "Добавление единицы измерения");
     }//GEN-LAST:event_productUnitCreationHandler
 
-    private void transactionCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductConsumingMaster(), "Расходование товара");
-    }//GEN-LAST:event_transactionCreationHandler
-
     private void employeeCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
     }//GEN-LAST:event_employeeCreationHandler
@@ -262,7 +248,6 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JButton jButtonProductAdd;
     private javax.swing.JButton jButtonProductGroupAdd;
     private javax.swing.JButton jButtonProductUnitAdd;
-    private javax.swing.JButton jButtonTransactionAdd;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
