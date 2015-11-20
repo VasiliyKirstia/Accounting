@@ -6,6 +6,8 @@
 package com.accounting.client.gui;
 
 import com.accounting.client.gui.models.CurrencyComboBoxModel;
+import com.accounting.client.gui.models.DocumentComboBoxModel;
+import com.accounting.client.gui.models.EmployeeComboBoxModel;
 import com.accounting.client.gui.models.ProductGroupComboBoxModel;
 import com.accounting.client.gui.models.ProductUnitComboBoxModel;
 import com.accounting.interfaces.*;
@@ -13,10 +15,10 @@ import com.accounting.models.Currency;
 import com.accounting.models.ProductGroup;
 import com.accounting.models.ProductUnit;
 import com.accounting.interfaces.IProductsServices;
-import javax.ejb.EJB;
+import com.accounting.models.Document;
+import com.accounting.models.Employee;
 
 import java.awt.Window;
-import java.util.List;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,9 +53,21 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
             pgcm.addElement(pg);
         }
         
+        EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
+        for(Employee emp : lookupEmployeesServicesRemote().getAllEmployees()){
+            ecm.addElement(emp);
+        }
+        
+        DocumentComboBoxModel doccm = new DocumentComboBoxModel();
+        for(Document doc : lookupDocumentsServicesRemote().getAllDocuments()){
+            doccm.addElement(doc);
+        }
+        
         jComboBoxUnit.setModel(pucm);
         jComboBoxGroup.setModel(pgcm);
         jComboBoxCurrency.setModel(ccm);
+        jComboBoxEmployee.setModel(ecm);
+        jComboBoxDocument.setModel(doccm);
     }
 
     /**
@@ -80,6 +94,10 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBoxEmployee = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBoxDocument = new javax.swing.JComboBox();
 
         jLabel1.setText("Наименование:");
 
@@ -107,15 +125,19 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
             }
         });
 
+        jLabel7.setText("Сотрудник:");
+
+        jLabel8.setText("Документ:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
@@ -123,25 +145,29 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldAmount)
                             .addComponent(jTextFieldName)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldPrice))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxCurrency, javax.swing.GroupLayout.Alignment.TRAILING, 0, 299, Short.MAX_VALUE)
-                            .addComponent(jComboBoxUnit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxGroup, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAdd)))
+                        .addComponent(jButtonAdd))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxCurrency, javax.swing.GroupLayout.Alignment.TRAILING, 0, 323, Short.MAX_VALUE)
+                            .addComponent(jComboBoxUnit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxGroup, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxDocument, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -171,7 +197,15 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBoxGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBoxEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBoxDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -194,7 +228,9 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
                 new BigDecimal(jTextFieldPrice.getText()).divide(new BigDecimal(amount)),
                 ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).getSelectedItem().Id,
                 ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).getSelectedItem().Id,
-                ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).getSelectedItem().Id
+                ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).getSelectedItem().Id,
+                ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
+                ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id
         );
         
         ((Window)this.getTopLevelAncestor()).dispose();
@@ -205,6 +241,8 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JComboBox jComboBoxCurrency;
+    private javax.swing.JComboBox jComboBoxDocument;
+    private javax.swing.JComboBox jComboBoxEmployee;
     private javax.swing.JComboBox jComboBoxGroup;
     private javax.swing.JComboBox jComboBoxUnit;
     private javax.swing.JLabel jLabel1;
@@ -213,6 +251,8 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAmount;
     private javax.swing.JTextField jTextFieldName;
@@ -253,6 +293,26 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         try {
             Context c = new InitialContext();
             return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+    
+    private IEmployeesServices lookupEmployeesServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+    
+    private IDocumentsServices lookupDocumentsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

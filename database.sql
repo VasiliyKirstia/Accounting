@@ -24,7 +24,7 @@ CREATE TABLE employee(
 );
 
 CREATE TABLE operation(
-	id SERIAL PRIMARY KEY,
+	id INTEGER PRIMARY KEY,
 	name CHARACTER VARYING(10) NOT NULL
 );
 
@@ -59,3 +59,8 @@ CREATE TABLE transaction(
 	employee_id INTEGER REFERENCES employee ( id ),
 	document_id INTEGER REFERENCES document ( id )
 );
+
+INSERT INTO operation (id, name) VALUES (1, 'addition');
+INSERT INTO operation (id, name) VALUES (2, 'consuming');
+
+INSERT INTO destination (id, name) VALUES (DEFAULT, 'склад');

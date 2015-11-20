@@ -27,20 +27,6 @@ import static com.accounting.server.services.Setings.USERNAME;
  */
 @Stateless
 public class TransactionsServices implements ITransactionsServices{
-    @Override
-    public void addTransaction(Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
-            PreparedStatement prepSt = con.prepareStatement("INSERT INTO transaction (date, product_amount, document_id, product_id, destination_id, employee_id, operation_id) VALUES (?,?,?,?,?,?,?)");
-            prepSt.setDate(1, date);
-            prepSt.setDouble(2, productAmount);
-            prepSt.setInt(3, documentId);
-            prepSt.setInt(4, productId);
-            prepSt.setInt(5, destinationId);
-            prepSt.setInt(6, employeeId);
-            prepSt.setInt(7, operationId);
-            prepSt.executeUpdate();
-        }catch(SQLException e){}
-    }
 
     @Override
     public Transaction getTransactionById(int id) {

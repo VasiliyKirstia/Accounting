@@ -16,7 +16,8 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface IProductsServices {
-    public void addProduct(String productName, double amount, BigDecimal price, int productGroupId, int currencyId, int productUnitId);
+    public void addProduct(String productName, double productAmount, BigDecimal price, int productGroupId, int currencyId, int productUnitId, int documentId, int employeeId);
+    public void consumeProduct( int productId, double productAmount, int documentId, int destinationId, int employeeId);
     public Product getProductById(int id);
     public List<Product> getAllProducts();
 }

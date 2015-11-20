@@ -8,23 +8,16 @@ package com.accounting.client.gui;
 import com.accounting.client.gui.models.DestinationComboBoxModel;
 import com.accounting.client.gui.models.DocumentComboBoxModel;
 import com.accounting.client.gui.models.EmployeeComboBoxModel;
-import com.accounting.client.gui.models.OperationComboBoxModel;
-import com.accounting.client.gui.models.ProductComboBoxModel;
 import com.accounting.interfaces.IDestinationsServices;
 import com.accounting.interfaces.IDocumentsServices;
 import com.accounting.interfaces.IEmployeesServices;
-import com.accounting.interfaces.IOperationsServices;
 import com.accounting.interfaces.IProductsServices;
-import com.accounting.interfaces.ITransactionsServices;
 import com.accounting.models.Destination;
 import com.accounting.models.Document;
 import com.accounting.models.Employee;
-import com.accounting.models.Operation;
 import com.accounting.models.Product;
 
 import java.awt.Window;
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -34,17 +27,18 @@ import javax.naming.NamingException;
  *
  * @author vasiliy
  */
-public class TransactionAdditionMaster extends javax.swing.JPanel {
+public class ProductConsumingMaster extends javax.swing.JPanel {
     /**
      * Creates new form TransactionAdditionMaster
      */
-    public TransactionAdditionMaster() {
+    private final Product product;
+    
+    public ProductConsumingMaster(int productId) {
         initComponents();
         
-        ProductComboBoxModel pcm = new ProductComboBoxModel();
-        for(Product prod : lookupProductsServicesRemote().getAllProducts()){
-            pcm.addElement(prod);
-        }
+        this.product = lookupProductsServicesRemote().getProductById(productId);
+        
+        jLabelProductName.setText(product.Name);
         
         DestinationComboBoxModel dcm = new DestinationComboBoxModel();
         for(Destination des : lookupDestinationsServicesRemote().getAllDestinations()){
@@ -60,17 +54,10 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         for(Employee emp : lookupEmployeesServicesRemote().getAllEmployees()){
             ecm.addElement(emp);
         }
-        
-        OperationComboBoxModel ocm = new OperationComboBoxModel();
-        for(Operation op : lookupOperationsServicesRemote().getAllOperations()){
-            ocm.addElement(op);
-        }
-        
-        jComboBoxOperation.setModel(ocm);
+
         jComboBoxEmployee.setModel(ecm);
         jComboBoxDestination.setModel(dcm);
         jComboBoxDocument.setModel(doccm);
-        jComboBoxProduct.setModel(pcm);
     }
 
     /**
@@ -84,36 +71,29 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jTextFieldAmount = new javax.swing.JTextField();
-        jComboBoxOperation = new javax.swing.JComboBox();
         jComboBoxEmployee = new javax.swing.JComboBox();
         jComboBoxDestination = new javax.swing.JComboBox();
-        jComboBoxProduct = new javax.swing.JComboBox();
         jComboBoxDocument = new javax.swing.JComboBox();
-        jButtonAdd = new javax.swing.JButton();
+        jButtonConsume = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabelProductName = new javax.swing.JLabel();
 
         jLabel2.setText("Количество:");
 
         jLabel3.setText("Документ:");
 
-        jLabel4.setText("Продукт:");
-
         jLabel5.setText("Место назначения:");
 
         jLabel6.setText("Сотрудник:");
 
-        jLabel7.setText("Операция:");
-
-        jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonConsume.setText("Расходовать");
+        jButtonConsume.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addTransaction(evt);
+                consumeProduct(evt);
             }
         });
 
@@ -128,39 +108,40 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelProductName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(58, 58, 58)
                         .addComponent(jTextFieldAmount))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxOperation, 0, 394, Short.MAX_VALUE)
-                            .addComponent(jComboBoxEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxDocument, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxProduct, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxDestination, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(66, 66, 66)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxDocument, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 316, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAdd)))
+                        .addComponent(jButtonConsume))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxDestination, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(16, 16, 16)
+                .addComponent(jLabelProductName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -170,43 +151,33 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
                     .addComponent(jComboBoxDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBoxProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jComboBoxDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBoxEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBoxOperation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAdd)
+                    .addComponent(jButtonConsume)
                     .addComponent(jButtonCancel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addTransaction(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTransaction
-        lookupTransactionsServicesRemote().addTransaction(
-                new Date(Calendar.getInstance().getTime().getTime()),
+    private void consumeProduct(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consumeProduct
+        lookupProductsServicesRemote().consumeProduct(
+                product.Id,
                 Double.valueOf(jTextFieldAmount.getText()),
                 ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
-                ((OperationComboBoxModel)jComboBoxProduct.getModel()).getSelectedItem().Id,
                 ((DestinationComboBoxModel)jComboBoxDestination.getModel()).getSelectedItem().Id,
-                ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id,
-                ((OperationComboBoxModel)jComboBoxOperation.getModel()).getSelectedItem().Id
+                ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id                
         );
         
         ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_addTransaction
+    }//GEN-LAST:event_consumeProduct
 
     private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
         ((Window)this.getTopLevelAncestor()).dispose();
@@ -214,23 +185,22 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JButton jButtonConsume;
     private javax.swing.JComboBox jComboBoxDestination;
     private javax.swing.JComboBox jComboBoxDocument;
     private javax.swing.JComboBox jComboBoxEmployee;
-    private javax.swing.JComboBox jComboBoxOperation;
-    private javax.swing.JComboBox jComboBoxProduct;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelProductName;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAmount;
     // End of variables declaration//GEN-END:variables
 
+    
+    
     private IDestinationsServices lookupDestinationsServicesRemote() {
         try {
             Context c = new InitialContext();
@@ -261,30 +231,10 @@ public class TransactionAdditionMaster extends javax.swing.JPanel {
         }
     }
 
-    private IOperationsServices lookupOperationsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IOperationsServices) c.lookup("java:comp/env/OperationsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
     private IProductsServices lookupProductsServicesRemote() {
         try {
             Context c = new InitialContext();
             return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private ITransactionsServices lookupTransactionsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (ITransactionsServices) c.lookup("java:comp/env/TransactionsServices");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

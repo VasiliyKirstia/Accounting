@@ -30,12 +30,11 @@ public class Main extends javax.swing.JPanel {
     private void updateTableData(){
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(
-                new String[]{"Id","Name","Amount","Price","ProductGroupName","CurrencyName","ProductUnitName"}
+                new String[]{"Название","Остаток","Стоимость единицы","Группа товара","Валюта","ед. изм."}
         );
         for(Product p : lookupProductsServicesRemote().getAllProducts()){
             dtm.addRow(
                     new String[]{
-                        String.valueOf(p.Id),
                         p.Name,
                         String.valueOf(p.Amount),
                         String.valueOf(p.Price),
@@ -233,7 +232,7 @@ public class Main extends javax.swing.JPanel {
     }//GEN-LAST:event_operationCreationHandler
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление продукта");
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
     }//GEN-LAST:event_productCreationHandler
 
     private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler
@@ -245,7 +244,7 @@ public class Main extends javax.swing.JPanel {
     }//GEN-LAST:event_productUnitCreationHandler
 
     private void transactionCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new TransactionAdditionMaster(), "Добавление транзакции");
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductConsumingMaster(), "Расходование товара");
     }//GEN-LAST:event_transactionCreationHandler
 
     private void employeeCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeCreationHandler
