@@ -17,12 +17,12 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import com.accounting.models.Product;
-import static com.accounting.server.services.Setings.CONECTION_STRING;
-import static com.accounting.server.services.Setings.PASSWORD;
-import static com.accounting.server.services.Setings.USERNAME;
-import static com.accounting.server.services.Setings.CONSUMING_ID;
-import static com.accounting.server.services.Setings.ADDITION_ID;
-import static com.accounting.server.services.Setings.DESTINATION_STORAGE_ID;
+import static com.accounting.server.services.Settings.CONECTION_STRING;
+import static com.accounting.server.services.Settings.PASSWORD;
+import static com.accounting.server.services.Settings.USERNAME;
+import static com.accounting.server.services.Settings.CONSUMING_ID;
+import static com.accounting.server.services.Settings.ADDITION_ID;
+import static com.accounting.server.services.Settings.DESTINATION_STORAGE_ID;
 import java.sql.Date;
 import java.util.Calendar;
 

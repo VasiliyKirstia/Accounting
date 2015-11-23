@@ -7,9 +7,9 @@ package com.accounting.server.services;
 
 import javax.ejb.Stateless;
 import com.accounting.interfaces.IDocumentsServices;
-import static com.accounting.server.services.Setings.CONECTION_STRING;
-import static com.accounting.server.services.Setings.PASSWORD;
-import static com.accounting.server.services.Setings.USERNAME;
+import static com.accounting.server.services.Settings.CONECTION_STRING;
+import static com.accounting.server.services.Settings.PASSWORD;
+import static com.accounting.server.services.Settings.USERNAME;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

@@ -9,7 +9,7 @@ package com.accounting.server.services;
  *
  * @author vasiliy
  */
-class Setings {
+class Settings {
     public static final String CONECTION_STRING = "jdbc:postgresql://localhost/accounting";
     public static final String USERNAME = "test_user";
     public static final String PASSWORD = "test_user";

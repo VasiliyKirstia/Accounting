@@ -16,9 +16,9 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import com.accounting.models.Operation;
-import static com.accounting.server.services.Setings.CONECTION_STRING;
-import static com.accounting.server.services.Setings.PASSWORD;
-import static com.accounting.server.services.Setings.USERNAME;
+import static com.accounting.server.services.Settings.CONECTION_STRING;
+import static com.accounting.server.services.Settings.PASSWORD;
+import static com.accounting.server.services.Settings.USERNAME;
 
 /**
  *

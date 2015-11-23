@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import com.accounting.interfaces.IAccountsServices;
 import com.accounting.models.Account;
 import java.util.List;
-import static com.accounting.server.services.Setings.*;
+import static com.accounting.server.services.Settings.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
