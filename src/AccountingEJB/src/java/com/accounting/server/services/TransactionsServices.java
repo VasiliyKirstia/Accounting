@@ -8,7 +8,6 @@ package com.accounting.server.services;
 import javax.ejb.Stateless;
 import com.accounting.interfaces.ITransactionsServices;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,9 +16,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import com.accounting.models.Transaction;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
 
 /**
  *
@@ -30,7 +26,14 @@ public class TransactionsServices implements ITransactionsServices{
 
     @Override
     public Transaction getTransactionById(int id) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM transaction WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -56,7 +59,14 @@ public class TransactionsServices implements ITransactionsServices{
 
     @Override
     public List<Transaction> getAllTransactions() {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM transaction");
             List<Transaction> transactions = new LinkedList<Transaction>();

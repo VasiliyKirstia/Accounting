@@ -17,12 +17,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import com.accounting.models.Product;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
-import static com.accounting.server.services.Settings.CONSUMING_ID;
-import static com.accounting.server.services.Settings.ADDITION_ID;
-import static com.accounting.server.services.Settings.DESTINATION_STORAGE_ID;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -34,7 +28,14 @@ import java.util.Calendar;
 public class ProductsServices implements IProductsServices{
     @Override
     public void addProduct(String productName, double productAmount, BigDecimal price, int productGroupId, int currencyId, int productUnitId, int documentId, int employeeId) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             con.setAutoCommit(Boolean.FALSE);
             
             Date dateNow = new Date(Calendar.getInstance().getTimeInMillis());
@@ -53,9 +54,9 @@ public class ProductsServices implements IProductsServices{
             addTransactionStmt.setDouble(2, productAmount);
             addTransactionStmt.setInt(3, documentId);
             addTransactionStmt.setInt(4, productId);
-            addTransactionStmt.setInt(5, DESTINATION_STORAGE_ID);
+            addTransactionStmt.setInt(5, settings.getDestinationStorageId());
             addTransactionStmt.setInt(6, employeeId);
-            addTransactionStmt.setInt(7, ADDITION_ID);
+            addTransactionStmt.setInt(7, settings.getProductAdditionId());
             addTransactionStmt.executeUpdate();
             
             con.commit();
@@ -65,7 +66,14 @@ public class ProductsServices implements IProductsServices{
     
     @Override
     public void consumeProduct(int productId, double productAmount, int documentId, int destinationId, int employeeId) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             con.setAutoCommit(Boolean.FALSE);
             
             Date dateNow = new Date(Calendar.getInstance().getTimeInMillis());
@@ -82,7 +90,7 @@ public class ProductsServices implements IProductsServices{
             addTransactionStmt.setInt(4, productId);
             addTransactionStmt.setInt(5, destinationId);
             addTransactionStmt.setInt(6, employeeId);
-            addTransactionStmt.setInt(7, CONSUMING_ID);
+            addTransactionStmt.setInt(7, settings.getProductConsumingId());
             addTransactionStmt.executeUpdate();
             
             con.commit();
@@ -92,7 +100,14 @@ public class ProductsServices implements IProductsServices{
 
     @Override
     public Product getProductById(int id) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement(
                     "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod "
                     +"INNER JOIN product_group AS pg ON prod.product_group_id = pg.id "
@@ -123,7 +138,14 @@ public class ProductsServices implements IProductsServices{
 
     @Override
     public List<Product> getAllProducts() {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery(
                     "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod "

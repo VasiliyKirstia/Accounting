@@ -7,9 +7,6 @@ package com.accounting.server.services;
 
 import javax.ejb.Stateless;
 import com.accounting.interfaces.IDocumentsServices;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,7 +25,14 @@ import com.accounting.models.Document;
 public class DocumentsServices implements IDocumentsServices{
     @Override
     public void addDocument(String documentName){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO document (name) VALUES (?)");
             prepSt.setString(1, documentName);
             prepSt.executeUpdate();
@@ -37,7 +41,14 @@ public class DocumentsServices implements IDocumentsServices{
 
     @Override
     public Document getDocumentById(int id){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM document WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -57,7 +68,14 @@ public class DocumentsServices implements IDocumentsServices{
 
     @Override
     public List<Document> getAllDocuments(){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM document");
             List<Document> documents = new LinkedList<Document>();

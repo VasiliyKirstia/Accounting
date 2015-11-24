@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import com.accounting.interfaces.IAccountsServices;
 import com.accounting.models.Account;
 import java.util.List;
-import static com.accounting.server.services.Settings.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,7 +26,14 @@ public class AccountsServices implements IAccountsServices {
 
     @Override
     public void addAccount(String accountNumber) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO account (account_number) VALUES (?)");
             prepSt.setString(1, accountNumber);
             prepSt.executeUpdate();
@@ -39,7 +45,14 @@ public class AccountsServices implements IAccountsServices {
 
     @Override
     public Account getAccountById(int id) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM account WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -57,7 +70,14 @@ public class AccountsServices implements IAccountsServices {
 
     @Override
     public List<Account> getAllAccounts() {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM account");
             List<Account> accounts = new LinkedList<Account>();

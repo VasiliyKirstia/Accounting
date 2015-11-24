@@ -16,9 +16,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import com.accounting.models.ProductUnit;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
 
 /**
  *
@@ -28,7 +25,14 @@ import static com.accounting.server.services.Settings.USERNAME;
 public class ProductUnitsServices implements IProductUnitsServices{
 @Override
     public void addProductUnit(String productUnitName){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_unit (name) VALUES (?)");
             prepSt.setString(1, productUnitName);
             prepSt.executeUpdate();
@@ -37,7 +41,14 @@ public class ProductUnitsServices implements IProductUnitsServices{
 
     @Override
     public ProductUnit getProductUnitById(int id) {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_unit WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -54,7 +65,14 @@ public class ProductUnitsServices implements IProductUnitsServices{
 
     @Override
     public List<ProductUnit> getAllProductUnits() {
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM product_unit");
             List<ProductUnit> productUnits = new LinkedList<ProductUnit>();

@@ -7,9 +7,6 @@ package com.accounting.server.services;
 
 import javax.ejb.Stateless;
 import com.accounting.interfaces.ICurrencysServices;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,7 +27,14 @@ public class CurrencysServices implements  ICurrencysServices{
     
     @Override
     public void addCurrency(String currencyName){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO currency (name) VALUES (?)");
             prepSt.setString(1, currencyName);
             prepSt.executeUpdate();
@@ -40,7 +44,14 @@ public class CurrencysServices implements  ICurrencysServices{
 
     @Override
     public Currency getCurrencyById(int id){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM currency WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -58,7 +69,14 @@ public class CurrencysServices implements  ICurrencysServices{
 
     @Override
     public List<Currency> getAllCurrencis(){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM currency");
             List<Currency> currencis = new LinkedList<Currency>();

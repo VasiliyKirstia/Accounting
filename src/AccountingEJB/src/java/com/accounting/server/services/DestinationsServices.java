@@ -7,9 +7,6 @@ package com.accounting.server.services;
 
 import javax.ejb.Stateless;
 import com.accounting.interfaces.IDestinationsServices;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,7 +25,14 @@ import com.accounting.models.Destination;
 public class DestinationsServices implements IDestinationsServices{
 @Override
     public void addDestination(String destinationName){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO destination (name) VALUES (?)");
             prepSt.setString(1, destinationName);
             prepSt.executeUpdate();
@@ -38,7 +42,14 @@ public class DestinationsServices implements IDestinationsServices{
 
     @Override
     public Destination getDestinationyById(int id){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM destination WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -55,7 +66,14 @@ public class DestinationsServices implements IDestinationsServices{
 
     @Override
     public List<Destination> getAllDestinations(){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM destination");
             List<Destination> destinations = new LinkedList<Destination>();

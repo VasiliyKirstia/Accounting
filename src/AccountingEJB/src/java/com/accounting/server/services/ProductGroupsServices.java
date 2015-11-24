@@ -16,9 +16,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import com.accounting.models.ProductGroup;
-import static com.accounting.server.services.Settings.CONECTION_STRING;
-import static com.accounting.server.services.Settings.PASSWORD;
-import static com.accounting.server.services.Settings.USERNAME;
 
 /**
  *
@@ -28,7 +25,14 @@ import static com.accounting.server.services.Settings.USERNAME;
 public class ProductGroupsServices implements IProductGroupsServices{
 @Override
     public void addProductGroup(String productGroupName, int accountId){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("INSERT INTO product_group (name, account_id) VALUES (?, ?)");
             prepSt.setString(1, productGroupName);
             prepSt.setInt(2, accountId);
@@ -38,7 +42,14 @@ public class ProductGroupsServices implements IProductGroupsServices{
 
     @Override
     public ProductGroup getProductGroupById(int id){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             PreparedStatement prepSt = con.prepareStatement("SELECT * FROM product_group WHERE id = ?");
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -55,7 +66,14 @@ public class ProductGroupsServices implements IProductGroupsServices{
 
     @Override
     public List<ProductGroup> getAllProductGroups(){
-        try(Connection con = DriverManager.getConnection(CONECTION_STRING, USERNAME, PASSWORD)){
+        Settings settings = Settings.getInstance();
+        try(
+                Connection con = DriverManager.getConnection(
+                        settings.getConnectionURL(), 
+                        settings.getUserName(), 
+                        settings.getPassword()
+                )
+        ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT * FROM product_group");
             List<ProductGroup> productGroups = new LinkedList<ProductGroup>();
