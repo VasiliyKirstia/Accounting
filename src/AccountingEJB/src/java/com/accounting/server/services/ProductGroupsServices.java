@@ -23,7 +23,8 @@ import com.accounting.models.ProductGroup;
  */
 @Stateless
 public class ProductGroupsServices implements IProductGroupsServices{
-@Override
+   
+    @Override
     public void addProductGroup(String productGroupName, int accountId){
         Settings settings = Settings.getInstance();
         try(

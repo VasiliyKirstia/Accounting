@@ -24,7 +24,7 @@ import java.util.List;
 @Stateless
 //@Remote(ICurrencysServices.class)
 public class CurrencysServices implements  ICurrencysServices{
-    
+
     @Override
     public void addCurrency(String currencyName){
         Settings settings = Settings.getInstance();

@@ -23,7 +23,8 @@ import com.accounting.models.Operation;
  */
 @Stateless
 public class OperationsServices implements IOperationsServices{
-@Override
+
+    @Override
     public void addOperation(String operationName){
         Settings settings = Settings.getInstance();
         try(

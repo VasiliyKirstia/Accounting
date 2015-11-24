@@ -23,7 +23,8 @@ import com.accounting.models.Destination;
  */
 @Stateless
 public class DestinationsServices implements IDestinationsServices{
-@Override
+    
+    @Override
     public void addDestination(String destinationName){
         Settings settings = Settings.getInstance();
         try(

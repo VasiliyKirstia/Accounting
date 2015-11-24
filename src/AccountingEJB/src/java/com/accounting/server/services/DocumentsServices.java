@@ -23,6 +23,7 @@ import com.accounting.models.Document;
  */
 @Stateless
 public class DocumentsServices implements IDocumentsServices{
+
     @Override
     public void addDocument(String documentName){
         Settings settings = Settings.getInstance();

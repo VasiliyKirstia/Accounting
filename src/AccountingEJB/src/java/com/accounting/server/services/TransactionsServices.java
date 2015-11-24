@@ -23,7 +23,7 @@ import com.accounting.models.Transaction;
  */
 @Stateless
 public class TransactionsServices implements ITransactionsServices{
-
+    
     @Override
     public Transaction getTransactionById(int id) {
         Settings settings = Settings.getInstance();

@@ -26,6 +26,7 @@ import java.util.Calendar;
  */
 @Stateless
 public class ProductsServices implements IProductsServices{
+
     @Override
     public void addProduct(String productName, double productAmount, BigDecimal price, int productGroupId, int currencyId, int productUnitId, int documentId, int employeeId) {
         Settings settings = Settings.getInstance();
@@ -40,14 +41,25 @@ public class ProductsServices implements IProductsServices{
             
             Date dateNow = new Date(Calendar.getInstance().getTimeInMillis());
             
-            PreparedStatement addProductStmt = con.prepareStatement("INSERT INTO product (id, name, amount, price, product_group_id, currency_id, product_unit_id) VALUES (DEFAULT,?,?,?,?,?,?) RETURNING id;");
-            addProductStmt.setString(2, productName);
-            addProductStmt.setDouble(3, productAmount);
-            addProductStmt.setBigDecimal(4, price);
-            addProductStmt.setInt(5, productGroupId);
-            addProductStmt.setInt(6, currencyId);
-            addProductStmt.setInt(7, productUnitId);
-            int productId = addProductStmt.executeUpdate();
+            PreparedStatement addProductStmt = con.prepareStatement(
+                    "INSERT INTO product (id, name, amount, price, product_group_id, currency_id, product_unit_id) VALUES (DEFAULT,?,?,?,?,?,?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            addProductStmt.setString(1, productName);
+            addProductStmt.setDouble(2, productAmount);
+            addProductStmt.setBigDecimal(3, price);
+            addProductStmt.setInt(4, productGroupId);
+            addProductStmt.setInt(5, currencyId);
+            addProductStmt.setInt(6, productUnitId);
+            addProductStmt.executeUpdate();
+            
+            ResultSet genKeys = addProductStmt.getGeneratedKeys();
+            int productId;
+            if(genKeys.next()){
+                productId = genKeys.getInt(1);
+            }else{
+                throw new SQLException();
+            }
             
             PreparedStatement addTransactionStmt = con.prepareStatement("INSERT INTO transaction (date, product_amount, document_id, product_id, destination_id, employee_id, operation_id) VALUES (?,?,?,?,?,?,?);");
             addTransactionStmt.setDate(1, dateNow);
