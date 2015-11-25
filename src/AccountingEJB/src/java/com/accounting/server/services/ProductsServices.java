@@ -125,7 +125,7 @@ public class ProductsServices implements IProductsServices{
                     +"INNER JOIN product_group AS pg ON prod.product_group_id = pg.id "
                     +"INNER JOIN currency AS cur ON prod.currency_id = cur.id "
                     +"INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id "
-                    +" WHERE id = ?"
+                    +"WHERE prod.id = ?"
             );
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();

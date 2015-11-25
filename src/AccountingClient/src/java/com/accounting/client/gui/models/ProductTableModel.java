@@ -6,6 +6,7 @@
 package com.accounting.client.gui.models;
 
 import com.accounting.models.Product;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ProductTableModel extends AbstractTableModel{
 
-    private List<Product> products;  
+    private List<Product> products = new LinkedList<Product>();  
     private final String[] tableHeader = {
         "Название", 
         "Количество",
@@ -27,7 +28,7 @@ public class ProductTableModel extends AbstractTableModel{
     
     public ProductTableModel(List<Product> productsList){
         super();
-        products = productsList;
+        products.addAll(productsList);
     }
     
     public void appendProduct(Product product){

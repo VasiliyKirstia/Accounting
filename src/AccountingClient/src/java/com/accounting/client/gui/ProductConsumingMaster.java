@@ -31,12 +31,12 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     /**
      * Creates new form TransactionAdditionMaster
      */
-    private final Product product;
+    private Product product;
     
-    public ProductConsumingMaster(int productId) {
-        initComponents();
-        
+    public ProductConsumingMaster(int productId) {       
         this.product = lookupProductsServicesRemote().getProductById(productId);
+        
+        initComponents();
         
         jLabelProductName.setText(product.Name);
         

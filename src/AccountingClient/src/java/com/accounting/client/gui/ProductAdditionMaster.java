@@ -20,6 +20,7 @@ import com.accounting.models.Employee;
 
 import java.awt.Window;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -225,7 +226,7 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         lookupProductsServicesRemote().addProduct(
                 jTextFieldName.getText(),
                 amount,
-                new BigDecimal(jTextFieldPrice.getText()).divide(new BigDecimal(amount)),
+                (new BigDecimal(jTextFieldPrice.getText())).divide(new BigDecimal(amount), 5, RoundingMode.HALF_DOWN),
                 ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).getSelectedItem().Id,
                 ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).getSelectedItem().Id,
                 ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).getSelectedItem().Id,

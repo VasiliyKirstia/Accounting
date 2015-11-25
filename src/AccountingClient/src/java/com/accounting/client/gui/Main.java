@@ -32,7 +32,6 @@ public class Main extends javax.swing.JPanel {
     }
     private void updateTableData(){
         jTable1.setModel(new ProductTableModel(lookupProductsServicesRemote().getAllProducts()));
-        final JFrame pearentFrame = (JFrame)this.getTopLevelAncestor();
         jTable1.addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 if (me.getClickCount() == 2) {
@@ -40,10 +39,11 @@ public class Main extends javax.swing.JPanel {
                     Point p = me.getPoint();
                     int row = table.rowAtPoint(p);
                     WindowsFactory.createDialog(
-                            pearentFrame, 
+                            (JFrame)table.getTopLevelAncestor(), 
                             new ProductConsumingMaster(((ProductTableModel)jTable1.getModel()).getProductAtRow(row).Id),
                             "Расходование товара"
                     );
+                    ((ProductTableModel)jTable1.getModel()).fireTableDataChanged();
                 }
             }
         });
@@ -223,6 +223,7 @@ public class Main extends javax.swing.JPanel {
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
+        ((ProductTableModel)jTable1.getModel()).fireTableDataChanged();
     }//GEN-LAST:event_productCreationHandler
 
     private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler
