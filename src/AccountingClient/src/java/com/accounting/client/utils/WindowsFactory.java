@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.accounting.client.gui;
+package com.accounting.client.utils;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;

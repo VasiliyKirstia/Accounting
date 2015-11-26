@@ -5,7 +5,7 @@
  */
 package com.accounting.client;
 
-import com.accounting.client.gui.WindowsFactory;
+import com.accounting.client.utils.WindowsFactory;
 
 /**
  *

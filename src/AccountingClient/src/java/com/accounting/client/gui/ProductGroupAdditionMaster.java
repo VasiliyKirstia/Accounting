@@ -59,15 +59,15 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         jLabel2.setText("Счет:");
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addProductGroup(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -116,17 +116,17 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_closeWindow
-
-    private void addProductGroup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductGroup
+    private void addProductGroup(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductGroup
         lookupProductGroupsServicesRemote().addProductGroup(
                 jTextFieldGroupName.getText(),
                 ((AccountComboBoxModel)jComboBoxAccount.getModel()).getSelectedItem().Id 
         );
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProductGroup
+
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

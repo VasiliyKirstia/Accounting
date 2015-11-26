@@ -41,15 +41,15 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCurrency(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -66,10 +66,9 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldCurrencyName, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 169, Short.MAX_VALUE))
+                        .addComponent(jTextFieldCurrencyName))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 180, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAdd))
@@ -93,14 +92,14 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_closeWindow
-
-    private void addCurrency(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addCurrency
+    private void addCurrency(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrency
         lookupCurrencysServicesRemote().addCurrency(jTextFieldCurrencyName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addCurrency
+
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

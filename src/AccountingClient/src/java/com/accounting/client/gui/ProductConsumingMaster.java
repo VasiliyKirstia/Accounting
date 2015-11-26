@@ -16,42 +16,43 @@ import com.accounting.models.Destination;
 import com.accounting.models.Document;
 import com.accounting.models.Employee;
 import com.accounting.models.Product;
-
 import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 /**
  *
  * @author vasiliy
  */
 public class ProductConsumingMaster extends javax.swing.JPanel {
+    
     /**
-     * Creates new form TransactionAdditionMaster
+     * Creates new form ProductConsumingMaster
      */
     private Product product;
     
-    public ProductConsumingMaster(int productId) {       
+    public ProductConsumingMaster(int productId) {
         this.product = lookupProductsServicesRemote().getProductById(productId);
-        
+
         initComponents();
-        
-        jLabelProductName.setText(product.Name);
-        
+
+        jTextFieldProductName.setText(product.Name);
+
         DestinationComboBoxModel dcm = new DestinationComboBoxModel();
-        for(Destination des : lookupDestinationsServicesRemote().getAllDestinations()){
+        for (Destination des : lookupDestinationsServicesRemote().getAllDestinations()) {
             dcm.addElement(des);
         }
-        
+
         DocumentComboBoxModel doccm = new DocumentComboBoxModel();
-        for(Document doc : lookupDocumentsServicesRemote().getAllDocuments()){
+        for (Document doc : lookupDocumentsServicesRemote().getAllDocuments()) {
             doccm.addElement(doc);
         }
-        
+
         EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
-        for(Employee emp : lookupEmployeesServicesRemote().getAllEmployees()){
+        for (Employee emp : lookupEmployeesServicesRemote().getAllEmployees()) {
             ecm.addElement(emp);
         }
 
@@ -69,78 +70,82 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextFieldAmount = new javax.swing.JTextField();
-        jComboBoxEmployee = new javax.swing.JComboBox();
-        jComboBoxDestination = new javax.swing.JComboBox();
-        jComboBoxDocument = new javax.swing.JComboBox();
-        jButtonConsume = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabelProductName = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldProductName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldAmount = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoxDocument = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBoxDestination = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBoxEmployee = new javax.swing.JComboBox();
 
-        jLabel2.setText("Количество:");
-
-        jLabel3.setText("Документ:");
-
-        jLabel5.setText("Место назначения:");
-
-        jLabel6.setText("Сотрудник:");
-
-        jButtonConsume.setText("Расходовать");
-        jButtonConsume.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButton1.setText("Расходовать");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consumeProduct(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
+
+        jLabel1.setText("Название:");
+
+        jTextFieldProductName.setEditable(false);
+
+        jLabel2.setText("Количество:");
+
+        jLabel3.setText("Документ:");
+
+        jLabel4.setText("Место назначения:");
+
+        jLabel5.setText("Сотрудник:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelProductName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(58, 58, 58)
-                        .addComponent(jTextFieldAmount))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxDocument, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 316, Short.MAX_VALUE)
+                        .addGap(0, 317, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonConsume))
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxDestination, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldProductName)
+                            .addComponent(jTextFieldAmount)
+                            .addComponent(jComboBoxDocument, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxDestination, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEmployee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabelProductName)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextFieldProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -151,56 +156,65 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
                     .addComponent(jComboBoxDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
                     .addComponent(jComboBoxDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
                     .addComponent(jComboBoxEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonConsume)
+                    .addComponent(jButton1)
                     .addComponent(jButtonCancel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void consumeProduct(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consumeProduct
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window) this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
+
+    private void consumeProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumeProduct
         lookupProductsServicesRemote().consumeProduct(
                 product.Id,
                 Double.valueOf(jTextFieldAmount.getText()),
-                ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
-                ((DestinationComboBoxModel)jComboBoxDestination.getModel()).getSelectedItem().Id,
-                ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id                
+                ((DocumentComboBoxModel) jComboBoxDocument.getModel()).getSelectedItem().Id,
+                ((DestinationComboBoxModel) jComboBoxDestination.getModel()).getSelectedItem().Id,
+                ((EmployeeComboBoxModel) jComboBoxEmployee.getModel()).getSelectedItem().Id
         );
-        
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_consumeProduct
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_closeWindow
+        ((Window) this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_consumeProduct
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancel;
-    private javax.swing.JButton jButtonConsume;
     private javax.swing.JComboBox jComboBoxDestination;
     private javax.swing.JComboBox jComboBoxDocument;
     private javax.swing.JComboBox jComboBoxEmployee;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabelProductName;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAmount;
+    private javax.swing.JTextField jTextFieldProductName;
     // End of variables declaration//GEN-END:variables
 
-    
-    
+    private IProductsServices lookupProductsServicesRemote() {
+        try {
+            Context c = new InitialContext();
+            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
     private IDestinationsServices lookupDestinationsServicesRemote() {
         try {
             Context c = new InitialContext();
@@ -225,16 +239,6 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
         try {
             Context c = new InitialContext();
             return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IProductsServices lookupProductsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

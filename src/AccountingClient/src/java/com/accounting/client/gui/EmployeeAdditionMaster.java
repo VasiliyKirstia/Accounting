@@ -41,15 +41,15 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEmployee(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -60,16 +60,16 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 180, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 230, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAdd))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldEmployeeName)))
@@ -82,7 +82,7 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldEmployeeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -92,14 +92,14 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_closeWindow
-
-    private void addEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployee
+    private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
         lookupEmployeesServicesRemote().addEmployee(jTextFieldEmployeeName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addEmployee
+
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

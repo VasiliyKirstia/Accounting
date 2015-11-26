@@ -43,15 +43,15 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
         jLabel1.setText("Название единицы измерения:");
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addProductUnit(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -92,12 +92,12 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addProductUnit(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductUnit
+    private void addProductUnit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductUnit
         lookupProductUnitsServicesRemote().addProductUnit(jTextFieldProductUnitName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProductUnit
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_closeWindow
 

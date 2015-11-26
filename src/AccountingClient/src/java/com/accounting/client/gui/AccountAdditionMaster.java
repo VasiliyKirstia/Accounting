@@ -41,22 +41,17 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
         jButtonCancel = new javax.swing.JButton();
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addAccount(evt);
-            }
-        });
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
+                addAccount(evt);
             }
         });
 
         jLabel1.setText("Номер счета:");
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -70,15 +65,14 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 180, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAdd))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 70, Short.MAX_VALUE)))
+                        .addComponent(jTextFieldAccountNumber)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,18 +92,14 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_closeWindow
-
-    private void addAccount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAccount
+    private void addAccount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccount
         lookupAccountsServicesRemote().addAccount(jTextFieldAccountNumber.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addAccount
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddActionPerformed
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

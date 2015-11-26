@@ -43,15 +43,15 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
         jLabel1.setText("Название отдела:");
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addDestination(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -92,12 +92,12 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addDestination(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDestination
+    private void addDestination(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDestination
         lookupDestinationsServicesRemote().addDestination(jTextFieldDestinationName.getText());
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addDestination
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_closeWindow
 

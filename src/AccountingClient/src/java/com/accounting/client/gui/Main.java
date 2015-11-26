@@ -5,6 +5,7 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.WindowsFactory;
 import com.accounting.client.gui.models.ProductTableModel;
 import javax.swing.JFrame;
 import com.accounting.interfaces.IProductsServices;

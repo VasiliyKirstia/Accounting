@@ -113,15 +113,15 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         jLabel6.setText("Группа:");
 
         jButtonAdd.setText("Добавить");
-        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addProduct(evt);
             }
         });
 
         jButtonCancel.setText("Отмена");
-        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindow(evt);
             }
         });
@@ -216,11 +216,7 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindow
-        ((Window)this.getTopLevelAncestor()).dispose();
-    }//GEN-LAST:event_closeWindow
-
-    private void addProduct(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProduct
+    private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct
         Double amount = Double.parseDouble(jTextFieldAmount.getText());
         
         lookupProductsServicesRemote().addProduct(
@@ -236,6 +232,10 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProduct
+
+    private void closeWindow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindow
+        ((Window)this.getTopLevelAncestor()).dispose();
+    }//GEN-LAST:event_closeWindow
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
