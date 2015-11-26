@@ -43,7 +43,8 @@ public class Main extends javax.swing.JPanel {
                             new ProductConsumingMaster(((ProductTableModel)jTable1.getModel()).getProductAtRow(row).Id),
                             "Расходование товара"
                     );
-                    ((ProductTableModel)jTable1.getModel()).fireTableDataChanged();
+                    //TODO: ИМХО надо переделать!
+                    ((ProductTableModel)jTable1.getModel()).replaceProducts(lookupProductsServicesRemote().getAllProducts());
                 }
             }
         });
@@ -223,7 +224,8 @@ public class Main extends javax.swing.JPanel {
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
-        ((ProductTableModel)jTable1.getModel()).fireTableDataChanged();
+        //TODO: ИМХО надо переделать!
+        ((ProductTableModel)jTable1.getModel()).replaceProducts(lookupProductsServicesRemote().getAllProducts());
     }//GEN-LAST:event_productCreationHandler
 
     private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler

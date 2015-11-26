@@ -41,6 +41,12 @@ public class ProductTableModel extends AbstractTableModel{
         this.fireTableDataChanged();
     }
     
+    public void replaceProducts(List<Product> productList){
+        this.products.clear();
+        this.products.addAll(productList);
+        this.fireTableDataChanged();
+    }
+    
     @Override
     public int getRowCount() {
         return products.size();

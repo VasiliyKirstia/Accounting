@@ -23,7 +23,7 @@ class Settings {
     private final String PASSWORD;
     private final Integer PRODUCT_ADDITION_ID = 1;
     private final Integer PRODUCT_CONSUMING_ID = 2;
-    private final Integer DESTINATION_STORAGE_ID = 2;
+    private final Integer DESTINATION_STORAGE_ID = 1;
     
     private Settings(){
         Type type = new TypeToken<Map<String, String>>(){}.getType();
