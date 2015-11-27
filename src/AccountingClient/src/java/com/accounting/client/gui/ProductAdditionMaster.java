@@ -10,6 +10,7 @@ import com.accounting.client.gui.models.DocumentComboBoxModel;
 import com.accounting.client.gui.models.EmployeeComboBoxModel;
 import com.accounting.client.gui.models.ProductGroupComboBoxModel;
 import com.accounting.client.gui.models.ProductUnitComboBoxModel;
+import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.*;
 import com.accounting.models.Currency;
 import com.accounting.models.ProductGroup;
@@ -21,8 +22,6 @@ import com.accounting.models.Employee;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -33,16 +32,63 @@ import javax.naming.NamingException;
  */
 public class ProductAdditionMaster extends javax.swing.JPanel {
     
+    private final RemoteServicesProvider<IProductGroupsServices> productGroupsServicesProvider;
+    private final RemoteServicesProvider<IProductUnitsServices> productUnitsServicesProvider;
+    private final RemoteServicesProvider<IProductsServices> productsServicesProvider;
+    private final RemoteServicesProvider<IDocumentsServices> documentsServicesProvider;
+    private final RemoteServicesProvider<ICurrencysServices> currencysServicesProvider;
+    private final RemoteServicesProvider<IEmployeesServices> employeesServicesProvider;
+    
     /**
      * Creates new form ProductAdditionMaster
      */
-    public ProductAdditionMaster() {      
-        initComponents();
+    public ProductAdditionMaster() {
+        productGroupsServicesProvider = new RemoteServicesProvider<IProductGroupsServices>() {
+            @Override
+            public IProductGroupsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
+            }
+        };
+        productUnitsServicesProvider = new RemoteServicesProvider<IProductUnitsServices>() {
+            @Override
+            public IProductUnitsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IProductUnitsServices) c.lookup("java:comp/env/ProductUnitsServices");
+            }
+        };
+        productsServicesProvider = new RemoteServicesProvider<IProductsServices>() {
+            @Override
+            public IProductsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
+            }
+        };
+        documentsServicesProvider = new RemoteServicesProvider<IDocumentsServices>() {
+            @Override
+            public IDocumentsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
+            }
+        };
+        currencysServicesProvider = new RemoteServicesProvider<ICurrencysServices>() {
+            @Override
+            public ICurrencysServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
+            }
+        };
+        employeesServicesProvider = new RemoteServicesProvider<IEmployeesServices>() {
+            @Override
+            public IEmployeesServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
+            }
+        };
         
-        CurrencyComboBoxModel ccm = new CurrencyComboBoxModel();
-        for(Currency cur : lookupCurrencysServicesRemote().getAllCurrencis()){
-            ccm.addElement(cur);
-        }
+        initComponents();
+        updateCurrencyComboBox();
+        
         
         ProductUnitComboBoxModel pucm = new ProductUnitComboBoxModel();
         for(ProductUnit pu : lookupProductUnitsServicesRemote1().getAllProductUnits()){
@@ -66,9 +112,22 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         
         jComboBoxUnit.setModel(pucm);
         jComboBoxGroup.setModel(pgcm);
-        jComboBoxCurrency.setModel(ccm);
+        
         jComboBoxEmployee.setModel(ecm);
         jComboBoxDocument.setModel(doccm);
+    }
+
+    private void updateCurrencyComboBox() {
+        ICurrencysServices currencysServices = currencysServicesProvider.getServicesSafely();
+        if(null != currencysServices){
+            CurrencyComboBoxModel ccm = new CurrencyComboBoxModel();
+            for(Currency cur : currencysServices.getAllCurrencis()){
+                ccm.addElement(cur);
+            }
+            jComboBoxCurrency.setModel(ccm);
+        }else{
+            System.err.println("NullPointerException");
+        }
     }
 
     /**
@@ -336,64 +395,4 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldPrice;
     // End of variables declaration//GEN-END:variables
-
-    private ICurrencysServices lookupCurrencysServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IProductsServices lookupProductsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IProductUnitsServices lookupProductUnitsServicesRemote1() {
-        try {
-            Context c = new InitialContext();
-            return (IProductUnitsServices) c.lookup("java:comp/env/ProductUnitsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IProductGroupsServices lookupProductGroupsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-    
-    private IEmployeesServices lookupEmployeesServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-    
-    private IDocumentsServices lookupDocumentsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }
