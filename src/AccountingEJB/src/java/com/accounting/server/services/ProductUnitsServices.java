@@ -5,6 +5,7 @@
  */
 package com.accounting.server.services;
 
+import com.accounting.server.Settings;
 import javax.ejb.Stateless;
 import com.accounting.interfaces.IProductUnitsServices;
 import java.sql.Connection;

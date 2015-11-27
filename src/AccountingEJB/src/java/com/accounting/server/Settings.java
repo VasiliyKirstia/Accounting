@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.accounting.server.services;
+package com.accounting.server;
 
 import java.util.Map;
 import com.google.gson.Gson;
@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  *
  * @author vasiliy
  */
-class Settings {
+public class Settings {
 
     private volatile static Settings instance;
     
