@@ -18,21 +18,39 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.JTable;
+import com.accounting.client.utils.RemoteServicesProvider;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author vasiliy
  */
 public class Main extends javax.swing.JPanel {   
+    
+    private RemoteServicesProvider<IProductsServices> productsProvider;
+    
     /**
      * Creates new form Main
      */
     public Main() {
+        productsProvider = new RemoteServicesProvider<IProductsServices>() {
+            @Override
+            public IProductsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
+            }
+        };
         initComponents();
         updateTableData();
     }
     private void updateTableData(){
-        jTable1.setModel(new ProductTableModel(lookupProductsServicesRemote().getAllProducts()));
+        final IProductsServices productsServices = productsProvider.getServicesSafely();
+        if(productsServices == null){
+            jTable1.setModel(new DefaultTableModel());
+        }else{
+            jTable1.setModel(new ProductTableModel(productsServices.getAllProducts()));
+        }
+        
         jTable1.addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 if (me.getClickCount() == 2) {
@@ -45,7 +63,7 @@ public class Main extends javax.swing.JPanel {
                             "Расходование товара"
                     );
                     //TODO: ИМХО надо переделать!
-                    ((ProductTableModel)jTable1.getModel()).replaceProducts(lookupProductsServicesRemote().getAllProducts());
+                    ((ProductTableModel)jTable1.getModel()).replaceProducts(productsServices.getAllProducts());
                 }
             }
         });
@@ -225,8 +243,11 @@ public class Main extends javax.swing.JPanel {
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
-        //TODO: ИМХО надо переделать!
-        ((ProductTableModel)jTable1.getModel()).replaceProducts(lookupProductsServicesRemote().getAllProducts());
+        IProductsServices productsServices = this.productsProvider.getServicesSafely();
+        if(productsServices != null){
+            //TODO: ИМХО надо переделать!
+            ((ProductTableModel)jTable1.getModel()).replaceProducts(productsServices.getAllProducts());
+        }
     }//GEN-LAST:event_productCreationHandler
 
     private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler
@@ -259,14 +280,4 @@ public class Main extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
-
-    private IProductsServices lookupProductsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }
