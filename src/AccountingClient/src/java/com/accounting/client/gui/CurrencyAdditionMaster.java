@@ -5,10 +5,9 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.ICurrencysServices;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,10 +17,20 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class CurrencyAdditionMaster extends javax.swing.JPanel {
+    
+    private final RemoteServicesProvider<ICurrencysServices> currencysServicesProvider;
+    
     /**
      * Creates new form CurrencyAdditionMaster
      */
     public CurrencyAdditionMaster() {
+        currencysServicesProvider = new RemoteServicesProvider<ICurrencysServices>() {
+            @Override
+            public ICurrencysServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
+            }
+        };
         initComponents();
     }
 
@@ -93,7 +102,12 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCurrency(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrency
-        lookupCurrencysServicesRemote().addCurrency(jTextFieldCurrencyName.getText());
+        ICurrencysServices currencysServices = currencysServicesProvider.getServicesSafely();
+        if(null != currencysServices){
+            currencysServices.addCurrency(jTextFieldCurrencyName.getText());
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addCurrency
 
@@ -109,14 +123,4 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldCurrencyName;
     // End of variables declaration//GEN-END:variables
-
-    private ICurrencysServices lookupCurrencysServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

@@ -53,6 +53,7 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jButtonAddAccount = new javax.swing.JButton();
 
         jLabel1.setText("Название группы:");
 
@@ -72,6 +73,13 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
             }
         });
 
+        jButtonAddAccount.setText("Ещё");
+        jButtonAddAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addAccount(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,8 +94,11 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldGroupName)
-                            .addComponent(jComboBoxAccount, 0, 237, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBoxAccount, 0, 302, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonAddAccount))
+                            .addComponent(jTextFieldGroupName)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
@@ -105,8 +116,9 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBoxAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addComponent(jComboBoxAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAddAccount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -128,9 +140,14 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_closeWindow
 
+    private void addAccount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccount
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addAccount
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonAddAccount;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JComboBox jComboBoxAccount;
     private javax.swing.JLabel jLabel1;

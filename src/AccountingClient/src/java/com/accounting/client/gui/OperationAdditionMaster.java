@@ -5,6 +5,8 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.interfaces.IEmployeesServices;
 import com.accounting.interfaces.IOperationsServices;
 import javax.ejb.EJB;
 import java.awt.Window;
@@ -19,10 +21,20 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class OperationAdditionMaster extends javax.swing.JPanel {
+    
+    private final RemoteServicesProvider<IOperationsServices> operationsServicesProvider;
+    
     /**
      * Creates new form OperationAdditionMaster
      */
     public OperationAdditionMaster() {
+        operationsServicesProvider = new RemoteServicesProvider<IOperationsServices>() {
+            @Override
+            public IOperationsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IOperationsServices) c.lookup("java:comp/env/OperationsServices");
+            }
+        };
         initComponents();
     }
 
@@ -70,7 +82,7 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldOperationName))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 265, Short.MAX_VALUE)
+                        .addGap(0, 243, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAdd)))
@@ -94,7 +106,12 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addOperation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOperation
-        lookupOperationsServicesRemote().addOperation(jTextFieldOperationName.getText());
+        IOperationsServices operationsServices = operationsServicesProvider.getServicesSafely();
+        if(null != operationsServices){
+            operationsServices.addOperation(jTextFieldOperationName.getText());
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addOperation
 
@@ -110,14 +127,4 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldOperationName;
     // End of variables declaration//GEN-END:variables
-
-    private IOperationsServices lookupOperationsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IOperationsServices) c.lookup("java:comp/env/OperationsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

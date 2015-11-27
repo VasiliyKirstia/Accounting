@@ -16,15 +16,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="317" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jButtonCancel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="126" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -36,13 +35,24 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextFieldProductName" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jComboBoxDocument" pref="285" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxDestination" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxEmployee" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jButtonAddEmployee" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonAddDestination" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonAddDocument" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <Component id="jTextFieldAmount" max="32767" attributes="0"/>
-                          <Component id="jComboBoxDocument" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jComboBoxDestination" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jComboBoxEmployee" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldProductName" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -65,18 +75,21 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxDocument" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAddDocument" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxDestination" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAddDestination" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxEmployee" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonAddEmployee" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="53" max="32767" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -153,6 +166,30 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAddDocument">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x415;&#x449;&#x451;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addDocument"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAddDestination">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x415;&#x449;&#x451;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addDestination"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAddEmployee">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x415;&#x449;&#x451;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addEmployee"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

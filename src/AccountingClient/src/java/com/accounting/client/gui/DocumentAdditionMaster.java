@@ -5,10 +5,9 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IDocumentsServices;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,10 +17,20 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class DocumentAdditionMaster extends javax.swing.JPanel {
+    
+    private final RemoteServicesProvider<IDocumentsServices> documentsServicesProvider;
+    
     /**
      * Creates new form DocumentAdditionMaster
      */
     public DocumentAdditionMaster() {
+        documentsServicesProvider = new RemoteServicesProvider<IDocumentsServices>() {
+            @Override
+            public IDocumentsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
+            }
+        };
         initComponents();
     }
 
@@ -93,7 +102,12 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDocument(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocument
-        lookupDocumentsServicesRemote().addDocument(jTextFieldDocumentName.getText());
+        IDocumentsServices documentsServices = documentsServicesProvider.getServicesSafely();
+        if(null != documentsServices){
+            documentsServices.addDocument(jTextFieldDocumentName.getText());
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addDocument
 
@@ -109,14 +123,4 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldDocumentName;
     // End of variables declaration//GEN-END:variables
-
-    private IDocumentsServices lookupDocumentsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

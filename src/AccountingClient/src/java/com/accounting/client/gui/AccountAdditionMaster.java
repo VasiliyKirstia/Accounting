@@ -5,10 +5,9 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IAccountsServices;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,10 +17,21 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class AccountAdditionMaster extends javax.swing.JPanel {
+    
+    private final RemoteServicesProvider<IAccountsServices> accountsServicesProvider;
+    
     /**
      * Creates new form AccountAdditionMaster
      */
     public AccountAdditionMaster() {
+        accountsServicesProvider = new RemoteServicesProvider<IAccountsServices>() {
+            @Override
+            public IAccountsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IAccountsServices) c.lookup("java:comp/env/AccountsServices");
+            }
+        };
+        
         initComponents();
     }
 
@@ -93,7 +103,12 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addAccount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccount
-        lookupAccountsServicesRemote().addAccount(jTextFieldAccountNumber.getText());
+        IAccountsServices accountsServices = accountsServicesProvider.getServicesSafely();
+        if(null != accountsServices){
+            accountsServices.addAccount(jTextFieldAccountNumber.getText());
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addAccount
 
@@ -109,14 +124,4 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAccountNumber;
     // End of variables declaration//GEN-END:variables
-
-    private IAccountsServices lookupAccountsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IAccountsServices) c.lookup("java:comp/env/AccountsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

@@ -5,10 +5,9 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IEmployeesServices;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,10 +17,20 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class EmployeeAdditionMaster extends javax.swing.JPanel {
+    
+    private final RemoteServicesProvider<IEmployeesServices> empoloyeesServicesProvider;
+    
     /**
      * Creates new form EmployeeAdditionMaster
      */
     public EmployeeAdditionMaster() {
+        empoloyeesServicesProvider = new RemoteServicesProvider<IEmployeesServices>() {
+            @Override
+            public IEmployeesServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
+            }
+        };
         initComponents();
     }
 
@@ -93,7 +102,12 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        lookupEmployeesServicesRemote().addEmployee(jTextFieldEmployeeName.getText());
+        IEmployeesServices employeesServices = empoloyeesServicesProvider.getServicesSafely();
+        if(null != employeesServices){
+            employeesServices.addEmployee(jTextFieldEmployeeName.getText());
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addEmployee
 
@@ -109,14 +123,4 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldEmployeeName;
     // End of variables declaration//GEN-END:variables
-
-    private IEmployeesServices lookupEmployeesServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

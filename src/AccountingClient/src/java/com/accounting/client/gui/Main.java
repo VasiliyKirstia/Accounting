@@ -27,13 +27,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Main extends javax.swing.JPanel {   
     
-    private RemoteServicesProvider<IProductsServices> productsProvider;
+    private RemoteServicesProvider<IProductsServices> productsServicesProvider;
     
     /**
      * Creates new form Main
      */
     public Main() {
-        productsProvider = new RemoteServicesProvider<IProductsServices>() {
+        productsServicesProvider = new RemoteServicesProvider<IProductsServices>() {
             @Override
             public IProductsServices getServices() throws NamingException, Exception {
                 Context c = new InitialContext();
@@ -44,7 +44,7 @@ public class Main extends javax.swing.JPanel {
         updateTableData();
     }
     private void updateTableData(){
-        final IProductsServices productsServices = productsProvider.getServicesSafely();
+        final IProductsServices productsServices = productsServicesProvider.getServicesSafely();
         if(productsServices == null){
             jTable1.setModel(new DefaultTableModel());
         }else{
@@ -243,7 +243,7 @@ public class Main extends javax.swing.JPanel {
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
-        IProductsServices productsServices = this.productsProvider.getServicesSafely();
+        IProductsServices productsServices = this.productsServicesProvider.getServicesSafely();
         if(productsServices != null){
             //TODO: ИМХО надо переделать!
             ((ProductTableModel)jTable1.getModel()).replaceProducts(productsServices.getAllProducts());

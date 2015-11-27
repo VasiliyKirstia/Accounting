@@ -5,6 +5,8 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.interfaces.ICurrencysServices;
 import com.accounting.interfaces.IDestinationsServices;
 import java.awt.Window;
 import java.util.logging.Level;
@@ -18,10 +20,20 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class DestinationAdditionMaster extends javax.swing.JPanel {
+    
+    private final RemoteServicesProvider<IDestinationsServices> destinationsServicesProvider;
+    
     /**
      * Creates new form DestinationAdditionMaster
      */
     public DestinationAdditionMaster() {
+        destinationsServicesProvider = new RemoteServicesProvider<IDestinationsServices>() {
+            @Override
+            public IDestinationsServices getServices() throws NamingException, Exception {
+                Context c = new InitialContext();
+                return (IDestinationsServices) c.lookup("java:comp/env/DestinationsServices");
+            }
+        };
         initComponents();
     }
 
@@ -93,7 +105,12 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDestination(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDestination
-        lookupDestinationsServicesRemote().addDestination(jTextFieldDestinationName.getText());
+        IDestinationsServices destinationsServices = destinationsServicesProvider.getServicesSafely();
+        if(null != destinationsServices){
+            destinationsServices.addDestination(jTextFieldDestinationName.getText());
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addDestination
 
@@ -109,14 +126,4 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldDestinationName;
     // End of variables declaration//GEN-END:variables
-
-    private IDestinationsServices lookupDestinationsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IDestinationsServices) c.lookup("java:comp/env/DestinationsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }
