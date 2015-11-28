@@ -97,7 +97,7 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
         try{
             currencysServices = RemoteServicesProvider.getInstance().<ICurrencysServices>getServices(ICurrencysServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != currencysServices){

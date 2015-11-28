@@ -98,7 +98,7 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
         try{
             employeesServices = RemoteServicesProvider.getInstance().<IEmployeesServices>getServices(IEmployeesServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != employeesServices){

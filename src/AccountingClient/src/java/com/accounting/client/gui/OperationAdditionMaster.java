@@ -95,7 +95,7 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
         try{
             operationsServices = RemoteServicesProvider.getInstance().<IOperationsServices>getServices(IOperationsServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != operationsServices){

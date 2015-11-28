@@ -95,7 +95,7 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
         try{
             documentsServices = RemoteServicesProvider.getInstance().<IDocumentsServices>getServices(IDocumentsServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != documentsServices){

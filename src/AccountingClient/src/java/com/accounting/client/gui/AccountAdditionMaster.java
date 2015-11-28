@@ -94,7 +94,7 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
         try{
             accountsServices = RemoteServicesProvider.getInstance().getServices(IAccountsServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != accountsServices){

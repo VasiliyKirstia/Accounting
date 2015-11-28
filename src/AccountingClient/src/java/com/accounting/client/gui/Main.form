@@ -59,61 +59,6 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButtonAccountAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x441;&#x447;&#x435;&#x442;"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="accountCreationHandler"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonCurrencyAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x432;&#x430;&#x43b;&#x44e;&#x442;&#x430;"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="currencyCreationHandler"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonDestinationAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x43c;&#x435;&#x441;&#x442;&#x43e;"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="destinationCreationHandler"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonDocumentAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x434;&#x43e;&#x43a;&#x443;&#x43c;&#x435;&#x43d;&#x442;"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="documentCreationHandler"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonEmployeeAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x441;&#x43e;&#x442;&#x440;&#x443;&#x434;&#x43d;&#x438;&#x43a;"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="employeeCreationHandler"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="jButtonOperationAdd">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x43e;&#x43f;&#x435;&#x440;&#x430;&#x446;&#x438;&#x44f;"/>
@@ -134,28 +79,6 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productCreationHandler"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonProductGroupAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x43f;&#x440;&#x43e;&#x434;.&#x433;&#x440;."/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productGroupCreationHandler"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonProductUnitAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x435;&#x434;.&#x438;&#x437;&#x43c;"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productUnitCreationHandler"/>
           </Events>
         </Component>
       </SubComponents>

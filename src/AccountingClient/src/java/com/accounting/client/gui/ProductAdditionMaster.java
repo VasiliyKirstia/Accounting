@@ -250,7 +250,7 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         try{
             productsServices = RemoteServicesProvider.getInstance().<IProductsServices>getServices(IProductsServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != productsServices){

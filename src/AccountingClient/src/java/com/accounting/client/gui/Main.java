@@ -60,15 +60,8 @@ public class Main extends javax.swing.JPanel {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jToolBar1 = new javax.swing.JToolBar();
-        jButtonAccountAdd = new javax.swing.JButton();
-        jButtonCurrencyAdd = new javax.swing.JButton();
-        jButtonDestinationAdd = new javax.swing.JButton();
-        jButtonDocumentAdd = new javax.swing.JButton();
-        jButtonEmployeeAdd = new javax.swing.JButton();
         jButtonOperationAdd = new javax.swing.JButton();
         jButtonProductAdd = new javax.swing.JButton();
-        jButtonProductGroupAdd = new javax.swing.JButton();
-        jButtonProductUnitAdd = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -80,61 +73,6 @@ public class Main extends javax.swing.JPanel {
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
-
-        jButtonAccountAdd.setText("счет");
-        jButtonAccountAdd.setFocusable(false);
-        jButtonAccountAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonAccountAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonAccountAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                accountCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonAccountAdd);
-
-        jButtonCurrencyAdd.setText("валюта");
-        jButtonCurrencyAdd.setFocusable(false);
-        jButtonCurrencyAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonCurrencyAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonCurrencyAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                currencyCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonCurrencyAdd);
-
-        jButtonDestinationAdd.setText("место");
-        jButtonDestinationAdd.setFocusable(false);
-        jButtonDestinationAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonDestinationAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonDestinationAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                destinationCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonDestinationAdd);
-
-        jButtonDocumentAdd.setText("документ");
-        jButtonDocumentAdd.setFocusable(false);
-        jButtonDocumentAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonDocumentAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonDocumentAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                documentCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonDocumentAdd);
-
-        jButtonEmployeeAdd.setText("сотрудник");
-        jButtonEmployeeAdd.setFocusable(false);
-        jButtonEmployeeAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonEmployeeAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonEmployeeAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                employeeCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonEmployeeAdd);
 
         jButtonOperationAdd.setText("операция");
         jButtonOperationAdd.setFocusable(false);
@@ -158,28 +96,6 @@ public class Main extends javax.swing.JPanel {
         });
         jToolBar1.add(jButtonProductAdd);
 
-        jButtonProductGroupAdd.setText("прод.гр.");
-        jButtonProductGroupAdd.setFocusable(false);
-        jButtonProductGroupAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonProductGroupAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonProductGroupAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                productGroupCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonProductGroupAdd);
-
-        jButtonProductUnitAdd.setText("ед.изм");
-        jButtonProductUnitAdd.setFocusable(false);
-        jButtonProductUnitAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonProductUnitAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonProductUnitAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                productUnitCreationHandler(evt);
-            }
-        });
-        jToolBar1.add(jButtonProductUnitAdd);
-
         jTable1.setAutoCreateRowSorter(true);
         jScrollPane1.setViewportView(jTable1);
 
@@ -199,22 +115,6 @@ public class Main extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void accountCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountCreationHandler
-        
-    }//GEN-LAST:event_accountCreationHandler
-
-    private void currencyCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_currencyCreationHandler
-        
-    }//GEN-LAST:event_currencyCreationHandler
-
-    private void destinationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_destinationCreationHandler
-        
-    }//GEN-LAST:event_destinationCreationHandler
-
-    private void documentCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_documentCreationHandler
-        
-    }//GEN-LAST:event_documentCreationHandler
-
     private void operationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_operationCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new OperationAdditionMaster(), "Добавление операции");
     }//GEN-LAST:event_operationCreationHandler
@@ -224,29 +124,10 @@ public class Main extends javax.swing.JPanel {
         ((ProductTableModel)jTable1.getModel()).update();
     }//GEN-LAST:event_productCreationHandler
 
-    private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler
-        
-    }//GEN-LAST:event_productGroupCreationHandler
-
-    private void productUnitCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productUnitCreationHandler
-        
-    }//GEN-LAST:event_productUnitCreationHandler
-
-    private void employeeCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
-    }//GEN-LAST:event_employeeCreationHandler
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAccountAdd;
-    private javax.swing.JButton jButtonCurrencyAdd;
-    private javax.swing.JButton jButtonDestinationAdd;
-    private javax.swing.JButton jButtonDocumentAdd;
-    private javax.swing.JButton jButtonEmployeeAdd;
     private javax.swing.JButton jButtonOperationAdd;
     private javax.swing.JButton jButtonProductAdd;
-    private javax.swing.JButton jButtonProductGroupAdd;
-    private javax.swing.JButton jButtonProductUnitAdd;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

@@ -94,7 +94,7 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
         try{
             destinationsServices = RemoteServicesProvider.getInstance().<IDestinationsServices>getServices(IDestinationsServices.class);
         }catch(NotSupportedServicesException e){
-            System.err.println("NotSupportedServicesException");
+            throw new RuntimeException(e);
         }
         
         if(null != destinationsServices){
