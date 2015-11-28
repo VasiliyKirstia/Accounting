@@ -88,33 +88,62 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         
         initComponents();
         updateCurrencyComboBox();
-        
-        
-        ProductUnitComboBoxModel pucm = new ProductUnitComboBoxModel();
-        for(ProductUnit pu : lookupProductUnitsServicesRemote1().getAllProductUnits()){
-            pucm.addElement(pu);
+        updateProductUnitComboBox();
+        updateProductGroupComboBox();
+        updateEmployeeComboBox();
+        updateDocumentComboBox();
+    }
+
+    private void updateDocumentComboBox() {
+        IDocumentsServices documentsServices = documentsServicesProvider.getServicesSafely();
+        if(null != documentsServices){
+            DocumentComboBoxModel doccm = new DocumentComboBoxModel();
+            for(Document doc : documentsServices.getAllDocuments()){
+                doccm.addElement(doc);
+            }
+            jComboBoxDocument.setModel(doccm);
+        }else{
+            System.err.println("NullPointerException");
         }
-        
-        ProductGroupComboBoxModel pgcm = new ProductGroupComboBoxModel();
-        for(ProductGroup pg : lookupProductGroupsServicesRemote().getAllProductGroups()){
-            pgcm.addElement(pg);
+    }
+
+    private void updateEmployeeComboBox() {
+        IEmployeesServices employeesServices = employeesServicesProvider.getServicesSafely();
+        if(null != employeesServices){
+            EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
+            for(Employee emp : employeesServices.getAllEmployees()){
+                ecm.addElement(emp);
+            }
+            jComboBoxEmployee.setModel(ecm);
+        }else{
+            System.err.println("NullPointerException");
         }
-        
-        EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
-        for(Employee emp : lookupEmployeesServicesRemote().getAllEmployees()){
-            ecm.addElement(emp);
+    }
+
+    private void updateProductGroupComboBox() {
+        IProductGroupsServices productGroupsServices = productGroupsServicesProvider.getServicesSafely();
+        if(null != productGroupsServices){
+            ProductGroupComboBoxModel pgcm = new ProductGroupComboBoxModel();
+            for(ProductGroup pg : productGroupsServices.getAllProductGroups()){
+                pgcm.addElement(pg);
+            }
+            jComboBoxGroup.setModel(pgcm);
+        }else{
+            System.err.println("NullPointerException");
         }
-        
-        DocumentComboBoxModel doccm = new DocumentComboBoxModel();
-        for(Document doc : lookupDocumentsServicesRemote().getAllDocuments()){
-            doccm.addElement(doc);
+    }
+
+    private void updateProductUnitComboBox() {
+        IProductUnitsServices productUnitsServices = productUnitsServicesProvider.getServicesSafely();
+        if(null != productUnitsServices){
+            ProductUnitComboBoxModel pucm = new ProductUnitComboBoxModel();
+            for(ProductUnit pu : productUnitsServices.getAllProductUnits()){
+                pucm.addElement(pu);
+            }
+            jComboBoxUnit.setModel(pucm);
+        }else{
+            System.err.println("NullPointerException");
         }
-        
-        jComboBoxUnit.setModel(pucm);
-        jComboBoxGroup.setModel(pgcm);
-        
-        jComboBoxEmployee.setModel(ecm);
-        jComboBoxDocument.setModel(doccm);
     }
 
     private void updateCurrencyComboBox() {
@@ -328,19 +357,22 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct
-        Double amount = Double.parseDouble(jTextFieldAmount.getText());
-        
-        lookupProductsServicesRemote().addProduct(
-                jTextFieldName.getText(),
-                amount,
-                (new BigDecimal(jTextFieldPrice.getText())).divide(new BigDecimal(amount), 5, RoundingMode.HALF_DOWN),
-                ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).getSelectedItem().Id,
-                ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).getSelectedItem().Id,
-                ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).getSelectedItem().Id,
-                ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
-                ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id
-        );
-        
+        IProductsServices productsServices = productsServicesProvider.getServicesSafely();
+        if(null != productsServices){
+            Double amount = Double.parseDouble(jTextFieldAmount.getText());
+            productsServices.addProduct(
+                    jTextFieldName.getText(),
+                    amount,
+                    (new BigDecimal(jTextFieldPrice.getText())).divide(new BigDecimal(amount), 5, RoundingMode.HALF_DOWN),
+                    ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).getSelectedItem().Id,
+                    ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).getSelectedItem().Id,
+                    ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).getSelectedItem().Id,
+                    ((DocumentComboBoxModel)jComboBoxDocument.getModel()).getSelectedItem().Id,
+                    ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).getSelectedItem().Id
+            );
+        }else{
+            System.err.println("NullPointerException");
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProduct
 

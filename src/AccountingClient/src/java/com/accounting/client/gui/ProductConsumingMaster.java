@@ -38,7 +38,6 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
         this.product = lookupProductsServicesRemote().getProductById(productId);
 
         initComponents();
-
         jTextFieldProductName.setText(product.Name);
 
         DestinationComboBoxModel dcm = new DestinationComboBoxModel();

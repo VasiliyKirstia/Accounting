@@ -5,17 +5,6 @@
  */
 package com.accounting.client.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.Map;
-
-import com.accounting.interfaces.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 
