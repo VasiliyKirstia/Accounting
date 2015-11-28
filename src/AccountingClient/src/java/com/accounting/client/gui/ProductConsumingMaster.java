@@ -28,6 +28,8 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     private Product product;
     
     public ProductConsumingMaster(int productId) {
+        initComponents();
+        
         try{
             IProductsServices productsServices = RemoteServicesProvider.getInstance().<IProductsServices>getServices(IProductsServices.class);
             this.product = productsServices.getProductById(productId);
