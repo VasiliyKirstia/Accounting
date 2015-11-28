@@ -5,6 +5,7 @@
  */
 package com.accounting.client.utils;
 
+import java.awt.Window;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +23,7 @@ public class WindowsFactory {
         frame.setVisible(true);
     }
     
-    public static void createDialog(JFrame parent, JPanel panel, String title){
+    public static void createDialog(Window parent, JPanel panel, String title){
         JDialog dialog = new JDialog(parent, title);
         dialog.setModal(true);
         dialog.add(panel);

@@ -18,7 +18,6 @@ import com.accounting.interfaces.IProductsServices;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import javax.swing.JFrame;
 
 /**
  *
@@ -276,27 +275,27 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addProductUnit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductUnit
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductUnitAdditionMaster(), "Добавление единицы измерения");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new ProductUnitAdditionMaster(), "Добавление единицы измерения");
         ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).update();
     }//GEN-LAST:event_addProductUnit
 
     private void addCurrency(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrency
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new CurrencyAdditionMaster(), "Добавление валюты");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new CurrencyAdditionMaster(), "Добавление валюты");
         ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).update();
     }//GEN-LAST:event_addCurrency
 
     private void addProductGroup(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductGroup
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductGroupAdditionMaster(), "Добавление группы продуктов");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new ProductGroupAdditionMaster(), "Добавление группы продуктов");
         ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).update();
     }//GEN-LAST:event_addProductGroup
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
         ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).update();
     }//GEN-LAST:event_addEmployee
 
     private void addDocument(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocument
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
         ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
     }//GEN-LAST:event_addDocument
 

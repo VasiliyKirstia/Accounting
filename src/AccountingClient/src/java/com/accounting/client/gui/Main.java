@@ -7,8 +7,8 @@ package com.accounting.client.gui;
 
 import com.accounting.client.utils.WindowsFactory;
 import com.accounting.client.gui.models.ProductTableModel;
-import javax.swing.JFrame;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;
@@ -37,7 +37,7 @@ public class Main extends javax.swing.JPanel {
                     Point p = me.getPoint();
                     int row = table.rowAtPoint(p);
                     WindowsFactory.createDialog(
-                            (JFrame)table.getTopLevelAncestor(), 
+                            (Window)table.getTopLevelAncestor(), 
                             new ProductConsumingMaster(((ProductTableModel)jTable1.getModel()).getProductAtRow(row).Id),
                             "Расходование товара"
                     );
@@ -116,11 +116,11 @@ public class Main extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void operationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_operationCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new OperationAdditionMaster(), "Добавление операции");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new OperationAdditionMaster(), "Добавление операции");
     }//GEN-LAST:event_operationCreationHandler
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
         ((ProductTableModel)jTable1.getModel()).update();
     }//GEN-LAST:event_productCreationHandler
 

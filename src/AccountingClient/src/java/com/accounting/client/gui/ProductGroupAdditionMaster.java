@@ -142,7 +142,7 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addAccount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccount
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
         ((AccountComboBoxModel)jComboBoxAccount.getModel()).update();
     }//GEN-LAST:event_addAccount
 

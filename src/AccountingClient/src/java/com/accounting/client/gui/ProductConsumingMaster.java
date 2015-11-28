@@ -14,7 +14,6 @@ import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductsServices;
 import com.accounting.models.Product;
 import java.awt.Window;
-import javax.swing.JFrame;
 
 /**
  *
@@ -219,17 +218,17 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_consumeProduct
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
         ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).update();
     }//GEN-LAST:event_addEmployee
 
     private void addDestination(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDestination
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DestinationAdditionMaster(), "Добавление места");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new DestinationAdditionMaster(), "Добавление места");
         ((DestinationComboBoxModel)jComboBoxDestination.getModel()).update();
     }//GEN-LAST:event_addDestination
 
     private void addDocument(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocument
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
+        WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
         ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
     }//GEN-LAST:event_addDocument
 
