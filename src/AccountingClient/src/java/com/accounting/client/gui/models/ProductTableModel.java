@@ -5,6 +5,9 @@
  */
 package com.accounting.client.gui.models;
 
+import com.accounting.client.utils.NotSupportedServicesException;
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.interfaces.IProductsServices;
 import com.accounting.models.Product;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,8 +29,12 @@ public class ProductTableModel extends AbstractTableModel{
         "Ед. изм."
     };
     
-    public ProductTableModel(List<Product> productsList){
+    public ProductTableModel(){
         super();
+    }
+    
+    public ProductTableModel(List<Product> productsList){
+        this();
         products.addAll(productsList);
     }
     
@@ -84,5 +91,18 @@ public class ProductTableModel extends AbstractTableModel{
     @Override
     public String getColumnName(int columnIndex) {
         return tableHeader[columnIndex];
-    }    
+    }
+    
+    public void update(){
+        IProductsServices productsServices = null;
+        try{
+            productsServices = RemoteServicesProvider.getInstance().<IProductsServices>getServices(IProductsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
+        if(null != productsServices){
+            this.replaceProducts(productsServices.getAllProducts());
+        }
+    }
 }

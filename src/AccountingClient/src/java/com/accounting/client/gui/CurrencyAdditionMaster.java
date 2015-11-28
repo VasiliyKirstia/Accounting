@@ -5,6 +5,7 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.ICurrencysServices;
 import java.awt.Window;
@@ -17,20 +18,10 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class CurrencyAdditionMaster extends javax.swing.JPanel {
-    
-    private final RemoteServicesProvider<ICurrencysServices> currencysServicesProvider;
-    
     /**
      * Creates new form CurrencyAdditionMaster
      */
     public CurrencyAdditionMaster() {
-        currencysServicesProvider = new RemoteServicesProvider<ICurrencysServices>() {
-            @Override
-            public ICurrencysServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
-            }
-        };
         initComponents();
     }
 
@@ -102,7 +93,13 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCurrency(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrency
-        ICurrencysServices currencysServices = currencysServicesProvider.getServicesSafely();
+        ICurrencysServices currencysServices = null;
+        try{
+            currencysServices = RemoteServicesProvider.getInstance().<ICurrencysServices>getServices(ICurrencysServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != currencysServices){
             currencysServices.addCurrency(jTextFieldCurrencyName.getText());
         }else{

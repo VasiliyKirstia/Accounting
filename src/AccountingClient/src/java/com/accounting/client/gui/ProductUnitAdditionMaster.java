@@ -5,13 +5,10 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
+import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IProductUnitsServices;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
@@ -93,7 +90,15 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProductUnit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductUnit
-        lookupProductUnitsServicesRemote().addProductUnit(jTextFieldProductUnitName.getText());
+        IProductUnitsServices productUnitsServices = null;
+        try{
+            productUnitsServices = RemoteServicesProvider.getInstance().<IProductUnitsServices>getServices(IProductUnitsServices.class);
+        }catch(NotSupportedServicesException e){
+            throw new RuntimeException(e);
+        }
+        if(null != productUnitsServices){
+            productUnitsServices.addProductUnit(jTextFieldProductUnitName.getText());
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProductUnit
 
@@ -109,14 +114,4 @@ public class ProductUnitAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldProductUnitName;
     // End of variables declaration//GEN-END:variables
-
-    private IProductUnitsServices lookupProductUnitsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductUnitsServices) c.lookup("java:comp/env/ProductUnitsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

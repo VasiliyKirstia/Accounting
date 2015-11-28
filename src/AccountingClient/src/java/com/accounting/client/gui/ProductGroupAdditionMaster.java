@@ -6,16 +6,12 @@
 package com.accounting.client.gui;
 
 import com.accounting.client.gui.models.AccountComboBoxModel;
-import com.accounting.interfaces.IAccountsServices;
+import com.accounting.client.utils.NotSupportedServicesException;
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductGroupsServices;
-import com.accounting.models.Account;
 import java.awt.Window;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.swing.JFrame;
 
 /**
  *
@@ -27,14 +23,10 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
      * Creates new form ProductGroupAdditionMaster
      */
     public ProductGroupAdditionMaster() {
-        List<Account> accounts = lookupAccountsServicesRemote().getAllAccounts();
-        
         initComponents();
-        AccountComboBoxModel acm = new AccountComboBoxModel();
-        for(Account account : accounts){
-           acm.addElement(account);
-        }
-        jComboBoxAccount.setModel(acm);
+        
+        jComboBoxAccount.setModel(new AccountComboBoxModel());
+        ((AccountComboBoxModel)jComboBoxAccount.getModel()).update();
     }
 
     /**
@@ -129,10 +121,19 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProductGroup(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductGroup
-        lookupProductGroupsServicesRemote().addProductGroup(
-                jTextFieldGroupName.getText(),
-                ((AccountComboBoxModel)jComboBoxAccount.getModel()).getSelectedItem().Id 
-        );
+        IProductGroupsServices productGroupsServices = null;
+        try{
+            productGroupsServices = RemoteServicesProvider.getInstance().<IProductGroupsServices>getServices(IProductGroupsServices.class);
+        }catch(NotSupportedServicesException e){
+            throw new RuntimeException(e);
+        }
+        
+        if(null != productGroupsServices){
+            productGroupsServices.addProductGroup(
+                    jTextFieldGroupName.getText(),
+                    ((AccountComboBoxModel)jComboBoxAccount.getModel()).getSelectedItem().Id 
+            );
+        }
         ((Window)this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_addProductGroup
 
@@ -141,7 +142,8 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addAccount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccount
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
+        ((AccountComboBoxModel)jComboBoxAccount.getModel()).update();
     }//GEN-LAST:event_addAccount
 
 
@@ -155,24 +157,4 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldGroupName;
     // End of variables declaration//GEN-END:variables
-
-    private IAccountsServices lookupAccountsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IAccountsServices) c.lookup("java:comp/env/AccountsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IProductGroupsServices lookupProductGroupsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

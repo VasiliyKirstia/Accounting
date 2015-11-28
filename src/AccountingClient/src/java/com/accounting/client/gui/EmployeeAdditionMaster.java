@@ -5,6 +5,7 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IEmployeesServices;
 import java.awt.Window;
@@ -17,20 +18,11 @@ import javax.naming.NamingException;
  * @author vasiliy
  */
 public class EmployeeAdditionMaster extends javax.swing.JPanel {
-    
-    private final RemoteServicesProvider<IEmployeesServices> empoloyeesServicesProvider;
-    
+
     /**
      * Creates new form EmployeeAdditionMaster
      */
     public EmployeeAdditionMaster() {
-        empoloyeesServicesProvider = new RemoteServicesProvider<IEmployeesServices>() {
-            @Override
-            public IEmployeesServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
-            }
-        };
         initComponents();
     }
 
@@ -102,7 +94,13 @@ public class EmployeeAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        IEmployeesServices employeesServices = empoloyeesServicesProvider.getServicesSafely();
+        IEmployeesServices employeesServices = null;
+        try{
+            employeesServices = RemoteServicesProvider.getInstance().<IEmployeesServices>getServices(IEmployeesServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != employeesServices){
             employeesServices.addEmployee(jTextFieldEmployeeName.getText());
         }else{

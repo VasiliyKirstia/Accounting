@@ -40,7 +40,6 @@ public class Settings {
     }
     
     public static Settings getInstance(){
- 
         if( instance == null ){
             synchronized (Settings.class){
                 if( instance == null ){

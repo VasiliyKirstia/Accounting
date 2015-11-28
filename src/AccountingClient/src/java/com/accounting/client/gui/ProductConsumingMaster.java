@@ -8,20 +8,13 @@ package com.accounting.client.gui;
 import com.accounting.client.gui.models.DestinationComboBoxModel;
 import com.accounting.client.gui.models.DocumentComboBoxModel;
 import com.accounting.client.gui.models.EmployeeComboBoxModel;
-import com.accounting.interfaces.IDestinationsServices;
-import com.accounting.interfaces.IDocumentsServices;
-import com.accounting.interfaces.IEmployeesServices;
+import com.accounting.client.utils.NotSupportedServicesException;
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductsServices;
-import com.accounting.models.Destination;
-import com.accounting.models.Document;
-import com.accounting.models.Employee;
 import com.accounting.models.Product;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.swing.JFrame;
 
 /**
  *
@@ -35,29 +28,22 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     private Product product;
     
     public ProductConsumingMaster(int productId) {
-        this.product = lookupProductsServicesRemote().getProductById(productId);
-
-        initComponents();
-        jTextFieldProductName.setText(product.Name);
-
-        DestinationComboBoxModel dcm = new DestinationComboBoxModel();
-        for (Destination des : lookupDestinationsServicesRemote().getAllDestinations()) {
-            dcm.addElement(des);
+        try{
+            IProductsServices productsServices = RemoteServicesProvider.getInstance().<IProductsServices>getServices(IProductsServices.class);
+            this.product = productsServices.getProductById(productId);
+        }
+        catch(NotSupportedServicesException e){
+            throw new RuntimeException(e);
         }
 
-        DocumentComboBoxModel doccm = new DocumentComboBoxModel();
-        for (Document doc : lookupDocumentsServicesRemote().getAllDocuments()) {
-            doccm.addElement(doc);
-        }
-
-        EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
-        for (Employee emp : lookupEmployeesServicesRemote().getAllEmployees()) {
-            ecm.addElement(emp);
-        }
-
-        jComboBoxEmployee.setModel(ecm);
-        jComboBoxDestination.setModel(dcm);
-        jComboBoxDocument.setModel(doccm);
+        jComboBoxDocument.setModel(new DocumentComboBoxModel());
+        ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
+        
+        jComboBoxEmployee.setModel(new EmployeeComboBoxModel());
+        ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).update();
+        
+        jComboBoxDestination.setModel(new DestinationComboBoxModel());
+        ((DestinationComboBoxModel)jComboBoxDestination.getModel()).update();
     }
 
     /**
@@ -210,27 +196,39 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void consumeProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumeProduct
-        lookupProductsServicesRemote().consumeProduct(
-                product.Id,
-                Double.valueOf(jTextFieldAmount.getText()),
-                ((DocumentComboBoxModel) jComboBoxDocument.getModel()).getSelectedItem().Id,
-                ((DestinationComboBoxModel) jComboBoxDestination.getModel()).getSelectedItem().Id,
-                ((EmployeeComboBoxModel) jComboBoxEmployee.getModel()).getSelectedItem().Id
-        );
-
+        IProductsServices productsServices = null;
+        try{
+            productsServices = RemoteServicesProvider.getInstance().<IProductsServices>getServices(IProductsServices.class);
+        }
+        catch(NotSupportedServicesException e){
+            throw new RuntimeException(e);
+        }
+        
+        if(null != productsServices){
+            productsServices.consumeProduct(
+                    product.Id,
+                    Double.valueOf(jTextFieldAmount.getText()),
+                    ((DocumentComboBoxModel) jComboBoxDocument.getModel()).getSelectedItem().Id,
+                    ((DestinationComboBoxModel) jComboBoxDestination.getModel()).getSelectedItem().Id,
+                    ((EmployeeComboBoxModel) jComboBoxEmployee.getModel()).getSelectedItem().Id
+            );
+        }
         ((Window) this.getTopLevelAncestor()).dispose();
     }//GEN-LAST:event_consumeProduct
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
+        ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).update();
     }//GEN-LAST:event_addEmployee
 
     private void addDestination(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDestination
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DestinationAdditionMaster(), "Добавление места");
+        ((DestinationComboBoxModel)jComboBoxDestination.getModel()).update();
     }//GEN-LAST:event_addDestination
 
     private void addDocument(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocument
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
+        ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
     }//GEN-LAST:event_addDocument
 
 
@@ -252,44 +250,4 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldAmount;
     private javax.swing.JTextField jTextFieldProductName;
     // End of variables declaration//GEN-END:variables
-
-    private IProductsServices lookupProductsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IDestinationsServices lookupDestinationsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IDestinationsServices) c.lookup("java:comp/env/DestinationsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IDocumentsServices lookupDocumentsServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private IEmployeesServices lookupEmployeesServicesRemote() {
-        try {
-            Context c = new InitialContext();
-            return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }

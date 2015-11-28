@@ -5,33 +5,20 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IAccountsServices;
 import java.awt.Window;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class AccountAdditionMaster extends javax.swing.JPanel {
-    
-    private final RemoteServicesProvider<IAccountsServices> accountsServicesProvider;
-    
     /**
      * Creates new form AccountAdditionMaster
      */
     public AccountAdditionMaster() {
-        accountsServicesProvider = new RemoteServicesProvider<IAccountsServices>() {
-            @Override
-            public IAccountsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IAccountsServices) c.lookup("java:comp/env/AccountsServices");
-            }
-        };
-        
         initComponents();
     }
 
@@ -103,7 +90,13 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addAccount(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccount
-        IAccountsServices accountsServices = accountsServicesProvider.getServicesSafely();
+        IAccountsServices accountsServices = null;
+        try{
+            accountsServices = RemoteServicesProvider.getInstance().getServices(IAccountsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != accountsServices){
             accountsServices.addAccount(jTextFieldAccountNumber.getText());
         }else{

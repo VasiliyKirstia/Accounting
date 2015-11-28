@@ -5,6 +5,11 @@
  */
 package com.accounting.client.gui.models;
 
+import com.accounting.client.utils.NotSupportedServicesException;
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.interfaces.IAccountsServices;
+import com.accounting.interfaces.IProductUnitsServices;
+import com.accounting.models.Account;
 import com.accounting.models.ProductUnit;
 import javax.swing.DefaultComboBoxModel;
 /**
@@ -20,5 +25,20 @@ public class ProductUnitComboBoxModel extends DefaultComboBoxModel<ProductUnit>{
     @Override
     public ProductUnit getSelectedItem() {
         return (ProductUnit)super.getSelectedItem();
+    }
+    
+    public void update(){
+        IProductUnitsServices productUnitsServices = null;
+        try{
+            productUnitsServices = RemoteServicesProvider.getInstance().<IProductUnitsServices>getServices(IProductUnitsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
+        if(null != productUnitsServices){
+            this.removeAllElements();
+            for(ProductUnit productUnit: productUnitsServices.getAllProductUnits())
+                this.addElement(productUnit);
+        }
     }
 }

@@ -5,32 +5,21 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IDocumentsServices;
 import java.awt.Window;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class DocumentAdditionMaster extends javax.swing.JPanel {
-    
-    private final RemoteServicesProvider<IDocumentsServices> documentsServicesProvider;
-    
+
     /**
      * Creates new form DocumentAdditionMaster
      */
     public DocumentAdditionMaster() {
-        documentsServicesProvider = new RemoteServicesProvider<IDocumentsServices>() {
-            @Override
-            public IDocumentsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
-            }
-        };
         initComponents();
     }
 
@@ -102,7 +91,13 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDocument(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocument
-        IDocumentsServices documentsServices = documentsServicesProvider.getServicesSafely();
+        IDocumentsServices documentsServices = null;
+        try{
+            documentsServices = RemoteServicesProvider.getInstance().<IDocumentsServices>getServices(IDocumentsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != documentsServices){
             documentsServices.addDocument(jTextFieldDocumentName.getText());
         }else{

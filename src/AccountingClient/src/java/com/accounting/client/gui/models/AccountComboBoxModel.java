@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package com.accounting.client.gui.models;
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.models.Account;
 import javax.swing.DefaultComboBoxModel;
+import com.accounting.client.utils.RemoteServicesProvider;
+import com.accounting.interfaces.IAccountsServices;
 
 /**
  *
@@ -20,5 +23,20 @@ public class AccountComboBoxModel extends DefaultComboBoxModel<Account>{
     @Override
     public Account getSelectedItem() {
         return (Account)super.getSelectedItem();
+    }
+    
+    public void update(){
+        IAccountsServices accountsServices = null;
+        try{
+            accountsServices = RemoteServicesProvider.getInstance().<IAccountsServices>getServices(IAccountsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
+        if(null != accountsServices){
+            this.removeAllElements();
+            for(Account account: accountsServices.getAllAccounts())
+                this.addElement(account);
+        }
     }
 }

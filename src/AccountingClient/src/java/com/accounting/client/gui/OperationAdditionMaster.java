@@ -5,32 +5,21 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IOperationsServices;
 import java.awt.Window;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
 public class OperationAdditionMaster extends javax.swing.JPanel {
-    
-    private final RemoteServicesProvider<IOperationsServices> operationsServicesProvider;
-    
+
     /**
      * Creates new form OperationAdditionMaster
      */
     public OperationAdditionMaster() {
-        operationsServicesProvider = new RemoteServicesProvider<IOperationsServices>() {
-            @Override
-            public IOperationsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IOperationsServices) c.lookup("java:comp/env/OperationsServices");
-            }
-        };
         initComponents();
     }
 
@@ -102,7 +91,13 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addOperation(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOperation
-        IOperationsServices operationsServices = operationsServicesProvider.getServicesSafely();
+        IOperationsServices operationsServices = null;
+        try{
+            operationsServices = RemoteServicesProvider.getInstance().<IOperationsServices>getServices(IOperationsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != operationsServices){
             operationsServices.addOperation(jTextFieldOperationName.getText());
         }else{

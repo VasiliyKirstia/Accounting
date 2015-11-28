@@ -5,35 +5,20 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
-import com.accounting.interfaces.ICurrencysServices;
 import com.accounting.interfaces.IDestinationsServices;
 import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
  * @author vasiliy
  */
-public class DestinationAdditionMaster extends javax.swing.JPanel {
-    
-    private final RemoteServicesProvider<IDestinationsServices> destinationsServicesProvider;
-    
+public class DestinationAdditionMaster extends javax.swing.JPanel {    
     /**
      * Creates new form DestinationAdditionMaster
      */
     public DestinationAdditionMaster() {
-        destinationsServicesProvider = new RemoteServicesProvider<IDestinationsServices>() {
-            @Override
-            public IDestinationsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IDestinationsServices) c.lookup("java:comp/env/DestinationsServices");
-            }
-        };
         initComponents();
     }
 
@@ -105,7 +90,13 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDestination(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDestination
-        IDestinationsServices destinationsServices = destinationsServicesProvider.getServicesSafely();
+        IDestinationsServices destinationsServices = null;
+        try{
+            destinationsServices = RemoteServicesProvider.getInstance().<IDestinationsServices>getServices(IDestinationsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != destinationsServices){
             destinationsServices.addDestination(jTextFieldDestinationName.getText());
         }else{

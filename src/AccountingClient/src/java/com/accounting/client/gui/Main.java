@@ -8,48 +8,27 @@ package com.accounting.client.gui;
 import com.accounting.client.utils.WindowsFactory;
 import com.accounting.client.gui.models.ProductTableModel;
 import javax.swing.JFrame;
-import com.accounting.interfaces.IProductsServices;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.swing.JTable;
-import com.accounting.client.utils.RemoteServicesProvider;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author vasiliy
  */
 public class Main extends javax.swing.JPanel {   
-    
-    private RemoteServicesProvider<IProductsServices> productsServicesProvider;
-    
+
     /**
      * Creates new form Main
      */
     public Main() {
-        productsServicesProvider = new RemoteServicesProvider<IProductsServices>() {
-            @Override
-            public IProductsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
-            }
-        };
         initComponents();
         updateTableData();
     }
     private void updateTableData(){
-        final IProductsServices productsServices = productsServicesProvider.getServicesSafely();
-        if(productsServices == null){
-            jTable1.setModel(new DefaultTableModel());
-        }else{
-            jTable1.setModel(new ProductTableModel(productsServices.getAllProducts()));
-        }
+        jTable1.setModel(new ProductTableModel());
+        ((ProductTableModel)jTable1.getModel()).update();
         
         jTable1.addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
@@ -62,8 +41,7 @@ public class Main extends javax.swing.JPanel {
                             new ProductConsumingMaster(((ProductTableModel)jTable1.getModel()).getProductAtRow(row).Id),
                             "Расходование товара"
                     );
-                    //TODO: ИМХО надо переделать!
-                    ((ProductTableModel)jTable1.getModel()).replaceProducts(productsServices.getAllProducts());
+                    ((ProductTableModel)jTable1.getModel()).update();
                 }
             }
         });
@@ -222,19 +200,19 @@ public class Main extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void accountCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new AccountAdditionMaster(), "Добавление счета");
+        
     }//GEN-LAST:event_accountCreationHandler
 
     private void currencyCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_currencyCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new CurrencyAdditionMaster(), "Добавление валюты");
+        
     }//GEN-LAST:event_currencyCreationHandler
 
     private void destinationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_destinationCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DestinationAdditionMaster(), "Добавление места");
+        
     }//GEN-LAST:event_destinationCreationHandler
 
     private void documentCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_documentCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
+        
     }//GEN-LAST:event_documentCreationHandler
 
     private void operationCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_operationCreationHandler
@@ -243,19 +221,15 @@ public class Main extends javax.swing.JPanel {
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
         WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
-        IProductsServices productsServices = this.productsServicesProvider.getServicesSafely();
-        if(productsServices != null){
-            //TODO: ИМХО надо переделать!
-            ((ProductTableModel)jTable1.getModel()).replaceProducts(productsServices.getAllProducts());
-        }
+        ((ProductTableModel)jTable1.getModel()).update();
     }//GEN-LAST:event_productCreationHandler
 
     private void productGroupCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productGroupCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductGroupAdditionMaster(), "Добавление группы продуктов");
+        
     }//GEN-LAST:event_productGroupCreationHandler
 
     private void productUnitCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productUnitCreationHandler
-        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductUnitAdditionMaster(), "Добавление единицы измерения");
+        
     }//GEN-LAST:event_productUnitCreationHandler
 
     private void employeeCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeCreationHandler

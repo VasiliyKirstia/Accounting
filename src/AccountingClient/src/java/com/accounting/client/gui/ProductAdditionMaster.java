@@ -10,21 +10,15 @@ import com.accounting.client.gui.models.DocumentComboBoxModel;
 import com.accounting.client.gui.models.EmployeeComboBoxModel;
 import com.accounting.client.gui.models.ProductGroupComboBoxModel;
 import com.accounting.client.gui.models.ProductUnitComboBoxModel;
+import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
-import com.accounting.interfaces.*;
-import com.accounting.models.Currency;
-import com.accounting.models.ProductGroup;
-import com.accounting.models.ProductUnit;
+import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductsServices;
-import com.accounting.models.Document;
-import com.accounting.models.Employee;
 
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.swing.JFrame;
 
 /**
  *
@@ -32,133 +26,28 @@ import javax.naming.NamingException;
  */
 public class ProductAdditionMaster extends javax.swing.JPanel {
     
-    private final RemoteServicesProvider<IProductGroupsServices> productGroupsServicesProvider;
-    private final RemoteServicesProvider<IProductUnitsServices> productUnitsServicesProvider;
-    private final RemoteServicesProvider<IProductsServices> productsServicesProvider;
-    private final RemoteServicesProvider<IDocumentsServices> documentsServicesProvider;
-    private final RemoteServicesProvider<ICurrencysServices> currencysServicesProvider;
-    private final RemoteServicesProvider<IEmployeesServices> employeesServicesProvider;
-    
     /**
      * Creates new form ProductAdditionMaster
      */
     public ProductAdditionMaster() {
-        productGroupsServicesProvider = new RemoteServicesProvider<IProductGroupsServices>() {
-            @Override
-            public IProductGroupsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IProductGroupsServices) c.lookup("java:comp/env/ProductGroupsServices");
-            }
-        };
-        productUnitsServicesProvider = new RemoteServicesProvider<IProductUnitsServices>() {
-            @Override
-            public IProductUnitsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IProductUnitsServices) c.lookup("java:comp/env/ProductUnitsServices");
-            }
-        };
-        productsServicesProvider = new RemoteServicesProvider<IProductsServices>() {
-            @Override
-            public IProductsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IProductsServices) c.lookup("java:comp/env/ProductsServices");
-            }
-        };
-        documentsServicesProvider = new RemoteServicesProvider<IDocumentsServices>() {
-            @Override
-            public IDocumentsServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IDocumentsServices) c.lookup("java:comp/env/DocumentsServices");
-            }
-        };
-        currencysServicesProvider = new RemoteServicesProvider<ICurrencysServices>() {
-            @Override
-            public ICurrencysServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (ICurrencysServices) c.lookup("java:comp/env/CurrencysServices");
-            }
-        };
-        employeesServicesProvider = new RemoteServicesProvider<IEmployeesServices>() {
-            @Override
-            public IEmployeesServices getServices() throws NamingException, Exception {
-                Context c = new InitialContext();
-                return (IEmployeesServices) c.lookup("java:comp/env/EmployeesServices");
-            }
-        };
-        
         initComponents();
-        updateCurrencyComboBox();
-        updateProductUnitComboBox();
-        updateProductGroupComboBox();
-        updateEmployeeComboBox();
-        updateDocumentComboBox();
+        
+        jComboBoxCurrency.setModel(new CurrencyComboBoxModel());
+        ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).update();
+        
+        jComboBoxDocument.setModel(new DocumentComboBoxModel());
+        ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
+        
+        jComboBoxEmployee.setModel(new EmployeeComboBoxModel());
+        ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).update();
+        
+        jComboBoxGroup.setModel(new ProductGroupComboBoxModel());
+        ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).update();
+        
+        jComboBoxUnit.setModel(new ProductUnitComboBoxModel());
+        ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).update();
     }
-
-    private void updateDocumentComboBox() {
-        IDocumentsServices documentsServices = documentsServicesProvider.getServicesSafely();
-        if(null != documentsServices){
-            DocumentComboBoxModel doccm = new DocumentComboBoxModel();
-            for(Document doc : documentsServices.getAllDocuments()){
-                doccm.addElement(doc);
-            }
-            jComboBoxDocument.setModel(doccm);
-        }else{
-            System.err.println("NullPointerException");
-        }
-    }
-
-    private void updateEmployeeComboBox() {
-        IEmployeesServices employeesServices = employeesServicesProvider.getServicesSafely();
-        if(null != employeesServices){
-            EmployeeComboBoxModel ecm = new EmployeeComboBoxModel();
-            for(Employee emp : employeesServices.getAllEmployees()){
-                ecm.addElement(emp);
-            }
-            jComboBoxEmployee.setModel(ecm);
-        }else{
-            System.err.println("NullPointerException");
-        }
-    }
-
-    private void updateProductGroupComboBox() {
-        IProductGroupsServices productGroupsServices = productGroupsServicesProvider.getServicesSafely();
-        if(null != productGroupsServices){
-            ProductGroupComboBoxModel pgcm = new ProductGroupComboBoxModel();
-            for(ProductGroup pg : productGroupsServices.getAllProductGroups()){
-                pgcm.addElement(pg);
-            }
-            jComboBoxGroup.setModel(pgcm);
-        }else{
-            System.err.println("NullPointerException");
-        }
-    }
-
-    private void updateProductUnitComboBox() {
-        IProductUnitsServices productUnitsServices = productUnitsServicesProvider.getServicesSafely();
-        if(null != productUnitsServices){
-            ProductUnitComboBoxModel pucm = new ProductUnitComboBoxModel();
-            for(ProductUnit pu : productUnitsServices.getAllProductUnits()){
-                pucm.addElement(pu);
-            }
-            jComboBoxUnit.setModel(pucm);
-        }else{
-            System.err.println("NullPointerException");
-        }
-    }
-
-    private void updateCurrencyComboBox() {
-        ICurrencysServices currencysServices = currencysServicesProvider.getServicesSafely();
-        if(null != currencysServices){
-            CurrencyComboBoxModel ccm = new CurrencyComboBoxModel();
-            for(Currency cur : currencysServices.getAllCurrencis()){
-                ccm.addElement(cur);
-            }
-            jComboBoxCurrency.setModel(ccm);
-        }else{
-            System.err.println("NullPointerException");
-        }
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -357,7 +246,13 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct
-        IProductsServices productsServices = productsServicesProvider.getServicesSafely();
+        IProductsServices productsServices = null;
+        try{
+            productsServices = RemoteServicesProvider.getInstance().<IProductsServices>getServices(IProductsServices.class);
+        }catch(NotSupportedServicesException e){
+            System.err.println("NotSupportedServicesException");
+        }
+        
         if(null != productsServices){
             Double amount = Double.parseDouble(jTextFieldAmount.getText());
             productsServices.addProduct(
@@ -381,23 +276,28 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
     }//GEN-LAST:event_closeWindow
 
     private void addProductUnit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductUnit
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductUnitAdditionMaster(), "Добавление единицы измерения");
+        ((ProductUnitComboBoxModel)jComboBoxUnit.getModel()).update();
     }//GEN-LAST:event_addProductUnit
 
     private void addCurrency(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrency
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new CurrencyAdditionMaster(), "Добавление валюты");
+        ((CurrencyComboBoxModel)jComboBoxCurrency.getModel()).update();
     }//GEN-LAST:event_addCurrency
 
     private void addProductGroup(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductGroup
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new ProductGroupAdditionMaster(), "Добавление группы продуктов");
+        ((ProductGroupComboBoxModel)jComboBoxGroup.getModel()).update();
     }//GEN-LAST:event_addProductGroup
 
     private void addEmployee(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployee
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new EmployeeAdditionMaster(), "Добавление сотрудника");
+        ((EmployeeComboBoxModel)jComboBoxEmployee.getModel()).update();
     }//GEN-LAST:event_addEmployee
 
     private void addDocument(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocument
-        // TODO add your handling code here:
+        WindowsFactory.createDialog((JFrame)this.getTopLevelAncestor(), new DocumentAdditionMaster(), "Добавление документа");
+        ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
     }//GEN-LAST:event_addDocument
 
 
