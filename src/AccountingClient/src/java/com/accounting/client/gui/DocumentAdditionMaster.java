@@ -9,6 +9,7 @@ import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IDocumentsServices;
 import java.awt.Window;
+import com.accounting.client.gui.verifiers.StringVerifier;
 
 /**
  *
@@ -51,6 +52,8 @@ public class DocumentAdditionMaster extends javax.swing.JPanel {
                 closeWindow(evt);
             }
         });
+
+        jTextFieldDocumentName.setInputVerifier(new StringVerifier());
 
         jLabel1.setText("Название документа");
 

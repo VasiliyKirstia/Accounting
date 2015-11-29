@@ -9,6 +9,7 @@ import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IOperationsServices;
 import java.awt.Window;
+import com.accounting.client.gui.verifiers.StringVerifier;
 
 /**
  *
@@ -39,6 +40,8 @@ public class OperationAdditionMaster extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
 
         jLabel1.setText("Название операции:");
+
+        jTextFieldOperationName.setInputVerifier(new StringVerifier());
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {

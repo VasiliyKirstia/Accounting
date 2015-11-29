@@ -63,6 +63,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldProductUnitName">
+      <Properties>
+        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new StringVerifier()" type="code"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonAdd">
       <Properties>

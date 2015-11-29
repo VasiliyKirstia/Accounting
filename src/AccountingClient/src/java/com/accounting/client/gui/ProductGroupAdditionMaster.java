@@ -11,7 +11,7 @@ import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductGroupsServices;
 import java.awt.Window;
-import javax.swing.JFrame;
+import com.accounting.client.gui.verifiers.StringVerifier;
 
 /**
  *
@@ -48,6 +48,9 @@ public class ProductGroupAdditionMaster extends javax.swing.JPanel {
         jButtonAddAccount = new javax.swing.JButton();
 
         jLabel1.setText("Название группы:");
+
+        jTextFieldGroupName.setInputVerifier(new StringVerifier()
+        );
 
         jLabel2.setText("Счет:");
 

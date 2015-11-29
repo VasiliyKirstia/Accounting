@@ -9,6 +9,7 @@ import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IDestinationsServices;
 import java.awt.Window;
+import com.accounting.client.gui.verifiers.StringVerifier;
 
 /**
  *
@@ -38,6 +39,8 @@ public class DestinationAdditionMaster extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
 
         jLabel1.setText("Название отдела:");
+
+        jTextFieldDestinationName.setInputVerifier(new StringVerifier());
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {

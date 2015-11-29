@@ -14,6 +14,7 @@ import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductsServices;
 import com.accounting.models.Product;
 import java.awt.Window;
+import com.accounting.client.gui.verifiers.NumberVerifier;
 
 /**
  *
@@ -94,6 +95,8 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
         jTextFieldProductName.setEditable(false);
 
         jLabel2.setText("Количество:");
+
+        jTextFieldAmount.setInputVerifier(new NumberVerifier());
 
         jLabel3.setText("Документ:");
 

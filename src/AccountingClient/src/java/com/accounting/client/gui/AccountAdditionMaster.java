@@ -5,6 +5,7 @@
  */
 package com.accounting.client.gui;
 
+import com.accounting.client.gui.verifiers.AccountVerifier;
 import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.IAccountsServices;
@@ -43,6 +44,8 @@ public class AccountAdditionMaster extends javax.swing.JPanel {
                 addAccount(evt);
             }
         });
+
+        jTextFieldAccountNumber.setInputVerifier(new AccountVerifier());
 
         jLabel1.setText("Номер счета:");
 

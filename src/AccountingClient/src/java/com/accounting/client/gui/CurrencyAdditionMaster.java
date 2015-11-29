@@ -9,6 +9,7 @@ import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.interfaces.ICurrencysServices;
 import java.awt.Window;
+import com.accounting.client.gui.verifiers.CurrencyVerifier;
 
 /**
  *
@@ -52,6 +53,8 @@ public class CurrencyAdditionMaster extends javax.swing.JPanel {
         });
 
         jLabel1.setText("Код валюты");
+
+        jTextFieldCurrencyName.setInputVerifier(new CurrencyVerifier());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

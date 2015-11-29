@@ -14,6 +14,8 @@ import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
 import com.accounting.client.utils.WindowsFactory;
 import com.accounting.interfaces.IProductsServices;
+import com.accounting.client.gui.verifiers.NumberVerifier;
+import com.accounting.client.gui.verifiers.StringVerifier;
 
 import java.awt.Window;
 import java.math.BigDecimal;
@@ -92,6 +94,12 @@ public class ProductAdditionMaster extends javax.swing.JPanel {
         jLabel5.setText("Валюта:");
 
         jLabel6.setText("Группа:");
+
+        jTextFieldName.setInputVerifier(new StringVerifier());
+
+        jTextFieldAmount.setInputVerifier(new NumberVerifier());
+
+        jTextFieldPrice.setInputVerifier(new NumberVerifier());
 
         jButtonAdd.setText("Добавить");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
