@@ -1,5 +1,8 @@
 {
     "url": "jdbc:postgresql://localhost/accounting",
     "username": "test_user",
-    "password": "test_user"
+    "password": "test_user",
+    "productAdditionId": "1",
+    "ProductConsumingId": "2",
+    "DestinationStorageId": "1"
 }

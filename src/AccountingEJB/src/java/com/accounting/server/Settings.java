@@ -21,9 +21,9 @@ public class Settings {
     private final String CONNECTION_URL;
     private final String USERNAME;
     private final String PASSWORD;
-    private final Integer PRODUCT_ADDITION_ID = 1;
-    private final Integer PRODUCT_CONSUMING_ID = 2;
-    private final Integer DESTINATION_STORAGE_ID = 1;
+    private final Integer PRODUCT_ADDITION_ID;
+    private final Integer PRODUCT_CONSUMING_ID;
+    private final Integer DESTINATION_STORAGE_ID;
     
     private Settings(){
         Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -37,6 +37,14 @@ public class Settings {
         this.CONNECTION_URL = settings.get("url");
         this.USERNAME = settings.get("username");
         this.PASSWORD = settings.get("password");
+        
+        try{
+            this.PRODUCT_ADDITION_ID = Integer.valueOf(settings.get("productAdditionId"));
+            this.PRODUCT_CONSUMING_ID = Integer.valueOf(settings.get("ProductConsumingId"));
+            this.DESTINATION_STORAGE_ID = Integer.valueOf(settings.get("DestinationStorageId"));
+        }catch(NumberFormatException e){
+            throw new RuntimeException(e);
+        }
     }
     
     public static Settings getInstance(){
