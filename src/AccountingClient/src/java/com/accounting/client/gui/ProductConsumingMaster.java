@@ -36,7 +36,9 @@ public class ProductConsumingMaster extends javax.swing.JPanel {
         catch(NotSupportedServicesException e){
             throw new RuntimeException(e);
         }
-
+        
+        jTextFieldProductName.setText(product.Name);
+        
         jComboBoxDocument.setModel(new DocumentComboBoxModel());
         ((DocumentComboBoxModel)jComboBoxDocument.getModel()).update();
         
