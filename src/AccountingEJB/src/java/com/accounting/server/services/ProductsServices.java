@@ -122,11 +122,12 @@ public class ProductsServices implements IProductsServices{
                 )
         ){
             PreparedStatement prepSt = con.prepareStatement(
-                    "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod "
-                    +"INNER JOIN product_group AS pg ON prod.product_group_id = pg.id "
-                    +"INNER JOIN currency AS cur ON prod.currency_id = cur.id "
-                    +"INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id "
-                    +"WHERE prod.id = ?"
+                    "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, " +
+                    "pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod " +
+                    "INNER JOIN product_group AS pg ON prod.product_group_id = pg.id " +
+                    "INNER JOIN currency AS cur ON prod.currency_id = cur.id " +
+                    "INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id " +
+                    "WHERE prod.id = ?"
             );
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
@@ -161,10 +162,11 @@ public class ProductsServices implements IProductsServices{
         ){
             Statement st = con.createStatement();
             ResultSet resultSet = st.executeQuery(
-                    "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod "
-                    +"INNER JOIN product_group AS pg ON prod.product_group_id = pg.id "
-                    +"INNER JOIN currency AS cur ON prod.currency_id = cur.id "
-                    +"INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id "
+                    "SELECT prod.id AS id, prod.name AS name, prod.amount AS amount, prod.price AS price, " +
+                    "pg.name AS pg_name, cur.name AS cur_name, pu.name AS pu_name FROM product AS prod " +
+                    "INNER JOIN product_group AS pg ON prod.product_group_id = pg.id " + 
+                    "INNER JOIN currency AS cur ON prod.currency_id = cur.id " +
+                    "INNER JOIN product_unit AS pu ON prod.product_unit_id = pu.id;"
             );
             List<Product> products = new LinkedList<Product>();
             while(resultSet.next()){

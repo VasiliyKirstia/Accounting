@@ -35,7 +35,17 @@ public class TransactionsServices implements ITransactionsServices{
                         settings.getPassword()
                 )
         ){
-            PreparedStatement prepSt = con.prepareStatement("SELECT * FROM transaction WHERE id = ?");
+            PreparedStatement prepSt = con.prepareStatement(
+                "SELECT tran.id AS id, tran.date AS date, tran.product_amount AS amount, op.name AS op_name, "+
+                "prod.name AS prod_name, dest.name AS dest_name, emp.name AS emp_name, doc.name AS doc_name "+
+                "FROM transaction AS tran "+
+                "INNER JOIN operation AS op ON tran.operation_id = op.id "+
+                "INNER JOIN product AS prod ON tran.product_id = prod.id "+
+                "INNER JOIN destination AS dest ON tran.destination_id = dest.id "+
+                "INNER JOIN employee AS emp ON tran.employee_id = emp.id "+
+                "INNER JOIN document AS doc ON tran.document_id = doc.id "+
+                "WHERE tran.id = ?;"
+            );
             prepSt.setInt(1, id);
             ResultSet resultSet = prepSt.executeQuery();
 
@@ -43,12 +53,12 @@ public class TransactionsServices implements ITransactionsServices{
                 return new Transaction(
                     resultSet.getInt("id"),
                     resultSet.getDate("date"),
-                    resultSet.getDouble("product_amount"),
-                    resultSet.getInt("document_id"),
-                    resultSet.getInt("product_id"),
-                    resultSet.getInt("destination_id"),
-                    resultSet.getInt("employee_id"),
-                    resultSet.getInt("operation_id")
+                    resultSet.getDouble("amount"),
+                    resultSet.getString("doc_name"),
+                    resultSet.getString("prod_name"),
+                    resultSet.getString("dest_name"),
+                    resultSet.getString("emp_name"),
+                    resultSet.getString("op_name")
                 );
             }else{
                 return null;
@@ -69,19 +79,28 @@ public class TransactionsServices implements ITransactionsServices{
                 )
         ){
             Statement st = con.createStatement();
-            ResultSet resultSet = st.executeQuery("SELECT * FROM transaction");
+            ResultSet resultSet = st.executeQuery(
+                "SELECT tran.id AS id, tran.date AS date, tran.product_amount AS amount, op.name AS op_name, " +
+                "prod.name AS prod_name, dest.name AS dest_name, emp.name AS emp_name, doc.name AS doc_name " +
+                "FROM transaction AS tran " +
+                "INNER JOIN operation AS op ON tran.operation_id = op.id " +
+                "INNER JOIN product AS prod ON tran.product_id = prod.id " +
+                "INNER JOIN destination AS dest ON tran.destination_id = dest.id " +
+                "INNER JOIN employee AS emp ON tran.employee_id = emp.id " +
+                "INNER JOIN document AS doc ON tran.document_id = doc.id;" 
+            );
             List<Transaction> transactions = new LinkedList<Transaction>();
             while(resultSet.next()){
                 transactions.add(
                     new Transaction(
                         resultSet.getInt("id"),
                         resultSet.getDate("date"),
-                        resultSet.getDouble("product_amount"),
-                        resultSet.getInt("document_id"),
-                        resultSet.getInt("product_id"),
-                        resultSet.getInt("destination_id"),
-                        resultSet.getInt("employee_id"),
-                        resultSet.getInt("operation_id")
+                        resultSet.getDouble("amount"),
+                        resultSet.getString("doc_name"),
+                        resultSet.getString("prod_name"),
+                        resultSet.getString("dest_name"),
+                        resultSet.getString("emp_name"),
+                        resultSet.getString("op_name")
                     )
                 );
             }

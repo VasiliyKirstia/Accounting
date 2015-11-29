@@ -71,17 +71,17 @@ public class TransactionTableModel extends AbstractTableModel {
             case 0:
                 return transactions.get(rowIndex).Date;
             case 1:
-                return transactions.get(rowIndex).DestinationId;
+                return transactions.get(rowIndex).DestinationName;
             case 2:
-                return transactions.get(rowIndex).OperationId;
+                return transactions.get(rowIndex).OperationName;
             case 3:
                 return transactions.get(rowIndex).ProductAmount;
             case 4:
-                return transactions.get(rowIndex).ProductId;
+                return transactions.get(rowIndex).ProductName;
             case 5:
-                return transactions.get(rowIndex).EmployeeId;
+                return transactions.get(rowIndex).EmployeeName;
             case 6:
-                return transactions.get(rowIndex).DocumentId;
+                return transactions.get(rowIndex).DocumentName;
             default:
                 throw new AssertionError();
         }

@@ -16,20 +16,20 @@ public class Transaction implements Serializable{
     public final int Id;
     public final Date Date;
     public final double ProductAmount;
-    public final int DocumentId;
-    public final int ProductId;
-    public final int DestinationId;
-    public final int EmployeeId;
-    public final int OperationId;
+    public final String DocumentName;
+    public final String ProductName;
+    public final String DestinationName;
+    public final String EmployeeName;
+    public final String OperationName;
     
-    public Transaction(int id, Date date, double productAmount, int documentId, int productId, int destinationId, int employeeId, int operationId){
+    public Transaction(int id, Date date, double productAmount, String documentName, String productName, String destinationName, String employeeName, String operationName){
         this.Id = id;
         this.Date = date;
         this.ProductAmount = productAmount;
-        this.DocumentId = documentId;
-        this.ProductId = productId;
-        this.DestinationId = destinationId;
-        this.EmployeeId = employeeId;
-        this.OperationId = operationId;
+        this.DocumentName = documentName;
+        this.ProductName = productName;
+        this.DestinationName = destinationName;
+        this.EmployeeName = employeeName;
+        this.OperationName = operationName;
     }
 }
