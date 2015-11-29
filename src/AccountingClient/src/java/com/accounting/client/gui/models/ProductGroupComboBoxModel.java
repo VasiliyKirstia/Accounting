@@ -6,9 +6,7 @@
 package com.accounting.client.gui.models;
 import com.accounting.client.utils.NotSupportedServicesException;
 import com.accounting.client.utils.RemoteServicesProvider;
-import com.accounting.interfaces.IAccountsServices;
 import com.accounting.interfaces.IProductGroupsServices;
-import com.accounting.models.Account;
 import com.accounting.models.ProductGroup;
 import javax.swing.DefaultComboBoxModel;
 /**

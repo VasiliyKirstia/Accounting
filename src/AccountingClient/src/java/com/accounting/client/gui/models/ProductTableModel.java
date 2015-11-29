@@ -61,7 +61,7 @@ public class ProductTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return tableHeader.length;
     }
 
     @Override

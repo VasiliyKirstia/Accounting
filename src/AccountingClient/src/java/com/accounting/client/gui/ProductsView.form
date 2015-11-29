@@ -37,7 +37,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jToolBar1" max="32767" attributes="0"/>
-          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="0" pref="680" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -45,7 +45,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="139" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="233" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,7 +61,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButtonOperationAdd">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x43e;&#x43f;&#x435;&#x440;&#x430;&#x446;&#x438;&#x44f;"/>
+            <Property name="text" type="java.lang.String" value="&#x434;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x43e;&#x43f;&#x435;&#x440;&#x430;&#x446;&#x438;&#x44e;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -72,13 +72,24 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButtonProductAdd">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x43f;&#x440;&#x43e;&#x434;&#x443;&#x43a;&#x442;"/>
+            <Property name="text" type="java.lang.String" value="&#x434;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x43f;&#x440;&#x43e;&#x434;&#x443;&#x43a;&#x442;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="productCreationHandler"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x43f;&#x43e;&#x441;&#x43c;&#x43e;&#x442;&#x440;&#x435;&#x442;&#x44c; &#x442;&#x440;&#x430;&#x43d;&#x437;&#x430;&#x43a;&#x446;&#x438;&#x438;"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showTransactionView"/>
           </Events>
         </Component>
       </SubComponents>
@@ -90,7 +101,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="jTableProducts">
           <Properties>
             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
           </Properties>

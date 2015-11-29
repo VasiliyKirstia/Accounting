@@ -17,20 +17,18 @@ import javax.swing.JTable;
  *
  * @author vasiliy
  */
-public class Main extends javax.swing.JPanel {   
+public class ProductsView extends javax.swing.JPanel {   
 
     /**
      * Creates new form Main
      */
-    public Main() {
+    public ProductsView() {
         initComponents();
-        updateTableData();
-    }
-    private void updateTableData(){
-        jTable1.setModel(new ProductTableModel());
-        ((ProductTableModel)jTable1.getModel()).update();
         
-        jTable1.addMouseListener( new MouseAdapter() {
+        jTableProducts.setModel(new ProductTableModel());
+        ((ProductTableModel)jTableProducts.getModel()).update();
+        
+        jTableProducts.addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 if (me.getClickCount() == 2) {
                     JTable table =(JTable) me.getSource();
@@ -38,10 +36,10 @@ public class Main extends javax.swing.JPanel {
                     int row = table.rowAtPoint(p);
                     WindowsFactory.createDialog(
                             (Window)table.getTopLevelAncestor(), 
-                            new ProductConsumingMaster(((ProductTableModel)jTable1.getModel()).getProductAtRow(row).Id),
+                            new ProductConsumingMaster(((ProductTableModel)jTableProducts.getModel()).getProductAtRow(row).Id),
                             "Расходование товара"
                     );
-                    ((ProductTableModel)jTable1.getModel()).update();
+                    ((ProductTableModel)jTableProducts.getModel()).update();
                 }
             }
         });
@@ -62,8 +60,9 @@ public class Main extends javax.swing.JPanel {
         jToolBar1 = new javax.swing.JToolBar();
         jButtonOperationAdd = new javax.swing.JButton();
         jButtonProductAdd = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableProducts = new javax.swing.JTable();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -74,7 +73,7 @@ public class Main extends javax.swing.JPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButtonOperationAdd.setText("операция");
+        jButtonOperationAdd.setText("добавить операцию");
         jButtonOperationAdd.setFocusable(false);
         jButtonOperationAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonOperationAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -85,7 +84,7 @@ public class Main extends javax.swing.JPanel {
         });
         jToolBar1.add(jButtonOperationAdd);
 
-        jButtonProductAdd.setText("продукт");
+        jButtonProductAdd.setText("добавить продукт");
         jButtonProductAdd.setFocusable(false);
         jButtonProductAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonProductAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -96,22 +95,33 @@ public class Main extends javax.swing.JPanel {
         });
         jToolBar1.add(jButtonProductAdd);
 
-        jTable1.setAutoCreateRowSorter(true);
-        jScrollPane1.setViewportView(jTable1);
+        jButton1.setText("посмотреть транзакции");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showTransactionView(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        jTableProducts.setAutoCreateRowSorter(true);
+        jScrollPane1.setViewportView(jTableProducts);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -121,18 +131,23 @@ public class Main extends javax.swing.JPanel {
 
     private void productCreationHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productCreationHandler
         WindowsFactory.createDialog((Window)this.getTopLevelAncestor(), new ProductAdditionMaster(), "Добавление товара");
-        ((ProductTableModel)jTable1.getModel()).update();
+        ((ProductTableModel)jTableProducts.getModel()).update();
     }//GEN-LAST:event_productCreationHandler
+
+    private void showTransactionView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTransactionView
+        WindowsFactory.createFrame(new TransactionsView(), "Транзакции");
+    }//GEN-LAST:event_showTransactionView
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonOperationAdd;
     private javax.swing.JButton jButtonProductAdd;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableProducts;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

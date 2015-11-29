@@ -16,6 +16,6 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WindowsFactory.createFrame(new com.accounting.client.gui.Main(), "Главное окно");
+        WindowsFactory.createFrame(new com.accounting.client.gui.ProductsView(), "Главное окно");
     }
 }
